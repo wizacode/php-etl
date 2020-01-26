@@ -1,9 +1,15 @@
 <?php
 
+/**
+ * @author      Wizacha DevTeam <dev@wizacha.com>
+ * @copyright   Copyright (c) Wizacha
+ * @license     MIT
+ */
+
 namespace Tests;
 
-use Marquine\Etl\Loaders\Loader;
-use Marquine\Etl\Transformers\Transformer;
+use Wizaplace\Etl\Loaders\Loader;
+use Wizaplace\Etl\Transformers\Transformer;
 use PHPUnit\Framework\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase

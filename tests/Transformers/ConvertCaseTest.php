@@ -1,14 +1,20 @@
 <?php
 
+/**
+ * @author      Wizacha DevTeam <dev@wizacha.com>
+ * @copyright   Copyright (c) Wizacha
+ * @license     MIT
+ */
+
 namespace Tests\Transformers;
 
 use Tests\TestCase;
-use Marquine\Etl\Row;
-use Marquine\Etl\Transformers\ConvertCase;
+use Wizaplace\Etl\Row;
+use Wizaplace\Etl\Transformers\ConvertCase;
 
 class ConvertCaseTest extends TestCase
 {
-    protected function setUp()
+    protected function setUp() : void
     {
         parent::setUp();
 

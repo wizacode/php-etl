@@ -1,16 +1,23 @@
 <?php
 
-namespace Marquine\Etl\Transformers;
+declare(strict_types=1);
 
-use Marquine\Etl\Row;
-use InvalidArgumentException;
+/**
+ * @author      Wizacha DevTeam <dev@wizacha.com>
+ * @copyright   Copyright (c) Wizacha
+ * @license     MIT
+ */
+
+namespace Wizaplace\Etl\Transformers;
+
+use Wizaplace\Etl\Row;
 
 class Trim extends Transformer
 {
     /**
      * Transformer columns.
      *
-     * @var array
+     * @var string[]
      */
     protected $columns = [];
 
@@ -38,29 +45,24 @@ class Trim extends Transformer
     /**
      * Properties that can be set via the options method.
      *
-     * @var array
+     * @var string[]
      */
     protected $availableOptions = [
-        'columns', 'type', 'mask'
+        'columns', 'type', 'mask',
     ];
 
     /**
      * Initialize the step.
-     *
-     * @return void
      */
-    public function initialize()
+    public function initialize(): void
     {
         $this->function = $this->getTrimFunction();
     }
 
     /**
      * Transform the given row.
-     *
-     * @param  \Marquine\Etl\Row  $row
-     * @return void
      */
-    public function transform(Row $row)
+    public function transform(Row $row): void
     {
         $row->transform($this->columns, function ($column) {
             return call_user_func($this->function, $column, $this->mask);
@@ -69,10 +71,8 @@ class Trim extends Transformer
 
     /**
      * Get the trim function name.
-     *
-     * @return string
      */
-    protected function getTrimFunction()
+    protected function getTrimFunction(): string
     {
         switch ($this->type) {
             case 'ltrim':
@@ -91,6 +91,6 @@ class Trim extends Transformer
                 return 'trim';
         }
 
-        throw new InvalidArgumentException("The trim type [{$this->type}] is invalid.");
+        throw new \InvalidArgumentException("The trim type [{$this->type}] is invalid.");
     }
 }

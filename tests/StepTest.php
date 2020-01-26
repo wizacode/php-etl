@@ -1,6 +1,14 @@
 <?php
 
+/**
+ * @author      Wizacha DevTeam <dev@wizacha.com>
+ * @copyright   Copyright (c) Wizacha
+ * @license     MIT
+ */
+
 namespace Tests;
+
+use Wizaplace\Etl\Step;
 
 class StepTest extends TestCase
 {
@@ -14,14 +22,21 @@ class StepTest extends TestCase
             'option2' => 'value',
         ]);
 
-        $this->assertAttributeEquals('value', 'option1', $step);
-        $this->assertAttributeEquals(null, 'option2', $step);
+        $this->assertEquals('value', $step->getOption('Option1'));
+        $this->assertNull($step->getOption('Option2'));
     }
 }
 
-class FakeStep extends \Marquine\Etl\Step
+class FakeStep extends Step
 {
     protected $option1;
     protected $option2;
     protected $availableOptions = ['option1'];
+
+    public function getOption(string $name)
+    {
+        $name = lcfirst($name);
+
+        return $this->$name ?? null;
+    }
 }

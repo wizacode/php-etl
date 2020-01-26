@@ -1,9 +1,17 @@
 <?php
 
-namespace Marquine\Etl\Extractors;
+declare(strict_types=1);
 
-use Marquine\Etl\Row;
-use Marquine\Etl\Database\Manager;
+/**
+ * @author      Wizacha DevTeam <dev@wizacha.com>
+ * @copyright   Copyright (c) Wizacha
+ * @license     MIT
+ */
+
+namespace Wizaplace\Etl\Extractors;
+
+use Wizaplace\Etl\Database\Manager;
+use Wizaplace\Etl\Row;
 
 class Query extends Extractor
 {
@@ -24,7 +32,7 @@ class Query extends Extractor
     /**
      * The database manager.
      *
-     * @var \Marquine\Etl\Database\Manager
+     * @var \Wizaplace\Etl\Database\Manager
      */
     protected $db;
 
@@ -34,13 +42,12 @@ class Query extends Extractor
      * @var array
      */
     protected $availableOptions = [
-        'bindings', 'connection'
+        'bindings', 'connection',
     ];
 
     /**
      * Create a new Query Extractor instance.
      *
-     * @param  \Marquine\Etl\Database\Manager  $manager
      * @return void
      */
     public function __construct(Manager $manager)
@@ -50,10 +57,8 @@ class Query extends Extractor
 
     /**
      * Extract data from the input.
-     *
-     * @return \Generator
      */
-    public function extract()
+    public function extract(): \Generator
     {
         $statement = $this->db->pdo($this->connection)->prepare($this->input);
 

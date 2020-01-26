@@ -1,8 +1,14 @@
 <?php
 
+/**
+ * @author      Wizacha DevTeam <dev@wizacha.com>
+ * @copyright   Copyright (c) Wizacha
+ * @license     MIT
+ */
+
 namespace Tests;
 
-use Marquine\Etl\Row;
+use Wizaplace\Etl\Row;
 
 class RowTest extends TestCase
 {
@@ -13,7 +19,7 @@ class RowTest extends TestCase
 
         $row->set('name', 'Jane Doe');
 
-        $this->assertAttributeEquals(['name' => 'Jane Doe'], 'attributes', $row);
+        $this->assertEquals('Jane Doe', $row->get('name'));
     }
 
     /** @test */
@@ -32,7 +38,7 @@ class RowTest extends TestCase
 
         $row->remove('name');
 
-        $this->assertAttributeEquals([], 'attributes', $row);
+        $this->assertNull($row->get('name'));
     }
 
     /** @test */
@@ -44,13 +50,15 @@ class RowTest extends TestCase
             return "*$value*";
         });
 
-        $this->assertAttributeEquals(['name' => '*Jane Doe*', 'email' => '*janedoe@example.com*'], 'attributes', $row);
+        $this->assertEquals('*Jane Doe*', $row->get('name'));
+        $this->assertEquals('*janedoe@example.com*', $row->get('email'));
 
         $row->transform(['name'], function ($value) {
             return trim($value, '*');
         });
 
-        $this->assertAttributeEquals(['name' => 'Jane Doe', 'email' => '*janedoe@example.com*'], 'attributes', $row);
+        $this->assertEquals('Jane Doe', $row->get('name'));
+        $this->assertEquals('*janedoe@example.com*', $row->get('email'));
     }
 
     /** @test */
@@ -101,5 +109,35 @@ class RowTest extends TestCase
         $row->name = 'John Doe';
 
         $this->assertEquals('John Doe', $row->name);
+    }
+
+    /** @test */
+    public function set_attributes_without_merge()
+    {
+        $row = new Row(['name' => 'Jane Doe', 'Sex' => 'Female']);
+        $newAttributes =['name' => 'Pocahontas', 'Sex' => 'Female'];
+        $row->setAttributes($newAttributes);
+        $this->assertEquals($newAttributes, $row->toArray());
+    }
+
+    /** @test */
+    public function set_attributes_with_merge()
+    {
+        $row = new Row(['name' => 'Jane Doe', 'Sex' => 'Female']);
+        $newAttributes =['name' => 'Marie Curie', 'Job' => 'Scientist'];
+        $row->setAttributes($newAttributes, true);
+        $this->assertEquals([
+            'name' => 'Marie Curie',
+            'Sex' => 'Female',
+            'Job' => 'Scientist'
+        ], $row->toArray());
+    }
+
+    /** @test */
+    public function clear_attributes()
+    {
+        $row = new Row(['name' => 'Jane Doe', 'Sex' => 'Female']);
+        $row->clearAttributes();
+        $this->assertEmpty($row->toArray());
     }
 }

@@ -1,16 +1,23 @@
 <?php
 
-namespace Marquine\Etl\Transformers;
+declare(strict_types=1);
 
-use Marquine\Etl\Row;
-use InvalidArgumentException;
+/**
+ * @author      Wizacha DevTeam <dev@wizacha.com>
+ * @copyright   Copyright (c) Wizacha
+ * @license     MIT
+ */
+
+namespace Wizaplace\Etl\Transformers;
+
+use Wizaplace\Etl\Row;
 
 class ConvertCase extends Transformer
 {
     /**
      * Transformer columns.
      *
-     * @var array
+     * @var string[]
      */
     protected $columns = [];
 
@@ -38,29 +45,24 @@ class ConvertCase extends Transformer
     /**
      * Properties that can be set via the options method.
      *
-     * @var array
+     * @var string[]
      */
     protected $availableOptions = [
-        'columns', 'encoding', 'mode'
+        'columns', 'encoding', 'mode',
     ];
 
     /**
      * Initialize the step.
-     *
-     * @return void
      */
-    public function initialize()
+    public function initialize(): void
     {
         $this->conversionMode = $this->getConversionMode();
     }
 
     /**
      * Transform the given row.
-     *
-     * @param  \Marquine\Etl\Row  $row
-     * @return void
      */
-    public function transform(Row $row)
+    public function transform(Row $row): void
     {
         $row->transform($this->columns, function ($column) {
             return mb_convert_case($column, $this->conversionMode, $this->encoding);
@@ -70,11 +72,9 @@ class ConvertCase extends Transformer
     /**
      * Get the conversion mode.
      *
-     * @return int
-     *
      * @throws \InvalidArgumentException
      */
-    protected function getConversionMode()
+    protected function getConversionMode(): int
     {
         switch ($this->mode) {
             case 'upper':
@@ -89,6 +89,6 @@ class ConvertCase extends Transformer
                 return MB_CASE_TITLE;
         }
 
-        throw new InvalidArgumentException("The conversion mode [{$this->mode}] is invalid.");
+        throw new \InvalidArgumentException("The conversion mode [{$this->mode}] is invalid.");
     }
 }

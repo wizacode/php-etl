@@ -1,14 +1,20 @@
 <?php
 
+/**
+ * @author      Wizacha DevTeam <dev@wizacha.com>
+ * @copyright   Copyright (c) Wizacha
+ * @license     MIT
+ */
+
 namespace Tests\Transformers;
 
 use Tests\TestCase;
-use Marquine\Etl\Row;
-use Marquine\Etl\Transformers\Replace;
+use Wizaplace\Etl\Row;
+use Wizaplace\Etl\Transformers\Replace;
 
 class ReplaceTest extends TestCase
 {
-    protected function setUp()
+    protected function setUp() : void
     {
         parent::setUp();
 

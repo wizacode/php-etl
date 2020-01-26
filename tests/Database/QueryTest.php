@@ -1,9 +1,15 @@
 <?php
 
+/**
+ * @author      Wizacha DevTeam <dev@wizacha.com>
+ * @copyright   Copyright (c) Wizacha
+ * @license     MIT
+ */
+
 namespace Tests\Database;
 
 use Tests\TestCase;
-use Marquine\Etl\Database\Query;
+use Wizaplace\Etl\Database\Query;
 
 class QueryTest extends TestCase
 {

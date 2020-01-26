@@ -1,15 +1,23 @@
 <?php
 
-namespace Marquine\Etl\Transformers;
+declare(strict_types=1);
 
-use Marquine\Etl\Row;
+/**
+ * @author      Wizacha DevTeam <dev@wizacha.com>
+ * @copyright   Copyright (c) Wizacha
+ * @license     MIT
+ */
+
+namespace Wizaplace\Etl\Transformers;
+
+use Wizaplace\Etl\Row;
 
 class UniqueRows extends Transformer
 {
     /**
      * Transformer columns.
      *
-     * @var array
+     * @var string[]
      */
     protected $columns = [];
 
@@ -23,38 +31,35 @@ class UniqueRows extends Transformer
     /**
      * The control row for unique consecutives.
      *
-     * @var array
+     * @var string[]
      */
     protected $control;
 
     /**
      * The hash table of the rows.
      *
-     * @var array
+     * @var string[]
      */
     protected $hashTable = [];
 
     /**
      * Properties that can be set via the options method.
      *
-     * @var array
+     * @var string[]
      */
     protected $availableOptions = [
-        'columns', 'consecutive'
+        'columns', 'consecutive',
     ];
 
     /**
      * Transform the given row.
-     *
-     * @param  \Marquine\Etl\Row  $row
-     * @return void
      */
-    public function transform(Row $row)
+    public function transform(Row $row): void
     {
         $subject = $this->prepare($row);
 
         if ($this->isDuplicate($subject)) {
-            return $row->discard();
+            $row->discard();
         }
 
         $this->register($subject);
@@ -63,14 +68,13 @@ class UniqueRows extends Transformer
     /**
      * Prepare the given row for comparison.
      *
-     * @param  array  $row
      * @return mixed
      */
-    protected function prepare($row)
+    protected function prepare(Row $row)
     {
         $row = $row->toArray();
 
-        if (! empty($this->columns)) {
+        if (!empty($this->columns)) {
             $row = array_intersect_key($row, array_flip($this->columns));
         }
 
@@ -80,10 +84,9 @@ class UniqueRows extends Transformer
     /**
      * Verify if the subject is duplicate.
      *
-     * @param  mixed  $subject
-     * @return bool
+     * @param mixed $subject
      */
-    protected function isDuplicate($subject)
+    protected function isDuplicate($subject): bool
     {
         return $this->consecutive ? $subject === $this->control : in_array($subject, $this->hashTable);
     }
@@ -91,10 +94,9 @@ class UniqueRows extends Transformer
     /**
      * Register the subject for future comparison.
      *
-     * @param  mixed  $subject
-     * @return void
+     * @param mixed $subject
      */
-    protected function register($subject)
+    protected function register($subject): void
     {
         $this->consecutive ? $this->control = $subject : $this->hashTable[] = $subject;
     }

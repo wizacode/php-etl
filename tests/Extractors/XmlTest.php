@@ -1,10 +1,16 @@
 <?php
 
+/**
+ * @author      Wizacha DevTeam <dev@wizacha.com>
+ * @copyright   Copyright (c) Wizacha
+ * @license     MIT
+ */
+
 namespace Tests\Extractors;
 
 use Tests\TestCase;
-use Marquine\Etl\Row;
-use Marquine\Etl\Extractors\Xml;
+use Wizaplace\Etl\Row;
+use Wizaplace\Etl\Extractors\Xml;
 
 class XmlTest extends TestCase
 {

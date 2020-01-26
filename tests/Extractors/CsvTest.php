@@ -1,10 +1,16 @@
 <?php
 
+/**
+ * @author      Wizacha DevTeam <dev@wizacha.com>
+ * @copyright   Copyright (c) Wizacha
+ * @license     MIT
+ */
+
 namespace Tests\Extractors;
 
 use Tests\TestCase;
-use Marquine\Etl\Row;
-use Marquine\Etl\Extractors\Csv;
+use Wizaplace\Etl\Row;
+use Wizaplace\Etl\Extractors\Csv;
 
 class CsvTest extends TestCase
 {
@@ -16,7 +22,7 @@ class CsvTest extends TestCase
             new Row(['id' => 2, 'name' => 'Jane Doe', 'email' => 'janedoe@email.com']),
         ];
 
-        $extractor = new Csv;
+        $extractor = new Csv();
 
         $extractor->input(__DIR__ . '/../data/csv1.csv');
 
@@ -31,7 +37,7 @@ class CsvTest extends TestCase
             new Row(['id' => 2, 'name' => 'Jane Doe', 'email' => 'janedoe@email.com']),
         ];
 
-        $extractor = new Csv;
+        $extractor = new Csv();
 
         $extractor->input(__DIR__ . '/../data/csv2.csv');
         $extractor->options(['delimiter' => ';', 'enclosure' => '"']);
@@ -47,7 +53,7 @@ class CsvTest extends TestCase
             new Row(['id' => 2, 'email' => 'janedoe@email.com']),
         ];
 
-        $extractor = new Csv;
+        $extractor = new Csv();
 
         $extractor->input(__DIR__ . '/../data/csv1.csv');
         $extractor->options(['columns' => ['id', 'email']]);
@@ -63,7 +69,7 @@ class CsvTest extends TestCase
             new Row(['id' => 2, 'email_address' => 'janedoe@email.com']),
         ];
 
-        $extractor = new Csv;
+        $extractor = new Csv();
 
         $extractor->input(__DIR__ . '/../data/csv1.csv');
         $extractor->options(['columns' => ['id' => 'id', 'email' => 'email_address']]);
@@ -79,7 +85,7 @@ class CsvTest extends TestCase
             new Row(['id' => 2, 'name' => 'Jane Doe', 'email' => 'janedoe@email.com']),
         ];
 
-        $extractor = new Csv;
+        $extractor = new Csv();
 
         $extractor->input(__DIR__ . '/../data/csv3.csv');
         $extractor->options(['columns' => ['id' => 1, 'name' => 2, 'email' => 3]]);

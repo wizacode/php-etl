@@ -1,16 +1,23 @@
 <?php
 
-namespace Marquine\Etl\Database\Connectors;
+declare(strict_types=1);
+
+/**
+ * @author      Wizacha DevTeam <dev@wizacha.com>
+ * @copyright   Copyright (c) Wizacha
+ * @license     MIT
+ */
+
+namespace Wizaplace\Etl\Database\Connectors;
 
 class MySqlConnector extends Connector
 {
     /**
-    * Connect to a database.
-    *
-    * @param  array  $config
-    * @return \PDO
-    */
-    public function connect($config)
+     * Connect to a database.
+     *
+     * @return \PDO
+     */
+    public function connect(array $config)
     {
         $dsn = $this->getDsn($config);
 
@@ -23,13 +30,12 @@ class MySqlConnector extends Connector
 
     /**
      * Get the DSN string.
-     *
-     * @param  array  $config
-     * @return string
      */
-    public function getDsn($config)
+    protected function getDsn(array $config): string
     {
         extract($config, EXTR_SKIP);
+
+        // @TODO refactor this code as the use of extract() is a bad practice, prone to create bugs
 
         $dsn = [];
 
@@ -55,13 +61,13 @@ class MySqlConnector extends Connector
     /**
      * Handle tasks after connection.
      *
-     * @param  \PDO  $connection
-     * @param  array  $config
      * @return void
      */
-    public function afterConnection($connection, $config)
+    protected function afterConnection(\PDO $connection, array $config)
     {
         extract($config, EXTR_SKIP);
+
+        // @TODO refactor this code as the use of extract() is a bad practice, prone to create bugs
 
         if (isset($database)) {
             $connection->exec("use `$database`");

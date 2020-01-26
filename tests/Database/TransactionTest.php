@@ -1,14 +1,20 @@
 <?php
 
+/**
+ * @author      Wizacha DevTeam <dev@wizacha.com>
+ * @copyright   Copyright (c) Wizacha
+ * @license     MIT
+ */
+
 namespace Tests\Database;
 
 use Exception;
 use Tests\TestCase;
-use Marquine\Etl\Database\Transaction;
+use Wizaplace\Etl\Database\Transaction;
 
 class TransactionTest extends TestCase
 {
-    protected function setUp()
+    protected function setUp() : void
     {
         parent::setUp();
 
