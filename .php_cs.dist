@@ -2,8 +2,6 @@
 $finder = PhpCsFixer\Finder::create()
     ->exclude('vendor')
     ->in(__DIR__)
-    ->exclude('tests')
-    ->in(__DIR__)
 ;
 
 return PhpCsFixer\Config::create()

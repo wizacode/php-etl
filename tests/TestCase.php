@@ -1,16 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * @author      Wizacha DevTeam <dev@wizacha.com>
  * @copyright   Copyright (c) Wizacha
+ * @copyright   Copyright (c) Leonardo Marquine
  * @license     MIT
  */
 
 namespace Tests;
 
+use PHPUnit\Framework\TestCase as BaseTestCase;
 use Wizaplace\Etl\Loaders\Loader;
 use Wizaplace\Etl\Transformers\Transformer;
-use PHPUnit\Framework\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase
 {

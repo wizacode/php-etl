@@ -5,6 +5,7 @@ declare(strict_types=1);
 /**
  * @author      Wizacha DevTeam <dev@wizacha.com>
  * @copyright   Copyright (c) Wizacha
+ * @copyright   Copyright (c) Leonardo Marquine
  * @license     MIT
  */
 
@@ -14,10 +15,8 @@ class PostgresConnector extends Connector
 {
     /**
      * Connect to a database.
-     *
-     * @return \PDO
      */
-    public function connect(array $config)
+    public function connect(array $config): \PDO
     {
         $dsn = $this->getDsn($config);
 

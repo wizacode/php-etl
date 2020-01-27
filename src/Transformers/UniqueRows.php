@@ -5,6 +5,7 @@ declare(strict_types=1);
 /**
  * @author      Wizacha DevTeam <dev@wizacha.com>
  * @copyright   Copyright (c) Wizacha
+ * @copyright   Copyright (c) Leonardo Marquine
  * @license     MIT
  */
 
@@ -74,7 +75,7 @@ class UniqueRows extends Transformer
     {
         $row = $row->toArray();
 
-        if (!empty($this->columns)) {
+        if (false === empty($this->columns)) {
             $row = array_intersect_key($row, array_flip($this->columns));
         }
 

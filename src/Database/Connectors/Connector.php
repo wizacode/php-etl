@@ -5,6 +5,7 @@ declare(strict_types=1);
 /**
  * @author      Wizacha DevTeam <dev@wizacha.com>
  * @copyright   Copyright (c) Wizacha
+ * @copyright   Copyright (c) Leonardo Marquine
  * @license     MIT
  */
 
@@ -28,17 +29,13 @@ abstract class Connector
 
     /**
      * Connect to a database.
-     *
-     * @return \PDO
      */
-    abstract public function connect(array $config);
+    abstract public function connect(array $config): \PDO;
 
     /**
      * Create a new PDO connection.
-     *
-     * @return \PDO
      */
-    protected function createConnection(string $dsn, array $config)
+    protected function createConnection(string $dsn, array $config): \PDO
     {
         $username = $config['username'] ?? null;
         $password = $config['password'] ?? null;
@@ -48,10 +45,8 @@ abstract class Connector
 
     /**
      * Get the PDO options based on the configuration.
-     *
-     * @return array
      */
-    public function getOptions(array $config)
+    public function getOptions(array $config): array
     {
         $options = $config['options'] ?? [];
 

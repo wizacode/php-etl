@@ -11,11 +11,15 @@ use Wizaplace\Etl\Etl;
 use Wizaplace\Etl\Extractors\Csv;
 use Wizaplace\Etl\Transformers\Trim;
 use Wizaplace\Etl\Loaders\Insert;
+use Wizaplace\Etl\Database\Manager;
+use Wizaplace\Etl\Database\ConnectionFactory;
 
+$connexionFactory = new ConnectionFactory();
+$manager = new Manager($connexionFactory);
 $etl = new Etl();
 $extractor = new Csv();
 $transformer = new Trim();
-$loader = new Insert();
+$loader = new Insert($manager);
 
 $etl->extract($extractor, '/path/to/users.csv')
     ->transform($transformer, ['columns' => ['name', 'email']])

@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * @author      Wizacha DevTeam <dev@wizacha.com>
  * @copyright   Copyright (c) Wizacha
+ * @copyright   Copyright (c) Leonardo Marquine
  * @license     MIT
  */
 
@@ -14,7 +17,7 @@ use Wizaplace\Etl\Database\Transaction;
 
 class TransactionTest extends TestCase
 {
-    protected function setUp() : void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -77,7 +80,7 @@ class TransactionTest extends TestCase
     public function rolls_back_the_last_transaction_and_stops_execution_on_error()
     {
         $this->callback->expects($this->exactly(3))->method('callback')->willReturnOnConsecutiveCalls(
-            null, null, $this->throwException(new Exception)
+            null, null, $this->throwException(new Exception())
         );
 
         $this->connection->expects($this->exactly(2))->method('beginTransaction');

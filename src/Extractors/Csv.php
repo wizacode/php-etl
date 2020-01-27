@@ -5,6 +5,7 @@ declare(strict_types=1);
 /**
  * @author      Wizacha DevTeam <dev@wizacha.com>
  * @copyright   Copyright (c) Wizacha
+ * @copyright   Copyright (c) Leonardo Marquine
  * @license     MIT
  */
 
@@ -62,10 +63,8 @@ class Csv extends Extractor
 
     /**
      * Converts the row string to array.
-     *
-     * @return array
      */
-    protected function makeRow(string $row, array $columns)
+    protected function makeRow(string $row, array $columns): array
     {
         $row = str_getcsv($row, $this->delimiter, $this->enclosure);
 

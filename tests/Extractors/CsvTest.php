@@ -1,16 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * @author      Wizacha DevTeam <dev@wizacha.com>
  * @copyright   Copyright (c) Wizacha
+ * @copyright   Copyright (c) Leonardo Marquine
  * @license     MIT
  */
 
 namespace Tests\Extractors;
 
 use Tests\TestCase;
-use Wizaplace\Etl\Row;
 use Wizaplace\Etl\Extractors\Csv;
+use Wizaplace\Etl\Row;
 
 class CsvTest extends TestCase
 {
@@ -26,7 +29,7 @@ class CsvTest extends TestCase
 
         $extractor->input(__DIR__ . '/../data/csv1.csv');
 
-        $this->assertEquals($expected, iterator_to_array($extractor->extract()));
+        static::assertEquals($expected, iterator_to_array($extractor->extract()));
     }
 
     /** @test */
@@ -42,7 +45,7 @@ class CsvTest extends TestCase
         $extractor->input(__DIR__ . '/../data/csv2.csv');
         $extractor->options(['delimiter' => ';', 'enclosure' => '"']);
 
-        $this->assertEquals($expected, iterator_to_array($extractor->extract()));
+        static::assertEquals($expected, iterator_to_array($extractor->extract()));
     }
 
     /** @test */
@@ -58,7 +61,7 @@ class CsvTest extends TestCase
         $extractor->input(__DIR__ . '/../data/csv1.csv');
         $extractor->options(['columns' => ['id', 'email']]);
 
-        $this->assertEquals($expected, iterator_to_array($extractor->extract()));
+        static::assertEquals($expected, iterator_to_array($extractor->extract()));
     }
 
     /** @test */
@@ -74,7 +77,7 @@ class CsvTest extends TestCase
         $extractor->input(__DIR__ . '/../data/csv1.csv');
         $extractor->options(['columns' => ['id' => 'id', 'email' => 'email_address']]);
 
-        $this->assertEquals($expected, iterator_to_array($extractor->extract()));
+        static::assertEquals($expected, iterator_to_array($extractor->extract()));
     }
 
     /** @test */
@@ -90,6 +93,6 @@ class CsvTest extends TestCase
         $extractor->input(__DIR__ . '/../data/csv3.csv');
         $extractor->options(['columns' => ['id' => 1, 'name' => 2, 'email' => 3]]);
 
-        $this->assertEquals($expected, iterator_to_array($extractor->extract()));
+        static::assertEquals($expected, iterator_to_array($extractor->extract()));
     }
 }

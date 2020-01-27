@@ -1,5 +1,6 @@
 The MIT License (MIT)
 
+Copyright (c) Leonardo Marquine
 Copyright (c) Wizaplace
 
 Permission is hereby granted, free of charge, to any person obtaining a copy

@@ -5,6 +5,7 @@ declare(strict_types=1);
 /**
  * @author      Wizacha DevTeam <dev@wizacha.com>
  * @copyright   Copyright (c) Wizacha
+ * @copyright   Copyright (c) Leonardo Marquine
  * @license     MIT
  */
 
@@ -164,10 +165,8 @@ class InsertUpdate extends Loader
 
     /**
      * Prepare the select statement.
-     *
-     * @return void
      */
-    protected function prepareSelect()
+    protected function prepareSelect(): void
     {
         $this->select = $this->db->statement($this->connection)->select($this->output)->where($this->key)->prepare();
     }
@@ -176,10 +175,8 @@ class InsertUpdate extends Loader
      * Prepare the insert statement.
      *
      * @param string[] $sample
-     *
-     * @return void
      */
-    protected function prepareInsert(array $sample)
+    protected function prepareInsert(array $sample): void
     {
         if ($this->columns) {
             $columns = array_values($this->columns);
@@ -198,10 +195,8 @@ class InsertUpdate extends Loader
      * Prepare the update statement.
      *
      * @param string[] $sample
-     *
-     * @return void
      */
-    protected function prepareUpdate(array $sample)
+    protected function prepareUpdate(array $sample): void
     {
         if ($this->columns) {
             $columns = array_values(array_diff($this->columns, $this->key));
@@ -220,10 +215,8 @@ class InsertUpdate extends Loader
      * Execute the given row.
      *
      * @param array $row
-     *
-     * @return void
      */
-    protected function execute($row)
+    protected function execute($row): void
     {
         if (null === $this->select) {
             $this->prepareSelect();
@@ -260,10 +253,8 @@ class InsertUpdate extends Loader
 
     /**
      * Execute the insert statement.
-     *
-     * @return void
      */
-    protected function insert(array $row)
+    protected function insert(array $row): void
     {
         if (null === $this->insert) {
             $this->prepareInsert($row);
@@ -279,10 +270,8 @@ class InsertUpdate extends Loader
 
     /**
      * Execute the update statement.
-     *
-     * @return void
      */
-    protected function update(array $row, array $current)
+    protected function update(array $row, array $current): void
     {
         if (null === $this->update) {
             $this->prepareUpdate($row);

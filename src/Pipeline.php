@@ -5,6 +5,7 @@ declare(strict_types=1);
 /**
  * @author      Wizacha DevTeam <dev@wizacha.com>
  * @copyright   Copyright (c) Wizacha
+ * @copyright   Copyright (c) Leonardo Marquine
  * @license     MIT
  */
 
@@ -131,7 +132,7 @@ class Pipeline implements \Iterator
      */
     public function valid(): bool
     {
-        if (!$this->flow->valid() || $this->limitReached()) {
+        if (false === $this->flow->valid() || true === $this->limitReached()) {
             $this->finalize();
 
             return false;

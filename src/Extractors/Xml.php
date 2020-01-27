@@ -5,6 +5,7 @@ declare(strict_types=1);
 /**
  * @author      Wizacha DevTeam <dev@wizacha.com>
  * @copyright   Copyright (c) Wizacha
+ * @copyright   Copyright (c) Leonardo Marquine
  * @license     MIT
  */
 
@@ -120,7 +121,9 @@ class Xml extends Extractor
      */
     protected function isValue(): bool
     {
-        return \XMLReader::TEXT == $this->reader->nodeType || \XMLReader::CDATA === $this->reader->nodeType || \XMLReader::ATTRIBUTE === $this->reader->nodeType;
+        return \XMLReader::TEXT == $this->reader->nodeType
+            || \XMLReader::CDATA === $this->reader->nodeType
+            || \XMLReader::ATTRIBUTE === $this->reader->nodeType;
     }
 
     /**

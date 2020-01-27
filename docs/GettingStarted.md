@@ -20,7 +20,7 @@ services:
 ```
 
 Sometimes you may need different instances of the classes. As by default Symfony services container
-provide with singleton, you can ask it explicitly to provide different instances:
+provide a singleton, but you can ask it explicitly to provide different instances:
 
 _services.yaml_
 
@@ -28,7 +28,7 @@ _services.yaml_
 services:
     Wizaplace\Etl\Etl:
       shared: false
-``` 
+```
 
 ## Database Configuration
 If you are working with ETL, you probably need to read and/or write to databases. Currently, we support MySQL, PostgreSQL, SQL Server and SQLite.

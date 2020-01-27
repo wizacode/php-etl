@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * @author      Wizacha DevTeam <dev@wizacha.com>
  * @copyright   Copyright (c) Wizacha
+ * @copyright   Copyright (c) Leonardo Marquine
  * @license     MIT
  */
 
@@ -14,7 +17,7 @@ use Wizaplace\Etl\Transformers\JsonDecode;
 
 class JsonDecodeTest extends TestCase
 {
-    protected function setUp() : void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -32,11 +35,11 @@ class JsonDecodeTest extends TestCase
             new Row(['id' => '2', 'data' => (object) ['name' => 'Jane Doe', 'email' => 'janedoe@email.com']]),
         ];
 
-        $transformer = new JsonDecode;
+        $transformer = new JsonDecode();
 
         $this->execute($transformer, $this->data);
 
-        $this->assertEquals($expected, $this->data);
+        static::assertEquals($expected, $this->data);
     }
 
     /** @test */
@@ -47,13 +50,13 @@ class JsonDecodeTest extends TestCase
             new Row(['id' => '2', 'data' => ['name' => 'Jane Doe', 'email' => 'janedoe@email.com']]),
         ];
 
-        $transformer = new JsonDecode;
+        $transformer = new JsonDecode();
 
         $transformer->options(['assoc' => true]);
 
         $this->execute($transformer, $this->data);
 
-        $this->assertEquals($expected, $this->data);
+        static::assertEquals($expected, $this->data);
     }
 
     /** @test */
@@ -64,12 +67,12 @@ class JsonDecodeTest extends TestCase
             new Row(['id' => '"2"', 'data' => (object) ['name' => 'Jane Doe', 'email' => 'janedoe@email.com']]),
         ];
 
-        $transformer = new JsonDecode;
+        $transformer = new JsonDecode();
 
         $transformer->options(['columns' => ['data']]);
 
         $this->execute($transformer, $this->data);
 
-        $this->assertEquals($expected, $this->data);
+        static::assertEquals($expected, $this->data);
     }
 }

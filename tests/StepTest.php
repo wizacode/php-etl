@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * @author      Wizacha DevTeam <dev@wizacha.com>
  * @copyright   Copyright (c) Wizacha
+ * @copyright   Copyright (c) Leonardo Marquine
  * @license     MIT
  */
 
@@ -15,15 +18,15 @@ class StepTest extends TestCase
     /** @test */
     public function set_options()
     {
-        $step = new FakeStep;
+        $step = new FakeStep();
 
         $step->options([
             'option1' => 'value',
             'option2' => 'value',
         ]);
 
-        $this->assertEquals('value', $step->getOption('Option1'));
-        $this->assertNull($step->getOption('Option2'));
+        static::assertEquals('value', $step->getOption('Option1'));
+        static::assertNull($step->getOption('Option2'));
     }
 }
 

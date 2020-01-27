@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * @author      Wizacha DevTeam <dev@wizacha.com>
  * @copyright   Copyright (c) Wizacha
+ * @copyright   Copyright (c) Leonardo Marquine
  * @license     MIT
  */
 
@@ -12,7 +15,7 @@ use Wizaplace\Etl\Pipeline;
 
 class PipelineTest extends TestCase
 {
-    protected function setUp() : void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -40,7 +43,7 @@ class PipelineTest extends TestCase
         $this->loader = $this->createMock('Wizaplace\Etl\Loaders\Loader');
         $this->loader->expects($this->any())->method('load')->withConsecutive([$this->row1], [$this->row2], [$this->row3]);
 
-        $this->pipeline = new Pipeline;
+        $this->pipeline = new Pipeline();
         $this->pipeline->extractor($this->extractor);
     }
 
@@ -63,11 +66,10 @@ class PipelineTest extends TestCase
         $this->loader->expects($this->once())->method('initialize');
         $this->loader->expects($this->once())->method('finalize');
 
-
         $this->pipeline->pipe($this->transformer);
         $this->pipeline->pipe($this->loader);
 
-        $this->assertEquals([['row1'], ['row2'], ['row3']], iterator_to_array($this->pipeline));
+        static::assertEquals([['row1'], ['row2'], ['row3']], iterator_to_array($this->pipeline));
     }
 
     /** @test */
@@ -75,7 +77,7 @@ class PipelineTest extends TestCase
     {
         $this->pipeline->limit(1);
 
-        $this->assertEquals([['row1']], iterator_to_array($this->pipeline));
+        static::assertEquals([['row1']], iterator_to_array($this->pipeline));
     }
 
     /** @test */
@@ -83,11 +85,11 @@ class PipelineTest extends TestCase
     {
         $this->pipeline->skip(2);
 
-        $this->assertEquals([['row3']], iterator_to_array($this->pipeline));
+        static::assertEquals([['row3']], iterator_to_array($this->pipeline));
 
         $this->pipeline->skip(3);
 
-        $this->assertEquals([], iterator_to_array($this->pipeline));
+        static::assertEquals([], iterator_to_array($this->pipeline));
     }
 
     /** @test */
@@ -96,7 +98,7 @@ class PipelineTest extends TestCase
         $this->pipeline->skip(1);
         $this->pipeline->limit(1);
 
-        $this->assertEquals([['row2']], iterator_to_array($this->pipeline));
+        static::assertEquals([['row2']], iterator_to_array($this->pipeline));
     }
 
     /** @test */
@@ -110,6 +112,6 @@ class PipelineTest extends TestCase
         $this->transformer->expects($this->exactly(2))->method('transform');
         $this->loader->expects($this->exactly(2))->method('load');
 
-        $this->assertEquals([['row1'], ['row3']], iterator_to_array($this->pipeline));
+        static::assertEquals([['row1'], ['row3']], iterator_to_array($this->pipeline));
     }
 }

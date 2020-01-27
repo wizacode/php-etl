@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * @author      Wizacha DevTeam <dev@wizacha.com>
  * @copyright   Copyright (c) Wizacha
+ * @copyright   Copyright (c) Leonardo Marquine
  * @license     MIT
  */
 
@@ -14,7 +17,7 @@ use Wizaplace\Etl\Transformers\ConvertCase;
 
 class ConvertCaseTest extends TestCase
 {
-    protected function setUp() : void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -32,13 +35,13 @@ class ConvertCaseTest extends TestCase
             new Row(['id' => '2', 'name' => 'john doe', 'email' => 'johndoe@email.com']),
         ];
 
-        $transformer = new ConvertCase;
+        $transformer = new ConvertCase();
 
         $transformer->options(['mode' => 'lower']);
 
         $this->execute($transformer, $this->data);
 
-        $this->assertEquals($expected, $this->data);
+        static::assertEquals($expected, $this->data);
     }
 
     /** @test */
@@ -49,13 +52,13 @@ class ConvertCaseTest extends TestCase
             new Row(['id' => '2', 'name' => 'JOHN DOE', 'email' => 'JOHNDOE@EMAIL.COM']),
         ];
 
-        $transformer = new ConvertCase;
+        $transformer = new ConvertCase();
 
         $transformer->options(['mode' => 'upper']);
 
         $this->execute($transformer, $this->data);
 
-        $this->assertEquals($expected, $this->data);
+        static::assertEquals($expected, $this->data);
     }
 
     /** @test */
@@ -66,13 +69,13 @@ class ConvertCaseTest extends TestCase
             new Row(['id' => '2', 'name' => 'John Doe', 'email' => 'Johndoe@email.com']),
         ];
 
-        $transformer = new ConvertCase;
+        $transformer = new ConvertCase();
 
         $transformer->options(['mode' => 'title']);
 
         $this->execute($transformer, $this->data);
 
-        $this->assertEquals($expected, $this->data);
+        static::assertEquals($expected, $this->data);
     }
 
     /** @test */
@@ -83,12 +86,12 @@ class ConvertCaseTest extends TestCase
             new Row(['id' => '2', 'name' => 'john doe', 'email' => 'JOHNDOE@EMAIL.COM']),
         ];
 
-        $transformer = new ConvertCase;
+        $transformer = new ConvertCase();
 
         $transformer->options(['columns' => ['name']]);
 
         $this->execute($transformer, $this->data);
 
-        $this->assertEquals($expected, $this->data);
+        static::assertEquals($expected, $this->data);
     }
 }

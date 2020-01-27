@@ -3,9 +3,9 @@
 ## Changes for future versions
 * Refactor the code where the PHP function extract() is used
 
-##Changes for release 1.0 (the first one since the fork)
+## Changes for release 1.0 (the first one since the fork)
 
-* Remove all the old DI system of Laraval (Illuminate):
+* Remove all the old DI system of Laravel (Illuminate):
 *   * to make it fully compatible with any PHP Application
     * to remove bad practices and rely only on DI instead of manual instanciation
 * Now you have to provide the ETL component instead of calling them with a string

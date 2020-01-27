@@ -20,11 +20,15 @@ use Wizaplace\Etl\Etl;
 use Wizaplace\Etl\Extractors\Csv;
 use Wizaplace\Etl\Transformers\Trim;
 use Wizaplace\Etl\Loaders\Insert;
+use Wizaplace\Etl\Database\Manager;
+use Wizaplace\Etl\Database\ConnectionFactory;
 
+$connexionFactory = new ConnectionFactory();
+$manager = new Manager($connexionFactory);
 $etl = new Etl();
 $extractor = new Csv();
 $transformer = new Trim();
-$loader = new Insert();
+$loader = new Insert($manager);
 
 $etl->extract($extractor, '/path/to/users.csv')
     ->transform($transformer, ['columns' => ['name', 'email']])
@@ -49,4 +53,4 @@ The documentation is available in a subfolder of the repo, [here](docs/README.md
 WP-ETL is licensed under the [MIT license](http://opensource.org/licenses/MIT).
 
 ## Origin of the project
-This project is a fork and an improvement of the [marquine/php-etl](https://github.com/leomarquine/php-etl) project by [Leonardo Marquine](https://github.com/leomarquine/php-etl). 
+This project is a fork and an improvement of the [marquine/php-etl](https://github.com/leomarquine/php-etl) project by [Leonardo Marquine](https://github.com/leomarquine/php-etl).

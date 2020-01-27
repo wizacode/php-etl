@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * @author      Wizacha DevTeam <dev@wizacha.com>
  * @copyright   Copyright (c) Wizacha
+ * @copyright   Copyright (c) Leonardo Marquine
  * @license     MIT
  */
 
@@ -21,7 +24,7 @@ class ManagerTest extends TestCase
         $manager = new Manager($factory);
         $manager->addConnection(['options']);
 
-        $this->assertEquals(['default' => ['options']], $manager->getConfig());
+        static::assertEquals(['default' => ['options']], $manager->getConfig());
     }
 
     /** @test */
@@ -32,7 +35,7 @@ class ManagerTest extends TestCase
         $manager = new Manager($factory);
         $manager->addConnection(['options'], 'custom');
 
-        $this->assertEquals(['custom' => ['options']], $manager->getConfig());
+        static::assertEquals(['custom' => ['options']], $manager->getConfig());
     }
 
     /** @test */
@@ -44,7 +47,7 @@ class ManagerTest extends TestCase
         $manager = new Manager($factory);
         $manager->addConnection([]);
 
-        $this->assertInstanceOf('Wizaplace\Etl\Database\Query', $manager->query('default'));
+        static::assertInstanceOf('Wizaplace\Etl\Database\Query', $manager->query('default'));
     }
 
     /** @test */
@@ -56,7 +59,7 @@ class ManagerTest extends TestCase
         $manager = new Manager($factory);
         $manager->addConnection([]);
 
-        $this->assertInstanceOf('Wizaplace\Etl\Database\Statement', $manager->statement('default'));
+        static::assertInstanceOf('Wizaplace\Etl\Database\Statement', $manager->statement('default'));
     }
 
     /** @test */
@@ -68,7 +71,7 @@ class ManagerTest extends TestCase
         $manager = new Manager($factory);
         $manager->addConnection([]);
 
-        $this->assertInstanceOf('Wizaplace\Etl\Database\Transaction', $manager->transaction('default'));
+        static::assertInstanceOf('Wizaplace\Etl\Database\Transaction', $manager->transaction('default'));
     }
 
     /** @test */
@@ -80,7 +83,7 @@ class ManagerTest extends TestCase
         $manager = new Manager($factory);
         $manager->addConnection([]);
 
-        $this->assertInstanceOf('PDO', $manager->pdo('default'));
+        static::assertInstanceOf('PDO', $manager->pdo('default'));
     }
 
     /** @test */

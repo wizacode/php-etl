@@ -1,16 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * @author      Wizacha DevTeam <dev@wizacha.com>
  * @copyright   Copyright (c) Wizacha
+ * @copyright   Copyright (c) Leonardo Marquine
  * @license     MIT
  */
 
 namespace Tests;
 
 use Wizaplace\Etl\Etl;
-use Wizaplace\Etl\Container;
-use Wizaplace\Etl\Extractors\Extractor;
 
 class EtlTest extends TestCase
 {
@@ -26,7 +27,7 @@ class EtlTest extends TestCase
 
         $etl = new Etl($pipeline);
 
-        $this->assertInstanceOf(Etl::class, $etl->extract($extractor, 'input', ['options']));
+        static::assertInstanceOf(Etl::class, $etl->extract($extractor, 'input', ['options']));
     }
 
     /** @test */
@@ -40,7 +41,7 @@ class EtlTest extends TestCase
 
         $etl = new Etl($pipeline);
 
-        $this->assertInstanceOf(Etl::class, $etl->transform($transformer, ['options']));
+        static::assertInstanceOf(Etl::class, $etl->transform($transformer, ['options']));
     }
 
     /** @test */
@@ -55,7 +56,7 @@ class EtlTest extends TestCase
 
         $etl = new Etl($pipeline);
 
-        $this->assertInstanceOf(Etl::class, $etl->load($loader, 'output', ['options']));
+        static::assertInstanceOf(Etl::class, $etl->load($loader, 'output', ['options']));
     }
 
     /** @test */
@@ -82,6 +83,6 @@ class EtlTest extends TestCase
 
         $etl = new Etl($pipeline);
 
-        $this->assertEquals([['row1'], ['row2']], $etl->toArray());
+        static::assertEquals([['row1'], ['row2']], $etl->toArray());
     }
 }

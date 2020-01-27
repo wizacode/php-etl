@@ -1,16 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * @author      Wizacha DevTeam <dev@wizacha.com>
  * @copyright   Copyright (c) Wizacha
+ * @copyright   Copyright (c) Leonardo Marquine
  * @license     MIT
  */
 
 namespace Tests\Extractors;
 
 use Tests\TestCase;
-use Wizaplace\Etl\Row;
 use Wizaplace\Etl\Extractors\Table;
+use Wizaplace\Etl\Row;
 
 class TableTest extends TestCase
 {
@@ -32,7 +35,7 @@ class TableTest extends TestCase
 
         $extractor->input('table');
 
-        $this->assertEquals([new Row(['row1']), new Row(['row2'])], iterator_to_array($extractor->extract()));
+        static::assertEquals([new Row(['row1']), new Row(['row2'])], iterator_to_array($extractor->extract()));
     }
 
     /** @test */
@@ -58,6 +61,6 @@ class TableTest extends TestCase
             'where' => ['where'],
         ]);
 
-        $this->assertEquals([new Row(['row1']), new Row(['row2'])], iterator_to_array($extractor->extract()));
+        static::assertEquals([new Row(['row1']), new Row(['row2'])], iterator_to_array($extractor->extract()));
     }
 }

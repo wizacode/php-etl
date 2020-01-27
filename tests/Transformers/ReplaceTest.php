@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * @author      Wizacha DevTeam <dev@wizacha.com>
  * @copyright   Copyright (c) Wizacha
+ * @copyright   Copyright (c) Leonardo Marquine
  * @license     MIT
  */
 
@@ -14,7 +17,7 @@ use Wizaplace\Etl\Transformers\Replace;
 
 class ReplaceTest extends TestCase
 {
-    protected function setUp() : void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -34,13 +37,13 @@ class ReplaceTest extends TestCase
             new Row(['id' => '3', 'name' => 'Jane Die', 'email' => 'janeDie@email.com']),
         ];
 
-        $transformer = new Replace;
+        $transformer = new Replace();
 
         $transformer->options(['search' => 'Doe', 'replace' => 'Die']);
 
         $this->execute($transformer, $this->data);
 
-        $this->assertEquals($expected, $this->data);
+        static::assertEquals($expected, $this->data);
     }
 
     /** @test */
@@ -52,17 +55,17 @@ class ReplaceTest extends TestCase
             new Row(['id' => '3', 'name' => 'Jane Die', 'email' => 'janeDoe@email.com']),
         ];
 
-        $transformer = new Replace;
+        $transformer = new Replace();
 
         $transformer->options([
-            'search' => 'Doe', 
-            'replace' => 'Die' , 
-            'columns' => ['name']
+            'search' => 'Doe',
+            'replace' => 'Die',
+            'columns' => ['name'],
         ]);
 
         $this->execute($transformer, $this->data);
 
-        $this->assertEquals($expected, $this->data);
+        static::assertEquals($expected, $this->data);
     }
 
     /** @test */
@@ -74,19 +77,19 @@ class ReplaceTest extends TestCase
             new Row(['id' => '3', 'name' => 'Jane Die', 'email' => 'janeDie@email.com']),
         ];
 
-        $transformer = new Replace;
+        $transformer = new Replace();
 
         $transformer->options([
             'type' => 'str',
-            'search' => 'Doe', 
-            'replace' => 'Die', 
+            'search' => 'Doe',
+            'replace' => 'Die',
         ]);
 
         $this->execute($transformer, $this->data);
 
-        $this->assertEquals($expected, $this->data);
+        static::assertEquals($expected, $this->data);
     }
-    
+
     /** @test */
     public function str_type_option_custom_columns()
     {
@@ -96,18 +99,18 @@ class ReplaceTest extends TestCase
             new Row(['id' => '3', 'name' => 'Jane Die', 'email' => 'janeDoe@email.com']),
         ];
 
-        $transformer = new Replace;
+        $transformer = new Replace();
 
         $transformer->options([
             'type' => 'str',
-            'search' => 'Doe', 
-            'replace' => 'Die' , 
-            'columns' => ['name'], 
+            'search' => 'Doe',
+            'replace' => 'Die',
+            'columns' => ['name'],
         ]);
 
         $this->execute($transformer, $this->data);
 
-        $this->assertEquals($expected, $this->data);
+        static::assertEquals($expected, $this->data);
     }
 
     /** @test */
@@ -119,17 +122,17 @@ class ReplaceTest extends TestCase
             new Row(['id' => '3', 'name' => 'Jane Die', 'email' => 'janeDie@email.com']),
         ];
 
-        $transformer = new Replace;
+        $transformer = new Replace();
 
         $transformer->options([
             'type' => 'preg',
-            'search' => '/Doe/m', 
-            'replace' => 'Die', 
+            'search' => '/Doe/m',
+            'replace' => 'Die',
         ]);
 
         $this->execute($transformer, $this->data);
 
-        $this->assertEquals($expected, $this->data);
+        static::assertEquals($expected, $this->data);
     }
 
     /** @test */
@@ -141,24 +144,24 @@ class ReplaceTest extends TestCase
             new Row(['id' => '3', 'name' => 'Jane Die', 'email' => 'janeDoe@email.com']),
         ];
 
-        $transformer = new Replace;
+        $transformer = new Replace();
 
         $transformer->options([
             'type' => 'preg',
-            'search' => '/Doe/m', 
+            'search' => '/Doe/m',
             'replace' => 'Die',
-            'columns' => ['name'], 
+            'columns' => ['name'],
         ]);
 
         $this->execute($transformer, $this->data);
 
-        $this->assertEquals($expected, $this->data);
+        static::assertEquals($expected, $this->data);
     }
 
     /** @test */
     public function throws_an_exception_for_unsupported_replace_type()
     {
-        $transformer = new Replace;
+        $transformer = new Replace();
 
         $transformer->options(['type' => 'invalid']);
 
