@@ -13,6 +13,7 @@ namespace Tests\Loaders;
 
 use Tests\TestCase;
 use Wizaplace\Etl\Etl;
+use Wizaplace\Etl\Exception\IoException;
 use Wizaplace\Etl\Extractors\Csv;
 use Wizaplace\Etl\Loaders\CsvLoader;
 use Wizaplace\Etl\Loaders\Insert;
@@ -31,6 +32,15 @@ class CsvLoaderTest extends TestCase
     {
         $this->csvLoader = new CsvLoader();
         $this->csvLoader->output(self::OUTPUT_FILE);
+        $this->csvLoader->initialize();
+    }
+
+    public function testLoadCsvWrongPath(): void
+    {
+        static::expectException(IoException::class);
+
+        $this->csvLoader = new CsvLoader();
+        $this->csvLoader->output('unknown_path/unknown_file');
         $this->csvLoader->initialize();
     }
 

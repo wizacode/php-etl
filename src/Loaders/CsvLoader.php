@@ -5,13 +5,13 @@ declare(strict_types=1);
 /**
  * @author      Wizacha DevTeam <dev@wizacha.com>
  * @copyright   Copyright (c) Wizacha
- * @copyright   Copyright (c) Leonardo Marquine
  * @license     MIT
  */
 
 namespace Wizaplace\Etl\Loaders;
 
 use Wizaplace\Etl\Database\Manager;
+use Wizaplace\Etl\Exception\IoException;
 use Wizaplace\Etl\Row;
 
 class CsvLoader extends Loader
@@ -68,7 +68,12 @@ class CsvLoader extends Loader
 
     public function initialize(): void
     {
-        $this->fileHandler = fopen($this->output . '_' . $this->fileCounter . '.csv', 'w+');
+        $fileUri = $this->output . '_' . $this->fileCounter . '.csv';
+        $this->fileHandler = @fopen($fileUri, 'w+');
+
+        if (false === $this->fileHandler) {
+            throw new IoException("Impossible to open the file '{$fileUri}'");
+        }
     }
 
     /**
