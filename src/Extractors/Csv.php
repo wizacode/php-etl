@@ -46,10 +46,10 @@ class Csv extends Extractor
     protected $throwError = false;
 
     /**
-     * @var int |null
-     *
      * The 'currentRow' attribute is global because used in many places and we don't want to change the
      * signature of the methods
+     *
+     * @var int |null
      */
     protected $currentRow;
 
@@ -109,7 +109,7 @@ class Csv extends Extractor
         $rowColumnsCount = count($row);
         $columnsCount = is_array($this->columns) ? count($this->columns) : count($columns);
 
-        if ($this->throwError && $rowColumnsCount < $columnsCount) {
+        if (true === $this->throwError && $rowColumnsCount < $columnsCount) {
             $message = "Row with index #{$this->currentRow} only contains $rowColumnsCount "
                 . "elements while $columnsCount were expected.";
             throw new InvalidInputException($message);
@@ -161,10 +161,10 @@ class Csv extends Extractor
 
     protected function validateFilteredColumns(int $columnsCount): void
     {
-        if (is_array($this->columns) && [] !== $this->columns) {
+        if (true === is_array($this->columns) && [] !== $this->columns) {
             $askedColumnsCount = count($this->columns);
 
-            if ($this->throwError && $askedColumnsCount > $columnsCount) {
+            if (true === $this->throwError && $askedColumnsCount > $columnsCount) {
                 $message = "Asked columns quantity ($askedColumnsCount) is higher than the one really "
                     . "available ($columnsCount)";
                 throw new InvalidInputException($message);
