@@ -128,6 +128,14 @@ class Etl
     }
 
     /**
+     * Get the pipeline
+     */
+    public function toIterator(): \Iterator
+    {
+        return $this->pipeline;
+    }
+
+    /**
      * Handle dynamic method calls.
      *
      * @param string $method

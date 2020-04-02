@@ -89,4 +89,32 @@ class EtlTest extends TestCase
 
         static::assertEquals([['row1'], ['row3']], $etl->toArray());
     }
+
+    /** @test */
+    public function get_iterator_from_etl()
+    {
+        $data = [
+            ['hello' => 'world'],
+            ['bye' => 'people'],
+        ];
+
+        $closure = function (array $data): \Generator {
+            foreach ($data as $value) {
+                yield $value;
+            }
+        };
+
+        $iterator =
+            (new Etl())
+            ->extract(
+                new Collection(),
+                $closure($data)
+            )
+            ->toIterator();
+
+        static::assertEquals(
+            $data,
+            iterator_to_array($iterator)
+        );
+    }
 }
