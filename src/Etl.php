@@ -39,8 +39,12 @@ class Etl
     /**
      * Extract.
      *
+     * $input cannot be strictly typed
+     * Etl\Extractor\Csv needs a string
+     * Etl\Extractor\Collection an \Iterator
+     *
      * @param mixed $input
-     * @param array  $options
+     * @param array $options
      *
      * @return $this
      */
