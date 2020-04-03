@@ -128,11 +128,16 @@ class Etl
     }
 
     /**
-     * Get the pipeline
+     * Consume the pipeline as a Generator
+     *
+     * @return \Generator<array>
      */
-    public function toIterator(): \Iterator
+    public function toIterator(): \Generator
     {
-        return $this->pipeline;
+        foreach($this->pipeline as $row)
+        {
+            yield $row;
+        }
     }
 
     /**
