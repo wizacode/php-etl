@@ -39,7 +39,7 @@ class Etl
     /**
      * Extract.
      *
-     * @param string $input
+     * @param mixed $input
      * @param array  $options
      *
      * @return $this
