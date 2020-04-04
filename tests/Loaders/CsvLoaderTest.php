@@ -12,16 +12,16 @@ declare(strict_types=1);
 namespace Tests\Loaders;
 
 use Tests\TestCase;
-use Wizaplace\Etl\Etl;
 use Wizaplace\Etl\Exception\IoException;
-use Wizaplace\Etl\Extractors\Csv;
 use Wizaplace\Etl\Loaders\CsvLoader;
-use Wizaplace\Etl\Loaders\Insert;
 use Wizaplace\Etl\Row;
 
 class CsvLoaderTest extends TestCase
 {
-    const OUTPUT_FILE = __DIR__ . '/../data/testOutput';
+    /**
+     * @var string
+     */
+    protected $outputPath;
 
     /**
      * @var CsvLoader
@@ -30,8 +30,10 @@ class CsvLoaderTest extends TestCase
 
     public function setUp(): void
     {
+        $this->outputPath = tempnam('/tmp', 'testOutput');
+
         $this->csvLoader = new CsvLoader();
-        $this->csvLoader->output(self::OUTPUT_FILE);
+        $this->csvLoader->output($this->outputPath);
         $this->csvLoader->initialize();
     }
 
@@ -49,15 +51,15 @@ class CsvLoaderTest extends TestCase
      */
     public function testLoadCsvNoOption(): void
     {
-        $row1 = $this->productRowFactory('Table',10.5,'A simple table');
-        $row2 = $this->productRowFactory('Chair',305.75,'A \"deluxe chair\". You need it!');
+        $row1 = $this->productRowFactory('Table', 10.5, 'A simple table');
+        $row2 = $this->productRowFactory('Chair', 305.75, 'A \"deluxe chair\". You need it!');
 
         $this->csvLoader->load($row1);
         $this->csvLoader->load($row2);
         $this->csvLoader->finalize();
 
         // Opening generated file
-        $handle = fopen(self::OUTPUT_FILE . '_0.csv', 'r');
+        $handle = fopen($this->outputPath . '_0.csv', 'r');
 
         $line = fgets($handle);
         static::assertEquals('"Product name";Price;Description', trim($line));
@@ -74,8 +76,8 @@ class CsvLoaderTest extends TestCase
      */
     public function testLoadCsvCustomOptions(): void
     {
-        $row1 = $this->productRowFactory('Table',10.5,'A simple table');
-        $row2 = $this->productRowFactory('Chair',305.75,'A #|deluxe chair#|. You need it!');
+        $row1 = $this->productRowFactory('Table', 10.5, 'A simple table');
+        $row2 = $this->productRowFactory('Chair', 305.75, 'A #|deluxe chair#|. You need it!');
 
         // Custom options
         $this->csvLoader->options(['delimiter' => ',', 'enclosure' => '|', 'escapeChar' => '#']);
@@ -84,7 +86,7 @@ class CsvLoaderTest extends TestCase
         $this->csvLoader->finalize();
 
         // Opening generated file
-        $handle = fopen(self::OUTPUT_FILE . '_0.csv', 'r');
+        $handle = fopen($this->outputPath . '_0.csv', 'r');
 
         $line = fgets($handle);
         static::assertEquals('|Product name|,Price,Description', trim($line));
@@ -102,9 +104,9 @@ class CsvLoaderTest extends TestCase
      */
     public function testLoadCsvMultipleFiles(): void
     {
-        $row1 = $this->productRowFactory('Table',10.5,'A simple table');
-        $row2 = $this->productRowFactory('Chair',305.75,'A "deluxe chair". You need it!');
-        $row3 = $this->productRowFactory('Desk',12.2,'Basic, really boring.');
+        $row1 = $this->productRowFactory('Table', 10.5, 'A simple table');
+        $row2 = $this->productRowFactory('Chair', 305.75, 'A "deluxe chair". You need it!');
+        $row3 = $this->productRowFactory('Desk', 12.2, 'Basic, really boring.');
 
         // 1 line per file
         $this->csvLoader->options(['linePerFile' => 1]);
@@ -121,7 +123,7 @@ class CsvLoaderTest extends TestCase
 
         // We should have 3 files
         for ($i = 0; $i < 3; $i++) {
-            $handle = fopen(self::OUTPUT_FILE . '_' . $i . '.csv', 'r');
+            $handle = fopen($this->outputPath . '_' . $i . '.csv', 'r');
 
             $line = fgets($handle);
             static::assertEquals('"Product name";Price;Description', trim($line));
