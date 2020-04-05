@@ -93,28 +93,16 @@ class EtlTest extends TestCase
     /** @test */
     public function get_iterator_from_etl()
     {
-        $data = [
-            ['hello' => 'world'],
-            ['bye' => 'people'],
-        ];
+        $pipeline = $this->createMock('Wizaplace\Etl\Pipeline');
+        $pipeline->expects($this->exactly(3))->method('valid')->willReturnOnConsecutiveCalls(true, true, false);
+        $pipeline->expects($this->exactly(2))->method('current')->willReturnOnConsecutiveCalls(['row1'], ['row2']);
+        $pipeline->expects($this->exactly(2))->method('next');
 
-        $closure = function (array $data): \Generator {
-            foreach ($data as $value) {
-                yield $value;
-            }
-        };
-
-        $iterator =
-            (new Etl())
-            ->extract(
-                new Collection(),
-                $closure($data)
-            )
-            ->toIterator();
+        $etl = new Etl($pipeline);
 
         static::assertEquals(
-            $data,
-            iterator_to_array($iterator)
+            [['row1'], ['row2']],
+            iterator_to_array($etl->toIterator())
         );
     }
 }

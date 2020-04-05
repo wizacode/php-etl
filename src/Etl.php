@@ -134,8 +134,7 @@ class Etl
      */
     public function toIterator(): \Generator
     {
-        foreach($this->pipeline as $row)
-        {
+        foreach ($this->pipeline as $row) {
             yield $row;
         }
     }
