@@ -15,6 +15,7 @@ use PHPUnit\Framework\TestCase;
 use Wizaplace\Etl\Etl;
 use Wizaplace\Etl\Extractors\Accumulator;
 use Wizaplace\Etl\Extractors\Csv;
+use Wizaplace\Etl\Transformers\ConvertCase;
 use Wizaplace\Etl\Transformers\RenameColumns;
 
 class ChainingTest extends TestCase
@@ -49,6 +50,15 @@ class ChainingTest extends TestCase
                     'columns' => [
                         'courriel' => 'email'
                     ]
+                ]
+            )
+            ->transform(
+                new ConvertCase(),
+                [
+                    'columns' => [
+                        'email'
+                    ],
+                    'mode' => 'lower',
                 ]
             )
             ->toIterator();
