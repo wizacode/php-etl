@@ -9,6 +9,7 @@
 
 namespace Wizaplace\Etl\Extractors;
 
+use Wizaplace\Etl\Exception\MissingDataException;
 use Wizaplace\Etl\Row;
 
 class Accumulator extends Extractor
@@ -27,6 +28,13 @@ class Accumulator extends Extractor
     /** @var string[] */
     protected $columns;
 
+    /**
+     * If true Missing data will raise a MissingDataException
+     *
+     * @var bool
+     */
+    protected $strict = true;
+
     /** @var array[] */
     protected $data;
 
@@ -38,10 +46,13 @@ class Accumulator extends Extractor
     protected $availableOptions = [
         'index',
         'columns',
+        'strict'
     ];
 
     /**
      * @return \Generator<Row>
+     *
+     * @throws MissingDataException
      */
     public function extract(): \Generator
     {
@@ -57,8 +68,26 @@ class Accumulator extends Extractor
                 $generator->next();
             }
         } while (
-            $this->validInput()
+            $this->hasValidInput()
         );
+
+        if ($this->strict && \count($this->data)) {
+            throw new MissingDataException(
+                sprintf(
+                    'Missing data for the rows: %s',
+                    \json_encode(
+                        array_values($this->data),
+                        JSON_PRETTY_PRINT
+                            | JSON_UNESCAPED_UNICODE
+                    )
+                )
+            );
+        }
+
+        // return incomplete remaining rows
+        foreach ($this->data as $row) {
+            yield new Row($row);
+        }
     }
 
     /**
@@ -102,7 +131,7 @@ class Accumulator extends Extractor
     /**
      * Check if there is any opened generator left
      */
-    protected function validInput(): bool
+    protected function hasValidInput(): bool
     {
         return (bool) array_sum(
             array_map(

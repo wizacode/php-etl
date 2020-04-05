@@ -19,7 +19,12 @@ use Wizaplace\Etl\Transformers\RenameColumns;
 
 class ChainingTest extends TestCase
 {
-    /** @test */
+    /**
+     * Merging data from two different source
+     * using a common matching column data
+     *
+     * @test
+     */
     public function merging_iterators_chaining()
     {
         // lazy get users
@@ -48,7 +53,7 @@ class ChainingTest extends TestCase
             )
             ->toIterator();
 
-        // and finally feed the Etl this Generator
+        // and finally lazy merge these iterators data
         $usersInfosIterator = (new Etl())
             ->extract(
                 new Accumulator(),
@@ -63,7 +68,8 @@ class ChainingTest extends TestCase
                         'email',
                         'name',
                         'age'
-                    ]
+                    ],
+                    'strict' => false
                 ]
             )
             ->toIterator();
@@ -81,6 +87,15 @@ class ChainingTest extends TestCase
                 'email' => 'janedoe@email.com',
                 'age' => '39',
             ],
+            [
+                'id' => '3',
+                'name' => 'Hello World',
+                'email' => 'hello@world.com',
+            ],
+            [
+                'age' => '1000',
+                'email' => 'glinglin@email.com',
+            ]
         ];
 
         $actual = iterator_to_array(
@@ -91,26 +106,5 @@ class ChainingTest extends TestCase
             $expected,
             $actual
         );
-    }
-
-    /**
-     * @return mixed[]
-     */
-    private function getByKey(
-        array &$data,
-        $key,
-        $needle
-    ): array {
-        // search for email in users
-        $id = array_search(
-            $needle,
-            array_column($data, $key)
-        );
-
-        if (false === $id) {
-            throw new \Exception('Not found');
-        }
-
-        return $data[$id];
     }
 }
