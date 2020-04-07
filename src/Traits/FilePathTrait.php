@@ -1,0 +1,44 @@
+<?php
+
+declare(strict_types=1);
+
+/**
+ * @author      Wizacha DevTeam <dev@wizacha.com>
+ * @copyright   Copyright (c) Wizacha
+ * @copyright   Copyright (c) Leonardo Marquine
+ * @license     MIT
+ */
+
+namespace Wizaplace\Etl\Traits;
+
+use Wizaplace\Etl\Exception\IoException;
+
+trait FilePathTrait
+{
+    /**
+     * Check if path dirname exist,
+     * recursivly create dir path if not
+     *
+     * @throws IoException
+     */
+    protected function checkOrCreateDir(string $fileUri): bool
+    {
+        $dirName = dirname($fileUri);
+
+        if (is_dir($dirName)) {
+            return true;
+        }
+
+        try {
+            $isCreated = \mkdir($dirName, 0755, true);
+        } catch (\Throwable $throwable) {
+            throw new IoException(
+                "Cannot create $dirName path",
+                0,
+                $throwable
+            );
+        }
+
+        return $isCreated;
+    }
+}

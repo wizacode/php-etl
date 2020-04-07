@@ -30,7 +30,7 @@ class CsvLoaderTest extends TestCase
 
     public function setUp(): void
     {
-        $this->outputPath = tempnam('/tmp', 'testOutput');
+        $this->outputPath = tempnam('/tmp', 'phpunit_');
 
         $this->csvLoader = new CsvLoader();
         $this->csvLoader->output($this->outputPath);
@@ -42,7 +42,7 @@ class CsvLoaderTest extends TestCase
         static::expectException(IoException::class);
 
         $this->csvLoader = new CsvLoader();
-        $this->csvLoader->output('unknown_path/unknown_file');
+        $this->csvLoader->output('/dev/random/impossible/to/write/here');
         $this->csvLoader->initialize();
     }
 
