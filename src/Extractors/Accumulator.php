@@ -3,7 +3,6 @@
 /**
  * @author      Wizacha DevTeam <dev@wizacha.com>
  * @copyright   Copyright (c) Wizacha
- * @copyright   Copyright (c) Leonardo Marquine
  * @license     MIT
  */
 
@@ -15,8 +14,7 @@ use Wizaplace\Etl\Row;
 class Accumulator extends Extractor
 {
     /**
-     * The matching key tuplet
-     * between generators
+     * The matching key tuplet between iterators
      *
      * @var string[]
      */
@@ -29,7 +27,9 @@ class Accumulator extends Extractor
     protected $columns;
 
     /**
-     * If true Missing data will raise a MissingDataException
+     * If set to true,
+     * will throw a MissingDataException if there is incomplete rows remaining
+     * when all input iterators are fully consumed and closed.
      *
      * @var bool
      */
@@ -56,16 +56,16 @@ class Accumulator extends Extractor
      */
     public function extract(): \Generator
     {
-        // consume input generators
+        // consume input iterators
         do {
-            foreach ($this->input as $generator) {
-                /** @var \Generator $generator */
-                if ($line = $generator->current()) {
+            foreach ($this->input as $iterator) {
+                /** @var \Iterator $iterator */
+                if ($line = $iterator->current()) {
                     if ($row = $this->build($line)) {
                         yield new Row($row);
                     }
                 }
-                $generator->next();
+                $iterator->next();
             }
         } while (
             $this->hasValidInput()
@@ -129,13 +129,13 @@ class Accumulator extends Extractor
     }
 
     /**
-     * Check if there is any opened generator left
+     * Check if there is any opened iterators left
      */
     protected function hasValidInput(): bool
     {
         return (bool) array_sum(
             array_map(
-                fn ($generator) => $generator->valid(),
+                fn (\Iterator $iterator) => $iterator->valid(),
                 $this->input
             )
         );
