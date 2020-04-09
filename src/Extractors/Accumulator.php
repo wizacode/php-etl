@@ -149,14 +149,12 @@ class Accumulator extends Extractor
      */
     protected function lineHash(array $line): string
     {
-        return md5(
-            json_encode(
-                array_map(
-                    function (string $key) use ($line) {
-                        return $line[$key];
-                    },
-                    $this->index
-                )
+        return \json_encode(
+            \array_map(
+                function (string $key) use ($line) {
+                    return $line[$key];
+                },
+                $this->index
             )
         );
     }
