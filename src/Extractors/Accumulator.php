@@ -134,10 +134,12 @@ class Accumulator extends Extractor
      */
     protected function hasValidInput(): bool
     {
-        return (bool) array_sum(
-            array_map(
-                fn (\Iterator $iterator) => $iterator->valid(),
-                $this->input
+        return 0 < \count(
+            array_filter(
+                $this->input,
+                function (\Iterator $iterator): bool {
+                    return $iterator->valid();
+                }
             )
         );
     }
