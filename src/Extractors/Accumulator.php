@@ -14,21 +14,22 @@ use Wizaplace\Etl\Row;
 class Accumulator extends Extractor
 {
     /**
-     * The matching key tuplet between iterators
+     * The matching key tuplet between iterators.
      *
      * @var string[]
      */
     protected $index;
 
     /**
-     * Columns
+     * Columns.
+     *
+     * @var string[]
      */
-    /** @var string[] */
     protected $columns;
 
     /**
      * If set to true,
-     * will throw a MissingDataException if there is incomplete rows remaining
+     * will throw a MissingDataException if there is any incomplete rows remaining
      * when all input iterators are fully consumed and closed.
      *
      * @var bool
@@ -46,7 +47,7 @@ class Accumulator extends Extractor
     protected $availableOptions = [
         'index',
         'columns',
-        'strict'
+        'strict',
     ];
 
     /**
@@ -74,10 +75,10 @@ class Accumulator extends Extractor
 
         if ($this->strict && \count($this->data)) {
             throw new MissingDataException(
-                sprintf(
+                \sprintf(
                     'Missing data for the rows: %s',
                     \json_encode(
-                        array_values($this->data),
+                        \array_values($this->data),
                         JSON_PRETTY_PRINT
                             | JSON_UNESCAPED_UNICODE
                     )
@@ -92,7 +93,7 @@ class Accumulator extends Extractor
     }
 
     /**
-     * Accumulate row data and return when completed
+     * Accumulate row data and return when completed.
      *
      * @param mixed[] $line
      *
@@ -102,14 +103,14 @@ class Accumulator extends Extractor
     {
         $hash = $this->lineHash($line);
 
-        $this->data[$hash] = array_merge(
+        $this->data[$hash] = \array_merge(
             $this->data[$hash] ?? [],
             $line
         );
 
         if ($this->isCompleted($hash)) {
             $row = $this->data[$hash];
-            unset($this->data[$hash]); # free the RAM
+            unset($this->data[$hash]); // free the RAM
 
             return $row;
         }
@@ -118,24 +119,23 @@ class Accumulator extends Extractor
     }
 
     /**
-     * Check if row is completed
+     * Check if row is completed.
      */
     protected function isCompleted(string $hash): bool
     {
-        return
-            false === ((bool) array_diff(
-                $this->columns,
-                array_keys($this->data[$hash])
-            ));
+        return false === (bool) \array_diff(
+            $this->columns,
+            \array_keys($this->data[$hash])
+        );
     }
 
     /**
-     * Check if there is any opened iterators left
+     * Check if there is any opened iterators left.
      */
     protected function hasValidInput(): bool
     {
         return 0 < \count(
-            array_filter(
+            \array_filter(
                 $this->input,
                 function (\Iterator $iterator): bool {
                     return $iterator->valid();
@@ -145,7 +145,7 @@ class Accumulator extends Extractor
     }
 
     /**
-     * calculate row hash key from specified index array
+     * calculate row hash key from specified index array.
      */
     protected function lineHash(array $line): string
     {
