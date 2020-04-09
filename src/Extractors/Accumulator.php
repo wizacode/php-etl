@@ -60,10 +60,11 @@ class Accumulator extends Extractor
         do {
             foreach ($this->input as $iterator) {
                 /** @var \Iterator $iterator */
-                if ($line = $iterator->current()) {
-                    if ($row = $this->build($line)) {
-                        yield new Row($row);
-                    }
+                if (
+                    ($line = $iterator->current())
+                    && ($row = $this->build($line))
+                ) {
+                    yield new Row($row);
                 }
                 $iterator->next();
             }
