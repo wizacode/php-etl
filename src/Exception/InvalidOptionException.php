@@ -10,6 +10,6 @@ declare(strict_types=1);
 
 namespace Wizaplace\Etl\Exception;
 
-class MissingDataException extends \Exception
+class InvalidOptionException extends \Exception
 {
 }

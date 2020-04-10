@@ -55,9 +55,7 @@ class ChainingTest extends TestCase
             ->transform(
                 new ConvertCase(),
                 [
-                    'columns' => [
-                        'email'
-                    ],
+                    'columns' => ['email'],
                     'mode' => 'lower',
                 ]
             )

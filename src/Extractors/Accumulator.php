@@ -8,7 +8,10 @@
 
 namespace Wizaplace\Etl\Extractors;
 
-use Wizaplace\Etl\Exception\MissingDataException;
+use Wizaplace\Etl\DirtyRow;
+use Wizaplace\Etl\Exception\IncompleteDataException;
+use Wizaplace\Etl\Exception\InvalidOptionException;
+use Wizaplace\Etl\Exception\UndefinedIndexException;
 use Wizaplace\Etl\Row;
 
 class Accumulator extends Extractor
@@ -51,9 +54,19 @@ class Accumulator extends Extractor
     ];
 
     /**
+     * Properties that MUST be set via the options method.
+     *
+     * @var array
+     */
+    protected $requiredOptions = [
+        'index',
+        'columns',
+    ];
+
+    /**
      * @return \Generator<Row>
      *
-     * @throws MissingDataException
+     * @throws IncompleteDataException
      */
     public function extract(): \Generator
     {
@@ -74,7 +87,7 @@ class Accumulator extends Extractor
         );
 
         if ($this->strict && \count($this->data)) {
-            throw new MissingDataException(
+            throw new IncompleteDataException(
                 \sprintf(
                     'Missing data for the rows: %s',
                     \json_encode(
@@ -86,9 +99,9 @@ class Accumulator extends Extractor
             );
         }
 
-        // return incomplete remaining rows
+        // then yield the incomplete remaining rows
         foreach ($this->data as $row) {
-            yield new Row($row);
+            yield new DirtyRow($row);
         }
     }
 
@@ -101,7 +114,11 @@ class Accumulator extends Extractor
      */
     protected function build(array $line): ?array
     {
-        $hash = $this->lineHash($line);
+        try {
+            $hash = $this->lineHash($line);
+        } catch (UndefinedIndexException $exception) {
+            return null;
+        };
 
         $this->data[$hash] = \array_merge(
             $this->data[$hash] ?? [],
@@ -123,10 +140,14 @@ class Accumulator extends Extractor
      */
     protected function isCompleted(string $hash): bool
     {
-        return false === (bool) \array_diff(
-            $this->columns,
-            \array_keys($this->data[$hash])
-        );
+        try {
+            return false === (bool) \array_diff(
+                $this->columns,
+                \array_keys($this->data[$hash])
+            );
+        } catch (\Exception $exception) {
+            throw new InvalidOptionException('specify at least 1 column', 3);
+        }
     }
 
     /**
@@ -149,9 +170,21 @@ class Accumulator extends Extractor
      */
     protected function lineHash(array $line): string
     {
+        if (!is_array($this->index)) {
+            throw new InvalidOptionException('We need an array', 1);
+        }
+
+        if (1 < \count($this->index)) {
+            throw new InvalidOptionException('Specify at least 1 index', 2);
+        }
+
         return \json_encode(
             \array_map(
                 function (string $key) use ($line) {
+                    if (!array_key_exists($key, $line)) {
+                        throw new UndefinedIndexException("Index $key not matching");
+                    }
+
                     return $line[$key];
                 },
                 $this->index
