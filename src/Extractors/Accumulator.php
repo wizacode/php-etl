@@ -73,7 +73,6 @@ class Accumulator extends Extractor
         // consume input iterators
         do {
             foreach ($this->input as $iterator) {
-                /** @var \Iterator $iterator */
                 if (
                     ($line = $iterator->current())
                     && ($row = $this->build($line))
@@ -86,17 +85,9 @@ class Accumulator extends Extractor
             $this->hasValidInput()
         );
 
-        if ($this->strict && \count($this->data)) {
-            throw new IncompleteDataException(
-                \sprintf(
-                    'Missing data for the rows: %s',
-                    \json_encode(
-                        \array_values($this->data),
-                        JSON_PRETTY_PRINT
-                            | JSON_UNESCAPED_UNICODE
-                    )
-                )
-            );
+        $incompletes = \count($this->data);
+        if ($this->strict && $incompletes) {
+            throw new IncompleteDataException("$incompletes rows");
         }
 
         // then yield the incomplete remaining rows
@@ -118,7 +109,7 @@ class Accumulator extends Extractor
             $hash = $this->lineHash($line);
         } catch (UndefinedIndexException $exception) {
             return null;
-        };
+        }
 
         $this->data[$hash] = \array_merge(
             $this->data[$hash] ?? [],
@@ -140,14 +131,17 @@ class Accumulator extends Extractor
      */
     protected function isCompleted(string $hash): bool
     {
-        try {
-            return false === (bool) \array_diff(
-                $this->columns,
-                \array_keys($this->data[$hash])
-            );
-        } catch (\Exception $exception) {
-            throw new InvalidOptionException('specify at least 1 column', 3);
+        if (!is_array($this->columns)) {
+            throw new InvalidOptionException('invalid columns', 2);
         }
+
+        foreach ($this->columns as $key) {
+            if (!array_key_exists($key, $this->data[$hash])) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**
@@ -155,14 +149,13 @@ class Accumulator extends Extractor
      */
     protected function hasValidInput(): bool
     {
-        return 0 < \count(
-            \array_filter(
-                $this->input,
-                function (\Iterator $iterator): bool {
-                    return $iterator->valid();
-                }
-            )
-        );
+        foreach ($this->input as $iterator) {
+            if ($iterator->valid()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -171,18 +164,14 @@ class Accumulator extends Extractor
     protected function lineHash(array $line): string
     {
         if (!is_array($this->index)) {
-            throw new InvalidOptionException('We need an array', 1);
-        }
-
-        if (1 < \count($this->index)) {
-            throw new InvalidOptionException('Specify at least 1 index', 2);
+            throw new InvalidOptionException('Invalid index', 1);
         }
 
         return \json_encode(
             \array_map(
                 function (string $key) use ($line) {
                     if (!array_key_exists($key, $line)) {
-                        throw new UndefinedIndexException("Index $key not matching");
+                        throw new UndefinedIndexException();
                     }
 
                     return $line[$key];
