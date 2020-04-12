@@ -131,12 +131,12 @@ class Accumulator extends Extractor
      */
     protected function isCompleted(string $hash): bool
     {
-        if (!is_array($this->columns)) {
+        if (!\is_array($this->columns)) {
             throw new InvalidOptionException('invalid columns', 2);
         }
 
         foreach ($this->columns as $key) {
-            if (!array_key_exists($key, $this->data[$hash])) {
+            if (!\array_key_exists($key, $this->data[$hash])) {
                 return false;
             }
         }
@@ -163,14 +163,14 @@ class Accumulator extends Extractor
      */
     protected function lineHash(array $line): string
     {
-        if (!is_array($this->index)) {
+        if (!\is_array($this->index)) {
             throw new InvalidOptionException('Invalid index', 1);
         }
 
         return \json_encode(
             \array_map(
                 function (string $key) use ($line) {
-                    if (!array_key_exists($key, $line)) {
+                    if (!\array_key_exists($key, $line)) {
                         throw new UndefinedIndexException();
                     }
 
