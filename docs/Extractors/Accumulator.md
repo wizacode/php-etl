@@ -4,7 +4,7 @@ Merge rows from a list of partial data iterators with a matching index.
 
 ```php
 # user data from one CSV file
-$userData = (new Etl())
+$userDataIterator = (new Etl())
     ->extract(
         new Csv(),
         'user_data.csv',
@@ -14,7 +14,7 @@ $userData = (new Etl())
 ;
 
 # extended info from another source
-$extendedInfo = (new Etl())
+$extendedInfoIterator = (new Etl())
     ->extract(
         new Table(),
         'extended_info',
@@ -35,8 +35,8 @@ $mergedData = (new Etl())
     ->extract(
         new Accumulator(),
         [
-            $userData,
-            $extendedInfo,
+            $userDataIterator,
+            $extendedInfoIterator,
         ],
         [
             'index' => ['email'], # common matching index
