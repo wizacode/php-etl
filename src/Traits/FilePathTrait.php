@@ -33,8 +33,8 @@ trait FilePathTrait
             $isCreated = \mkdir($dirName, 0755, true);
         } catch (\Throwable $throwable) {
             throw new IoException(
-                "Cannot create $dirName path",
-                0,
+                "Cannot create path: $dirName",
+                1,
                 $throwable
             );
         }

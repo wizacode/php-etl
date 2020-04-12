@@ -37,15 +37,6 @@ class CsvLoaderTest extends TestCase
         $this->csvLoader->initialize();
     }
 
-    public function testLoadCsvWrongPath(): void
-    {
-        static::expectException(IoException::class);
-
-        $this->csvLoader = new CsvLoader();
-        $this->csvLoader->output('/dev/random/impossible/to/write/here');
-        $this->csvLoader->initialize();
-    }
-
     /**
      * Test CSV loading with 2 rows and no options
      */
