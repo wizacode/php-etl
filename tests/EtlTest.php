@@ -89,20 +89,4 @@ class EtlTest extends TestCase
 
         static::assertEquals([['row1'], ['row3']], $etl->toArray());
     }
-
-    /** @test */
-    public function get_iterator_from_etl()
-    {
-        $pipeline = $this->createMock('Wizaplace\Etl\Pipeline');
-        $pipeline->expects($this->exactly(3))->method('valid')->willReturnOnConsecutiveCalls(true, true, false);
-        $pipeline->expects($this->exactly(2))->method('current')->willReturnOnConsecutiveCalls(['row1'], ['row2']);
-        $pipeline->expects($this->exactly(2))->method('next');
-
-        $etl = new Etl($pipeline);
-
-        static::assertEquals(
-            [['row1'], ['row2']],
-            iterator_to_array($etl->toIterator())
-        );
-    }
 }

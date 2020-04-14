@@ -113,7 +113,7 @@ class Etl
     }
 
     /**
-     * Consume the pipeline as a Generator
+     * Consume the pipeline as a Generator.
      *
      * @return \Generator<array>
      */
@@ -124,18 +124,6 @@ class Etl
             if (!$row->discarded()) {
                 yield $row->toArray();
             }
-        }
-    }
-
-    /**
-     * Consume the pipeline as a Generator
-     *
-     * @return \Generator<array>
-     */
-    public function toIterator(): \Generator
-    {
-        foreach ($this->pipeline as $row) {
-            yield $row;
         }
     }
 
