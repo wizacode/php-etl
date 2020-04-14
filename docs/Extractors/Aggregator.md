@@ -82,7 +82,7 @@ $options = ['columns' => ['id', 'name', 'email']];
 When all Iterators input are fully consummed, if we have any remaining incomplete rows:
 
 - if *true*: Throw an `IncompleteDataException`
-- if *false*: yield the incomplete remaining data as `DirtyRow`
+- if *false*: yield the incomplete remaining `Row` flagged as `incomplete`
 
 | Type    | Default value |
 |---------|---------------|

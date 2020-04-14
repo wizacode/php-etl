@@ -102,11 +102,14 @@ class AggregatorTest extends TestCase
                 'email' => 'janedoe@email.com',
                 'twitter' => '@jane',
             ]),
-            new DirtyRow([
-                'id' => 3,
-                'name' => 'Incomplete',
-                'email' => 'incomplete@dirtydata',
-            ]),
+            (
+                new Row([
+                    'id' => 3,
+                    'name' => 'Incomplete',
+                    'email' => 'incomplete@dirtydata',
+                ])
+            )
+            ->setIncomplete(),
         ];
         static::assertEquals($expected, $actual);
     }

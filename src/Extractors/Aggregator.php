@@ -92,7 +92,7 @@ class Aggregator extends Extractor
 
         // then yield the incomplete remaining rows
         foreach ($this->data as $row) {
-            yield new DirtyRow($row);
+            yield (new Row($row))->setIncomplete();
         }
     }
 
