@@ -63,7 +63,9 @@ class FilePathTraitTest extends TestCase
     {
         // make a forbidden folder
         $basePath = '/tmp/forbidden';
-        rmdir($basePath); // remove if any previous
+        if (is_dir($basePath)) {
+            rmdir($basePath); // remove if any previous
+        }
         mkdir($basePath, 0000);
 
         $filePath = "$basePath/stuff/file";
