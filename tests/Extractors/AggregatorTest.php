@@ -15,10 +15,10 @@ use Tests\TestCase;
 use Wizaplace\Etl\DirtyRow;
 use Wizaplace\Etl\Exception\IncompleteDataException;
 use Wizaplace\Etl\Exception\InvalidOptionException;
-use Wizaplace\Etl\Extractors\Accumulator;
+use Wizaplace\Etl\Extractors\Aggregator;
 use Wizaplace\Etl\Row;
 
-class AccumulatorTest extends TestCase
+class AggregatorTest extends TestCase
 {
     /**
      * @test
@@ -27,7 +27,7 @@ class AccumulatorTest extends TestCase
      **/
     public function invalid_index_options($invalidOptions, $exceptionCode)
     {
-        $extractor = new Accumulator();
+        $extractor = new Aggregator();
 
         $extractor
             ->input(
@@ -53,7 +53,7 @@ class AccumulatorTest extends TestCase
      **/
     public function strict_index_matching($iterators)
     {
-        $extractor = new Accumulator();
+        $extractor = new Aggregator();
 
         $extractor
             ->input($iterators)
@@ -76,7 +76,7 @@ class AccumulatorTest extends TestCase
      **/
     public function unstrict_index_matching($iterators)
     {
-        $extractor = new Accumulator();
+        $extractor = new Aggregator();
 
         $extractor
             ->input($iterators)
@@ -130,7 +130,7 @@ class AccumulatorTest extends TestCase
             }
         };
 
-        $extractor = new Accumulator();
+        $extractor = new Aggregator();
 
         $extractor
             ->input(

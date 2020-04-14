@@ -14,7 +14,7 @@ use Wizaplace\Etl\Exception\InvalidOptionException;
 use Wizaplace\Etl\Exception\UndefinedIndexException;
 use Wizaplace\Etl\Row;
 
-class Accumulator extends Extractor
+class Aggregator extends Extractor
 {
     /**
      * The matching key tuplet between iterators.

@@ -9,7 +9,7 @@ $etl->extract($type, $source, $options);
 
 ## Available extractors types
 
-* [Accumulator](Accumulator.md)
+* [Aggregator](Aggregator.md)
 * [Collection](Collection.md)
 * [CSV](Csv.md)
 * [Fixed Width](FixedWidth.md)

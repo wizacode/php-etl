@@ -1,4 +1,4 @@
-# Accumulator
+# Aggregator
 
 Merge rows from a list of partial data iterators with a matching index.
 
@@ -33,7 +33,7 @@ $extendedInfoIterator = (new Etl())
 # merge this two data sources
 $mergedData = (new Etl())
     ->extract(
-        new Accumulator(),
+        new Aggregator(),
         [
             $userDataIterator,
             $extendedInfoIterator,

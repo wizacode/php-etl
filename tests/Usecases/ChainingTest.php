@@ -13,7 +13,7 @@ namespace Tests\Usecases;
 
 use PHPUnit\Framework\TestCase;
 use Wizaplace\Etl\Etl;
-use Wizaplace\Etl\Extractors\Accumulator;
+use Wizaplace\Etl\Extractors\Aggregator;
 use Wizaplace\Etl\Extractors\Csv;
 use Wizaplace\Etl\Transformers\ConvertCase;
 use Wizaplace\Etl\Transformers\RenameColumns;
@@ -64,7 +64,7 @@ class ChainingTest extends TestCase
         // and finally lazy merge these iterators data
         $usersInfosIterator = (new Etl())
             ->extract(
-                new Accumulator(),
+                new Aggregator(),
                 [
                     $usersIterator,
                     $infosIterator,
