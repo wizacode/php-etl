@@ -12,7 +12,6 @@ declare(strict_types=1);
 namespace Tests\Extractors;
 
 use Tests\TestCase;
-use Wizaplace\Etl\DirtyRow;
 use Wizaplace\Etl\Exception\IncompleteDataException;
 use Wizaplace\Etl\Exception\InvalidOptionException;
 use Wizaplace\Etl\Extractors\Aggregator;
@@ -153,7 +152,7 @@ class AggregatorTest extends TestCase
 
         $actual = 0;
         foreach ($extractor->extract() as $row) {
-            ++$actual;
+            $actual++;
         }
         static::assertEquals($expected, $actual);
     }

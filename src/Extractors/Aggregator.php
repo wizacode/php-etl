@@ -6,9 +6,10 @@
  * @license     MIT
  */
 
+declare(strict_types=1);
+
 namespace Wizaplace\Etl\Extractors;
 
-use Wizaplace\Etl\DirtyRow;
 use Wizaplace\Etl\Exception\IncompleteDataException;
 use Wizaplace\Etl\Exception\InvalidOptionException;
 use Wizaplace\Etl\Exception\UndefinedIndexException;
