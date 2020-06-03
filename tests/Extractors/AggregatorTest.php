@@ -182,7 +182,8 @@ class AggregatorTest extends TestCase
                 [
                     $this->arrayToIterator([
                         ['id' => 1, 'name' => 'John Doe', 'email' => 'johndoe@email.com'],
-                        ['impossible error'], // should not happen
+                        [], // should not happen
+                        ['impossible error'], // should not happen as well
                         ['id' => 2, 'name' => 'Jane Doe', 'email' => 'janedoe@email.com'],
                         ['id' => 3, 'name' => 'Incomplete', 'email' => 'incomplete@dirtydata'],
                     ]),
