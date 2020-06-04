@@ -7,8 +7,7 @@
 [![Ask Me Anything !](https://img.shields.io/badge/Ask%20me-anything-1abc9c.svg)](https://GitHub.com/wizaplace/php-etl)
 
 Extract, Transform and Load data using PHP.
-This library provides classes and a workflow to allow you to extract data from various sources (CSV, DB...), one or many,
-then transform them before saving them in another format.
+This library provides classes and a workflow to allow you to extract data from various sources (CSV, DB...), one or many, then transform them before saving them in another format.
 
 You can also easily add your custom classes (Extractors, Transformers and Loaders).
 

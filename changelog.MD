@@ -4,21 +4,19 @@
 
 **New features**
 * Throw an exception when the CSV source file is not found during extraction.
-* Add an optional parameter on the CSV extractor: if set to true it will raise 
-an exception when trying to access non existing columns.
+* Add an optional parameter on the CSV extractor: if set to true it will raise an exception when trying to access non existing columns.
 * Add a CSV loader, to be able to ETL from a CSV to another.
 * Add the possibility to use multiple extractors and combine them.
 
 **Bufixes**
 * Fix an old bug on multilines CSV extraction.
 * Fix on ignored discarded rows (only the loader was ignoring them).
-* On the ConvertCase Transformer : fix to properly handle the change of
-behavior between PHP 7.2 and 7.3.
+* On the ConvertCase transformer : fix to properly handle the change of behavior between PHP 7.2 and 7.3.
 
 **Miscellaneous**
 * Improve CI with quality tools (PHPCS, PHPStan...).
-* CI : test the code against PHP 7.2 to 7.4.
-* Code cleanup to comply with modern standards.
+* CI: unit tests with PHP 7.2 to 7.4.
+* Code cleanup to progressively comply with modern standards.
 
 
 ## Changes for the release 1.0 (the first one since the fork)
