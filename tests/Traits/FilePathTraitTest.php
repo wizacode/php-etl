@@ -1,13 +1,13 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * @author      Wizacha DevTeam <dev@wizacha.com>
  * @copyright   Copyright (c) Wizacha
  * @copyright   Copyright (c) Leonardo Marquine
  * @license     MIT
  */
+
+declare(strict_types=1);
 
 namespace Tests\Traits;
 
@@ -22,7 +22,7 @@ class FilePathTraitTest extends TestCase
 
     public function setUp(): void
     {
-        $this->fakeLoader = new class() {
+        $this->fakeLoader = new class () {
             use FilePathTrait;
 
             public function input(string $filePath)
