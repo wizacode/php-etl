@@ -133,7 +133,7 @@ class InsertUpdateTest extends TestCase
     }
 
     /** @test */
-    public function do_not_update_row_if_updates_are_suppressed()
+    public function do_not_update_or_insert_row_if_updates_are_suppressed()
     {
         $this->loader->options(['doUpdates' => false]);
         $this->statement->expects($this->once())->method('select')->with('table');
@@ -143,6 +143,7 @@ class InsertUpdateTest extends TestCase
         $this->select->expects($this->once())->method('fetch')->willReturn(['name' => 'Jane']);
 
         $this->statement->expects($this->never())->method('update')->with('table', ['name', 'email']);
+        $this->statement->expects($this->never())->method('insert')->with('table', ['id', 'name', 'email']);
         $this->updateStatement->expects($this->never())->method('where')->with(['id']);
         $this->updateStatement->expects($this->never())->method('prepare');
         $this->update->expects($this->never())->method('execute')->with(['id' => '1', 'name' => 'Jane Doe', 'email' => 'janedoe@example.com']);
