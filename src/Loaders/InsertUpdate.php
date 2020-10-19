@@ -113,7 +113,7 @@ class InsertUpdate extends Loader
      * @var string[]
      */
     protected $availableOptions = [
-        'columns', 'connection', 'key', 'timestamps', 'transaction', 'commitSize', 'doUpdates'
+        'columns', 'connection', 'key', 'timestamps', 'transaction', 'commitSize', 'doUpdates',
     ];
 
     /**
@@ -139,8 +139,7 @@ class InsertUpdate extends Loader
             $this->transactionManager = $this->db->transaction($this->connection)->size($this->commitSize);
         }
 
-        if (
-            is_array($this->columns) && [] !== $this->columns
+        if (is_array($this->columns) && [] !== $this->columns
             && array_keys($this->columns) === range(0, count($this->columns) - 1)
         ) {
             $this->columns = array_combine($this->columns, $this->columns);
@@ -255,12 +254,10 @@ class InsertUpdate extends Loader
         }
 
         $current = $this->select->fetch();
-        if (false !== $current) {
-            if ($this->doUpdates) {
-                $this->update($row, $current);
-            }
-        } else {
+        if (false === $current) {
             $this->insert($row);
+        } else {
+            $this->update($row, $current);
         }
     }
 
@@ -286,6 +283,10 @@ class InsertUpdate extends Loader
      */
     protected function update(array $row, array $current): void
     {
+        if (false === $this->doUpdates) {
+            return;
+        }
+
         if (null === $this->update) {
             $this->prepareUpdate($row);
         }
