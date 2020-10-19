@@ -1,9 +1,9 @@
-# Collection
+# DateDimension
 
-Creates a Date Dimension table for a data warehouse
+Creates a Date Dimension table for a data warehouse.
 
 ```php
-$etl->extract('date_demension', $iterable, $options);
+$etl->extract('date_dimension', $iterable, $options);
 ```
 
 ## Options
@@ -43,7 +43,7 @@ Currently, the default columns are:
  * IsWorkDayKey
 
 ### StartDate
-First day in date dimesnion table.
+First day in date dimension table.
 
 | Type | Default value |
 |----- | ------------- |
@@ -54,7 +54,7 @@ $options = ['startDate' => '2015-01-01T60:00:00-4'];
 ```
 
 ### EndDate
-First day in date dimesnion table.
+Last day in date dimension table.
 
 | Type | Default value |
 |----- | ------------- |
