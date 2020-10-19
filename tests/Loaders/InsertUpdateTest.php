@@ -285,6 +285,4 @@ class InsertUpdateTest extends TestCase
 
         $this->execute($this->loader, [$this->row]);
     }
-
-
 }
