@@ -66,8 +66,6 @@ class DateDimension extends Extractor
 
     /**
      * Extract data from the input.
-     *
-     * @return \Generator
      */
     public function extract(): \Generator
     {
@@ -96,16 +94,18 @@ class DateDimension extends Extractor
                 'ISOWeekKey' => $date->format('W'),
                 'WeekDay' => $dayOfWeek,
                 'WeekDayName' => $date->format('l'),
-                'IsWorkDayKey' => ($dayOfWeek === 0 || $dayOfWeek === 6) ? 0 : 1,
+                'IsWorkDayKey' => (0 === $dayOfWeek || 6 === $dayOfWeek) ? 0 : 1,
             ];
-            $date->add($interval);
 
-            if ($this->columns !== null && count($this->columns) > 0) {
+            if (null !== $this->columns && count($this->columns) > 0) {
                 $flipped = array_flip($this->columns);
                 $row = array_intersect_key($row, $flipped);
             }
 
             yield new Row($row);
+
+            // Add one day to set up the next iteraion of the loop.
+            $date->add($interval);
         }
     }
 }
