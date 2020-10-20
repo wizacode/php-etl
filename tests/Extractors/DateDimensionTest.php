@@ -1,10 +1,19 @@
 <?php
 
+/**
+ * @author      Wizacha DevTeam <dev@wizacha.com>
+ * @copyright   Copyright (c) Wizacha
+ * @copyright   Copyright (c) Leonardo Marquine
+ * @license     MIT
+ */
+
+declare(strict_types=1);
+
 namespace Tests\Extractors;
 
 use Tests\TestCase;
-use Wizaplace\Etl\Row;
 use Wizaplace\Etl\Extractors\DateDimension;
+use Wizaplace\Etl\Row;
 
 class DateDimensionTest extends TestCase
 {
@@ -108,7 +117,8 @@ class DateDimensionTest extends TestCase
         ]);
         $result = iterator_to_array($extractor->extract());
         $this->assertGreaterThan(3650, count($result));
-        $this->assertEquals((new \DateTime())->format('Y') - 5 . '0101', $result[0]['DateKey']);
-        $this->assertEquals((new \DateTime())->format('Y') + 5 . '0101', $result[count($result) - 1]['DateKey']);
+        $year = (int) (new \DateTime())->format('Y');
+        $this->assertEquals($year - 5 . '0101', $result[0]['DateKey']);
+        $this->assertEquals($year + 5 . '0101', $result[count($result) - 1]['DateKey']);
     }
 }

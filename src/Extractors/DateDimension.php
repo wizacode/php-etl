@@ -104,7 +104,7 @@ class DateDimension extends Extractor
 
             yield new Row($row);
 
-            // Add one day to set up the next iteraion of the loop.
+            // Add one day to set up the next iteration of the loop.
             $date->add($interval);
         }
     }
