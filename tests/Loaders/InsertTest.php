@@ -123,7 +123,7 @@ class InsertTest extends TestCase
             'name' => 'Jane Doe',
             'email' => 'janedoe@example.com',
             'created_at' => date('Y-m-d G:i:s'),
-            'updated_at' => date('Y-m-d G:i:s')
+            'updated_at' => date('Y-m-d G:i:s'),
         ]);
 
         $this->loader->output('table');

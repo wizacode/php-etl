@@ -126,7 +126,8 @@ class InsertUpdateTest extends TestCase
 
         $this->statement->expects($this->once())->method('insert')->with('table', ['id', 'name', 'email']);
         $this->insertStatement->expects($this->once())->method('prepare');
-        $this->insert->expects($this->once())->method('execute')->with(['id' => '1', 'name' => 'Jane Doe', 'email' => 'janedoe@example.com']);
+        $this->insert->expects($this->once())->method('execute')
+            ->with(['id' => '1', 'name' => 'Jane Doe', 'email' => 'janedoe@example.com']);
 
         $this->update->expects($this->never())->method('execute');
 
@@ -151,7 +152,8 @@ class InsertUpdateTest extends TestCase
         $this->statement->expects($this->never())->method('insert')->with('table', ['id', 'name', 'email']);
         $this->updateStatement->expects($this->never())->method('where')->with(['id']);
         $this->updateStatement->expects($this->never())->method('prepare');
-        $this->update->expects($this->never())->method('execute')->with(['id' => '1', 'name' => 'Jane Doe', 'email' => 'janedoe@example.com']);
+        $this->update->expects($this->never())->method('execute')
+            ->with(['id' => '1', 'name' => 'Jane Doe', 'email' => 'janedoe@example.com']);
 
         $this->insert->expects($this->never())->method('execute');
 
@@ -174,7 +176,7 @@ class InsertUpdateTest extends TestCase
             'name' => 'Jane Doe',
             'email' => 'janedoe@example.com',
             'created_at' => date('Y-m-d G:i:s'),
-            'updated_at' => date('Y-m-d G:i:s')
+            'updated_at' => date('Y-m-d G:i:s'),
         ]);
 
         $this->statement->expects($this->once())->method('update')->with('table', ['name', 'email']);
@@ -254,7 +256,7 @@ class InsertUpdateTest extends TestCase
             'name' => 'Jane Doe',
             'email' => 'janedoe@example.com',
             'created_at' => date('Y-m-d G:i:s'),
-            'updated_at' => date('Y-m-d G:i:s')
+            'updated_at' => date('Y-m-d G:i:s'),
         ]);
 
         $this->loader->options(['timestamps' => true]);
@@ -272,7 +274,7 @@ class InsertUpdateTest extends TestCase
             'id' => '1',
             'name' => 'Jane Doe',
             'email' => 'janedoe@example.com',
-            'updated_at' => date('Y-m-d G:i:s')
+            'updated_at' => date('Y-m-d G:i:s'),
         ]);
 
         $this->loader->options(['timestamps' => true]);

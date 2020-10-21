@@ -22,7 +22,7 @@ class FilePathTraitTest extends TestCase
 
     public function setUp(): void
     {
-        $this->fakeLoader = new class () {
+        $this->fakeLoader = new class {
             use FilePathTrait;
 
             public function input(string $filePath)
