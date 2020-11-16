@@ -48,11 +48,9 @@ fi
 
 if [ "$(git diff --cached --name-only --diff-filter=ACMR $against | grep '[.]php')" != "" ]
 then
-    config=.php_cs.dist
-    test -f .php_cs && config=.php_cs
     echo "Running PHP-CS-fixer."
     git diff --cached --name-only --diff-filter=ACMR $against | grep '[.]php' | \
-        xargs ./vendor/bin/php-cs-fixer fix -v --using-cache=no --dry-run --config=$config
+        xargs ./vendor/bin/php-cs-fixer fix -v --using-cache=no --dry-run --allow-risky=yes
     if [ $? != 0 ]
     then
         echo "Fix the error before commit!"
