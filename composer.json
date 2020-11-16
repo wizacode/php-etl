@@ -45,7 +45,7 @@
             "php-cs-fixer --dry-run -v --allow-risky=yes fix",
             "phpcs",
             "(cd tests && phpcs)",
-            "phpstan --memory-limit=256M analyze>"
+            "phpstan --memory-limit=256M analyze"
         ],
         "test": "phpunit",
         "check": ["@scan", "@test"]
