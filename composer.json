@@ -40,6 +40,17 @@
             "Tests\\": "tests/"
         }
     },
+    "scripts": {
+        "scan": [
+            "php-cs-fixer --dry-run -v fix",
+            "phpcs",
+            "(cd tests && phpcs)",
+            "phpstan --memory-limit=256M analyze>"
+        ],
+        "test": "phpunit",
+        "check": ["@scan", "@test"]
+    },
     "minimum-stability": "dev",
     "prefer-stable": true
+
 }
