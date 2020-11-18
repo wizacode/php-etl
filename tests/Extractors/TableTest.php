@@ -74,34 +74,36 @@ class TableTest extends TestCase
      *
      * @param array $expected The expected result of table extraction.
      * @param string|string[] $where The where clause used in filtering.
-
+     *
      * @test
      * @dataProvider whereClauseDataProvider
      */
     public function whereClauseOperators(array $expected, $where)
     {
+        // Set up connection to SQLite test database.
+        $connection = 'default';
         $name = tempnam(sys_get_temp_dir(), 'etl');
-        $config = [
-            'driver' => 'sqlite',
-            'database' => $name,
-        ];
-        $factory = new ConnectionFactory();
-        $manager = new Manager($factory);
-        $manager->addConnection($config);
-        $database = $manager->pdo('default');
-        $database->exec('CREATE TABLE unit (column VARCHAR(20))');
-        $database->exec('INSERT INTO unit VALUES ("row1")');
-        $database->exec('INSERT INTO unit VALUES ("row2")');
+        $config = ['driver' => 'sqlite', 'database' => $name];
+        $manager = new Manager(new ConnectionFactory());
+        $manager->addConnection($config, $connection);
 
-        $extractor = new Table($manager);
-        $etl = new Etl\Etl();
+        // Instantiate a table for testing.
+        $database = $manager->pdo($connection);
+        $table = 'unit';
+        $column = 'column';
+        $database->exec("CREATE TABLE $table ($column VARCHAR(20))");
+        $database->exec("INSERT INTO $table VALUES ('row1')");
+        $database->exec("INSERT INTO $table VALUES ('row2')");
+
+        // Perform the test using data provider arrays for where condition and expected result.
+        $pipeline = new Etl\Etl();
         $options = [
             'connection' => 'default',
-            'columns' => ['column'],
-            'where' => ['column' => $where],
+            'columns' => [$column],
+            'where' => [$column => $where],
         ];
-        $array = $etl->extract($extractor, 'unit', $options);
-        self::assertEquals($expected, $array->toArray());
+        $actual = $pipeline->extract(new Table($manager), $table, $options)->toArray();
+        self::assertEquals($expected, $actual);
 
         // Clean up our temporary database.
         unlink($name);
