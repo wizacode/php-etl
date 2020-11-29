@@ -1,8 +1,10 @@
 <?php
 
 /**
- * @file
- * .
+ * @author      Wizacha DevTeam <dev@wizacha.com>
+ * @author      Karl DeBisschop <kdebisschop@gmail.com>
+ * @copyright   Copyright (c) Wizacha
+ * @license     MIT
  */
 
 declare(strict_types=1);
