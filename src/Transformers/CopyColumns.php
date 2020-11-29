@@ -2,8 +2,8 @@
 
 /**
  * @author      Wizacha DevTeam <dev@wizacha.com>
+ * @author      Karl DeBisschop <kdebisschop@gmail.com>
  * @copyright   Copyright (c) Wizacha
- * @copyright   Copyright (c) Leonardo Marquine
  * @license     MIT
  */
 
