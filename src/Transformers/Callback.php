@@ -23,9 +23,9 @@ class Callback extends Transformer
     protected $columns = [];
 
     /**
-     * The replace function.
+     * The callback function.
      *
-     * @var string
+     * @var callable
      */
     protected $callback;
 
