@@ -15,11 +15,16 @@ use Wizaplace\Etl\Step;
 
 class FakeStep extends Step
 {
+    /** @var string */
     protected $option1;
+
+    /** @var string */
     protected $option2;
+
+    /** @var string[] */
     protected $availableOptions = ['option1'];
 
-    public function getOption(string $name)
+    public function getOption(string $name): ?string
     {
         $name = lcfirst($name);
 
