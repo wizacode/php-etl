@@ -28,6 +28,13 @@ class FakeStep extends Step
     {
         $name = lcfirst($name);
 
-        return $this->$name ?? null;
+        switch ($name) {
+            case 'option1':
+                return $this->option1 ?? null;
+            case 'option2':
+                return $this->option2 ?? null;
+            default:
+                return null;
+        }
     }
 }

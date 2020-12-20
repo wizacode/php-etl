@@ -30,8 +30,10 @@ abstract class TestCase extends BaseTestCase
 
         $step->initialize();
 
-        foreach ($data as $row) {
-            $step->$method($row);
+        if (isset($method)) {
+            foreach ($data as $row) {
+                $step->$method($row);
+            }
         }
 
         $step->finalize();
