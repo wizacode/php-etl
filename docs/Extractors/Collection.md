@@ -3,7 +3,7 @@
 Extracts data from any iterable item. It accepts arrays or traversables objects. The collection items must be associative arrays.
 
 ```php
-/** @var \Wizaplace\Etl\Extractors\Collection $collection */
+/**  @var \Wizaplace\Etl\Extractors\Collection $collection */
 $etl->extract($collection, $iterable, $options);
 ```
 
