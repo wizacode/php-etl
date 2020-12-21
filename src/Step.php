@@ -23,8 +23,6 @@ abstract class Step
     /**
      * Set the step options.
      *
-     * @param array<int|string, bool|int|object|string|array<int|string, int|string|array<int, int>>> $options
-     *
      * @return $this
      */
     public function options(array $options): Step

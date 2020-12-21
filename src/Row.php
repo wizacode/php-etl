@@ -16,7 +16,7 @@ class Row implements \ArrayAccess
     /**
      * Row attributes.
      *
-     * @var array<int|string, int|float|string|object|array<string, string>>
+     * @var array
      */
     protected $attributes;
 
@@ -36,8 +36,6 @@ class Row implements \ArrayAccess
 
     /**
      * Create a new Row instance.
-     *
-     * @param array<int|string, int|float|string|object|array<string, string>> $attributes
      */
     public function __construct(array $attributes)
     {
