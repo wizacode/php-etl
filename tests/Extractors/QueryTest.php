@@ -42,7 +42,7 @@ class QueryTest extends TestCase
     public function customConnectionAndBindings(): void
     {
         $statement = $this->createMock('PDOStatement');
-        $statement->expects(static::once())->method('execute')->with(['bindings']);
+        $statement->expects(static::once())->method('execute')->with(['binding']);
         $statement->expects(static::exactly(3))->method('fetch')
             ->will(static::onConsecutiveCalls(['row1'], ['row2'], null));
 
