@@ -51,7 +51,7 @@ class CsvLoaderTest extends TestCase
         $this->csvLoader->finalize();
 
         // Opening generated file
-        $handle = fopen($this->outputPath . '_0.csv', 'r');
+        $handle = fopen($this->outputPath . '.csv', 'r');
 
         $line = fgets($handle);
         static::assertEquals('"Product name";Price;Description', trim($line));
@@ -78,7 +78,7 @@ class CsvLoaderTest extends TestCase
         $this->csvLoader->finalize();
 
         // Opening generated file
-        $handle = fopen($this->outputPath . '_0.csv', 'r');
+        $handle = fopen($this->outputPath . '.csv', 'r');
 
         $line = fgets($handle);
         static::assertEquals('|Product name|,Price,Description', trim($line));
@@ -101,6 +101,7 @@ class CsvLoaderTest extends TestCase
 
         // 1 line per file
         $this->csvLoader->options(['linePerFile' => 1]);
+        $this->csvLoader->initialize();
         $this->csvLoader->load($row1);
         $this->csvLoader->load($row2);
         $this->csvLoader->load($row3);

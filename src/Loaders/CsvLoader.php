@@ -78,7 +78,8 @@ class CsvLoader extends Loader
 
     public function initialize(): void
     {
-        $fileUri = $this->output . '_' . $this->fileCounter . '.csv';
+        $fileUri = $this->getFileUri();
+
         $this->checkOrCreateDir($fileUri);
 
         $this->fileHandler = @fopen($fileUri, 'w+');
@@ -118,6 +119,18 @@ class CsvLoader extends Loader
 
         $this->putCsv($rowArray);
         $this->loaderCounter++;
+    }
+
+    protected function getFileUri(): string
+    {
+        $dirname = \dirname($this->output);
+        $basename =  \basename($this->output, 'csv');
+
+        if (-1 === $this->linePerFile) {
+            return "$dirname/$basename.csv";
+        }
+
+        return "{$dirname}/{$basename}_{$this->fileCounter}.csv";
     }
 
     /**
