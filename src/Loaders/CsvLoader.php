@@ -123,14 +123,17 @@ class CsvLoader extends Loader
 
     protected function getFileUri(): string
     {
-        $dirname = \dirname($this->output);
-        $basename =  \basename($this->output, 'csv');
+        [
+            'dirname' => $dirname,
+            'filename' => $filename,
+            'extension' => $extension,
+        ] = \pathinfo($this->output);
 
         if (-1 === $this->linePerFile) {
-            return "$dirname/$basename.csv";
+            return "{$dirname}/{$filename}.{$extension}";
         }
 
-        return "{$dirname}/{$basename}_{$this->fileCounter}.csv";
+        return "{$dirname}/{$filename}_{$this->fileCounter}.{$extension}";
     }
 
     /**

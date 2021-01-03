@@ -31,7 +31,7 @@ class CsvLoaderTest extends TestCase
         if (false === $path) {
             static::fail('Could not create temp file');
         }
-        $this->outputPath = $path;
+        $this->outputPath = "{$path}.csv";
 
         $this->csvLoader = new CsvLoader();
         $this->csvLoader->output($this->outputPath);
@@ -51,7 +51,7 @@ class CsvLoaderTest extends TestCase
         $this->csvLoader->finalize();
 
         // Opening generated file
-        $handle = fopen($this->outputPath . '.csv', 'r');
+        $handle = fopen($this->outputPath, 'r');
 
         $line = fgets($handle);
         static::assertEquals('"Product name";Price;Description', trim($line));
@@ -78,7 +78,7 @@ class CsvLoaderTest extends TestCase
         $this->csvLoader->finalize();
 
         // Opening generated file
-        $handle = fopen($this->outputPath . '.csv', 'r');
+        $handle = fopen($this->outputPath, 'r');
 
         $line = fgets($handle);
         static::assertEquals('|Product name|,Price,Description', trim($line));
@@ -113,12 +113,22 @@ class CsvLoaderTest extends TestCase
             'Desk;12.2;"Basic, really boring."',
         ];
 
+        [
+            'dirname' => $dirname,
+            'filename' => $filename,
+            'extension' => $extension,
+        ] = \pathinfo($this->outputPath);
+
         // We should have 3 files
         for ($i = 0; $i < 3; $i++) {
-            $handle = fopen($this->outputPath . '_' . $i . '.csv', 'r');
+            $handle = fopen(
+                "{$dirname}/{$filename}_{$i}.{$extension}",
+                'r'
+            );
 
             $line = fgets($handle);
             static::assertEquals('"Product name";Price;Description', trim($line));
+
             $line = fgets($handle);
             static::assertEquals($expectedResults[$i], trim($line));
         }
