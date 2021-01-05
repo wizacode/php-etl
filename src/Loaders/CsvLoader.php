@@ -30,7 +30,7 @@ class CsvLoader extends Loader
      *
      * @var int
      */
-    protected $fileCounter = 0;
+    protected $fileCounter = 1;
 
     /**
      * CSV file handler
@@ -82,7 +82,7 @@ class CsvLoader extends Loader
 
         $this->checkOrCreateDir($fileUri);
 
-        $this->fileHandler = @fopen($fileUri, 'w+');
+        $this->fileHandler = @\fopen($fileUri, 'w+');
 
         if (false === $this->fileHandler) {
             throw new IoException("Impossible to open the file '{$fileUri}'");
@@ -94,7 +94,7 @@ class CsvLoader extends Loader
      */
     public function finalize(): void
     {
-        fclose($this->fileHandler);
+        \fclose($this->fileHandler);
     }
 
     /**
@@ -130,10 +130,18 @@ class CsvLoader extends Loader
         ] = \pathinfo($this->output);
 
         if (-1 === $this->linePerFile) {
-            return "{$dirname}/{$filename}.{$extension}";
+            return (
+                $dirname
+                . DIRECTORY_SEPARATOR
+                . "{$filename}.{$extension}"
+            );
         }
 
-        return "{$dirname}/{$filename}_{$this->fileCounter}.{$extension}";
+        return (
+            $dirname
+            . DIRECTORY_SEPARATOR
+            . "{$filename}_{$this->fileCounter}.{$extension}"
+        );
     }
 
     /**
@@ -161,7 +169,7 @@ class CsvLoader extends Loader
      */
     protected function putCsv(array $data): void
     {
-        fputcsv(
+        \fputcsv(
             $this->fileHandler,
             $data,
             $this->delimiter,

@@ -108,9 +108,9 @@ class CsvLoaderTest extends TestCase
         $this->csvLoader->finalize();
 
         $expectedResults = [
-            'Table;10.5;"A simple table"',
-            'Chair;305.75;"A ""deluxe chair"". You need it!"',
-            'Desk;12.2;"Basic, really boring."',
+            1 => 'Table;10.5;"A simple table"',
+            2 => 'Chair;305.75;"A ""deluxe chair"". You need it!"',
+            3 => 'Desk;12.2;"Basic, really boring."',
         ];
 
         [
@@ -120,7 +120,7 @@ class CsvLoaderTest extends TestCase
         ] = \pathinfo($this->outputPath);
 
         // We should have 3 files
-        for ($i = 0; $i < 3; $i++) {
+        for ($i = 1; $i <= 3; $i++) {
             $handle = fopen(
                 "{$dirname}/{$filename}_{$i}.{$extension}",
                 'r'

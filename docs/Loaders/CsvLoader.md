@@ -50,7 +50,7 @@ If **no limit**, the loader will output in one file
 > **Example**: outputFile.csv.
 
 Else the loader will split the data into multiple files, with their names suffixed by the file's number.
->**Example**: outputFile_0.csv / outputFile_1.csv / ...
+>**Example**: outputFile_1.csv / outputFile_2.csv / ...
 
 
 | Type | Default value |
