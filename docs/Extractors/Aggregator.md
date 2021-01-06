@@ -87,7 +87,7 @@ $options = [
 
 ### Strict
 
-When all Iterators input are fully consummed, if we have any remaining incomplete rows, an `IncompleteDataException` is thrown if `strict` is `true`
+When all Iterators input are fully consumed, if we have any remaining incomplete rows, an `IncompleteDataException` is thrown if `strict` is `true`
 
 
 | Type    | Default value |
