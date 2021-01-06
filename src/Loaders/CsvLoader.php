@@ -129,18 +129,16 @@ class CsvLoader extends Loader
             'extension' => $extension,
         ] = \pathinfo($this->output);
 
-        if (-1 === $this->linePerFile) {
-            return (
-                $dirname
-                . DIRECTORY_SEPARATOR
-                . "{$filename}.{$extension}"
-            );
-        }
+        $formatedFilename =
+            -1 === $this->linePerFile
+            ? "{$filename}.{$extension}"
+            : "{$filename}_{$this->fileCounter}.{$extension}"
+        ;
 
         return (
             $dirname
             . DIRECTORY_SEPARATOR
-            . "{$filename}_{$this->fileCounter}.{$extension}"
+            . $formatedFilename
         );
     }
 
@@ -155,7 +153,7 @@ class CsvLoader extends Loader
     {
         $headers = [];
 
-        foreach ($rowArray as $columnName => $rowColumn) {
+        foreach (\array_keys($rowArray) as $columnName) {
             $headers[] = $columnName;
         }
 
