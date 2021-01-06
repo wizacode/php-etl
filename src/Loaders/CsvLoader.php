@@ -78,15 +78,7 @@ class CsvLoader extends Loader
 
     public function initialize(): void
     {
-        $fileUri = $this->getFileUri();
-
-        $this->checkOrCreateDir($fileUri);
-
-        $this->fileHandler = @\fopen($fileUri, 'w+');
-
-        if (false === $this->fileHandler) {
-            throw new IoException("Impossible to open the file '{$fileUri}'");
-        }
+        $this->openFile();
     }
 
     /**
@@ -94,7 +86,7 @@ class CsvLoader extends Loader
      */
     public function finalize(): void
     {
-        \fclose($this->fileHandler);
+        $this->closeFile();
     }
 
     /**
@@ -107,8 +99,8 @@ class CsvLoader extends Loader
             $this->loaderCounter = 0;
             $this->fileCounter++;
 
-            $this->finalize();
-            $this->initialize();
+            $this->closeFile();
+            $this->openFile();
         }
 
         $rowArray = $row->toArray();
@@ -158,6 +150,22 @@ class CsvLoader extends Loader
         }
 
         return $headers;
+    }
+
+    protected function openFile(): void
+    {
+        $fileUri = $this->getFileUri();
+        $this->checkOrCreateDir($fileUri);
+        $this->fileHandler = @\fopen($fileUri, 'w+');
+
+        if (false === $this->fileHandler) {
+            throw new IoException("Impossible to open the file '{$fileUri}'");
+        }
+    }
+
+    protected function closeFile(): void
+    {
+        \fclose($this->fileHandler);
     }
 
     /**
