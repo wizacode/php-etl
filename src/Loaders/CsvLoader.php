@@ -95,7 +95,8 @@ class CsvLoader extends Loader
     public function load(Row $row): void
     {
         // If we reach the max lines, we open a new file
-        if (0 < $this->linePerFile
+        if (
+            0 < $this->linePerFile
             && $this->linePerFile <= $this->loaderCounter
         ) {
             $this->loaderCounter = 0;

@@ -166,7 +166,9 @@ class CsvLoaderTest extends TestCase
         $this->csvLoader->initialize();
 
         \array_map(
-            fn(Row $row) => $this->csvLoader->load($row),
+            function (Row $row): void {
+                $this->csvLoader->load($row);
+            },
             [
                 $this->productRowFactory('Table', 10.50, 'A simple table'),
                 $this->productRowFactory('Chair', 305.75, 'A "deluxe chair". You need it!'),
