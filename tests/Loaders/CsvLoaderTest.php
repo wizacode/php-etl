@@ -90,21 +90,90 @@ class CsvLoaderTest extends TestCase
         static::assertEquals('Chair,305.75,|A #|deluxe chair#|. You need it!|', trim($line));
     }
 
+    /** @dataProvider provideGetFileUriData */
+    public function testGetFileUri(
+        string $output,
+        string $fileUri,
+        int $linePerFile,
+        int $fileCounter
+    ): void {
+        $loaderR = new \ReflectionClass(
+            CsvLoader::class
+        );
+
+        $linePerFileR = $loaderR->getProperty('linePerFile');
+        $linePerFileR->setAccessible(true);
+
+        $fileCounterR = $loaderR->getProperty('fileCounter');
+        $fileCounterR->setAccessible(true);
+
+        $getFileUriR = $loaderR->getMethod('getFileUri');
+        $getFileUriR->setAccessible(true);
+
+        $this->csvLoader->output($output);
+        $linePerFileR->setValue(
+            $this->csvLoader,
+            $linePerFile
+        );
+        $fileCounterR->setValue(
+            $this->csvLoader,
+            $fileCounter
+        );
+
+        static::assertEquals(
+            $fileUri,
+            $getFileUriR->invoke($this->csvLoader)
+        );
+    }
+
+    public function provideGetFileUriData(): array
+    {
+        return [
+            'Unique file without extension' => [
+                'output' => 'relative/path/to/a/file',
+                'fileUri' => 'relative/path/to/a/file',
+                'linePerFile' => -1,
+                'fileCounter' => 1,
+            ],
+            'Unique file with extension' => [
+                'output' => '/hello/world.tsv',
+                'fileUri' => '/hello/world.tsv',
+                'linePerFile' => -1,
+                'fileCounter' => 1,
+            ],
+            'Multiple files with extension' => [
+                'output' => '/bye/people',
+                'fileUri' => '/bye/people_42',
+                'linePerFile' => 1,
+                'fileCounter' => 42,
+            ],
+            'Multiple relative path files without extension' => [
+                'output' => 'AFILE.CSV',
+                'fileUri' => './AFILE_42.CSV',
+                'linePerFile' => 1,
+                'fileCounter' => 42,
+            ]
+        ];
+    }
+
     /**
      * Test CSV loading with 3 rows and 1 row per file
      */
     public function testLoadCsvMultipleFiles(): void
     {
-        $row1 = $this->productRowFactory('Table', 10.5, 'A simple table');
-        $row2 = $this->productRowFactory('Chair', 305.75, 'A "deluxe chair". You need it!');
-        $row3 = $this->productRowFactory('Desk', 12.2, 'Basic, really boring.');
-
         // 1 line per file
         $this->csvLoader->options(['linePerFile' => 1]);
         $this->csvLoader->initialize();
-        $this->csvLoader->load($row1);
-        $this->csvLoader->load($row2);
-        $this->csvLoader->load($row3);
+
+        \array_map(
+            fn(Row $row) => $this->csvLoader->load($row),
+            [
+                $this->productRowFactory('Table', 10.50, 'A simple table'),
+                $this->productRowFactory('Chair', 305.75, 'A "deluxe chair". You need it!'),
+                $this->productRowFactory('Desk', 12.2, 'Basic, really boring.'),
+            ]
+        );
+
         $this->csvLoader->finalize();
 
         $expectedResults = [

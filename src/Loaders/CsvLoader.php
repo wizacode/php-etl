@@ -95,7 +95,9 @@ class CsvLoader extends Loader
     public function load(Row $row): void
     {
         // If we reach the max lines, we open a new file
-        if (-1 !== $this->linePerFile && $this->loaderCounter >= $this->linePerFile) {
+        if (0 < $this->linePerFile
+            && $this->linePerFile <= $this->loaderCounter
+        ) {
             $this->loaderCounter = 0;
             $this->fileCounter++;
 
@@ -115,22 +117,26 @@ class CsvLoader extends Loader
 
     protected function getFileUri(): string
     {
-        [
-            'dirname' => $dirname,
-            'filename' => $filename,
-            'extension' => $extension,
-        ] = \pathinfo($this->output);
+        $pathinfo = \pathinfo($this->output);
 
-        $formatedFilename =
-            -1 === $this->linePerFile
-            ? "{$filename}.{$extension}"
-            : "{$filename}_{$this->fileCounter}.{$extension}"
+        $suffix =
+            0 < $this->linePerFile
+            ? "_{$this->fileCounter}"
+            : ''
+        ;
+
+        $extension =
+            \array_key_exists('extension', $pathinfo)
+            ? ".{$pathinfo['extension']}"
+            : ''
         ;
 
         return (
-            $dirname
+            $pathinfo['dirname']
             . DIRECTORY_SEPARATOR
-            . $formatedFilename
+            . $pathinfo['filename']
+            . $suffix
+            . $extension
         );
     }
 
