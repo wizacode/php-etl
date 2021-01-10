@@ -98,7 +98,13 @@ class StatementTest extends TestCase
         $statement = new Statement($database);
         $statement->select('foo', ['>']);
 
-        static::expectException(\PDOException::class);
-        $statement->prepare();
+        try {
+            $statement->prepare();
+            static::fail('An exception should have been thrown');
+        } catch (\PDOException $exception) {
+            static::assertEquals('SQLSTATE[HY000]: General error: 1 near ">": syntax error', $exception->getMessage());
+        } catch (\Exception $exception) {
+            static::fail('An instance of ' . \PDOException::class . ' should have been thrown');
+        }
     }
 }
