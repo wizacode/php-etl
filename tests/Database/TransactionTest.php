@@ -36,53 +36,52 @@ class TransactionTest extends TestCase
         $this->transaction = new Transaction($this->connection);
     }
 
-    protected function transaction(array $range): void
+    protected function transaction(int $rows): void
     {
-        foreach ($range as $current) {
+        for ($i = 0; $i < $rows; $i++) {
             $this->transaction->run([$this->callback, 'callback']);
         }
-
-        $this->transaction->close();
     }
 
     /** @test */
     public function runsSingleTransactionIfSizeIsEmpty(): void
     {
-        $this->callback->expects(static::exactly(4))->method('callback');
-
-        $this->connection->expects(static::exactly(1))->method('beginTransaction');
-        $this->connection->expects(static::exactly(0))->method('rollBack');
-        $this->connection->expects(static::exactly(1))->method('commit');
-
-        $this->transaction(range(1, 4));
+        $this->runCleanly(4, 1);
+        $this->transaction->close();
     }
 
     /** @test */
     public function runsTransactionsWhenCommitSizeIsMultipleOfTotalLines(): void
     {
-        $this->callback->expects(static::exactly(4))->method('callback');
-
-        $this->connection->expects(static::exactly(2))->method('beginTransaction');
-        $this->connection->expects(static::exactly(0))->method('rollBack');
-        $this->connection->expects(static::exactly(2))->method('commit');
-
-        $this->transaction->size(2);
-
-        $this->transaction(range(1, 4));
+        $this->transaction->size(3);
+        $this->runCleanly(9, 3);
+        $this->transaction->close();
     }
 
     /** @test */
     public function runsTransactionsWhenCommitSizeIsNotMultipleOfTotalLines(): void
     {
-        $this->callback->expects(static::exactly(3))->method('callback');
-
-        $this->connection->expects(static::exactly(2))->method('beginTransaction');
-        $this->connection->expects(static::exactly(0))->method('rollBack');
-        $this->connection->expects(static::exactly(2))->method('commit');
-
         $this->transaction->size(2);
+        $this->runCleanly(7, 4);
+        $this->transaction->close();
+    }
 
-        $this->transaction(range(1, 3));
+    /** @test */
+    public function transactionClosesOnDestroy(): void
+    {
+        $this->transaction->size(2);
+        $this->runCleanly(7, 4);
+        unset($this->transaction);
+    }
+
+    private function runCleanly(int $calls, int $expectedTransactions): void
+    {
+        $this->connection->expects(static::exactly($expectedTransactions))->method('beginTransaction');
+        $this->connection->expects(static::exactly($expectedTransactions))->method('commit');
+        $this->connection->expects(static::exactly(0))->method('rollBack');
+
+        $this->callback->expects(static::exactly($calls))->method('callback');
+        $this->transaction($calls);
     }
 
     /** @test */
@@ -102,6 +101,6 @@ class TransactionTest extends TestCase
 
         $this->expectException('Exception');
 
-        $this->transaction(range(1, 4));
+        $this->transaction(4);
     }
 }

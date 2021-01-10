@@ -42,6 +42,14 @@ class Transaction
     }
 
     /**
+     * Code defensively by closing any open transactions when this object is destroyed.
+     */
+    public function __destruct()
+    {
+        $this->close();
+    }
+
+    /**
      * Set the commit size.
      *
      * @return $this
@@ -82,7 +90,7 @@ class Transaction
      */
     protected function shouldBeginTransaction(): bool
     {
-        return !$this->open && (0 === $this->size || 1 === $this->count);
+        return !$this->open;
     }
 
     /**
