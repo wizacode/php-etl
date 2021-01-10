@@ -120,17 +120,17 @@ class CsvLoader extends Loader
     {
         $pathinfo = \pathinfo($this->output);
 
-        $suffix =
-            0 < $this->linePerFile
-            ? "_{$this->fileCounter}"
-            : ''
-        ;
+        if (0 < $this->linePerFile) {
+            $suffix = "_{$this->fileCounter}";
+        } else {
+            $suffix = '';
+        }
 
-        $extension =
-            \array_key_exists('extension', $pathinfo)
-            ? ".{$pathinfo['extension']}"
-            : ''
-        ;
+        if (\array_key_exists('extension', $pathinfo)){
+            $extension = ".{$pathinfo['extension']}";
+        } else {
+            $extension = '';
+        }
 
         return (
             $pathinfo['dirname']
