@@ -126,7 +126,7 @@ class CsvLoader extends Loader
             $suffix = '';
         }
 
-        if (\array_key_exists('extension', $pathinfo)){
+        if (\array_key_exists('extension', $pathinfo)) {
             $extension = ".{$pathinfo['extension']}";
         } else {
             $extension = '';
