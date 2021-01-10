@@ -150,13 +150,7 @@ class CsvLoader extends Loader
      */
     protected function getHeaders(array $rowArray): array
     {
-        $headers = [];
-
-        foreach (\array_keys($rowArray) as $columnName) {
-            $headers[] = $columnName;
-        }
-
-        return $headers;
+        return \array_keys($rowArray);
     }
 
     protected function openFile(): void
