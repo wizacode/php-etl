@@ -164,14 +164,21 @@ class DateDimensionTest extends TestCase
     /** @test */
     public function defaultStart(): void
     {
+        ini_set('date.timezone', 'America/New_York');
+        $year = (int) (new \DateTime())->format('Y');
+        $offset = (new \DateTime())->format('P');
+
         $extractor = new DateDimension();
         $extractor->options([
             'columns' => ['DateKey', 'DateFull'],
         ]);
         $result = iterator_to_array($extractor->extract());
+
+        static::assertStringEndsWith("00:00:00$offset", $result[0]['DateFull']);
+        static::assertStringEndsWith("00:00:00$offset", $result[count($result) - 1]['DateFull']);
+        static::assertStringContainsString('12-31', $result[count($result) - 1]['DateFull']);
         static::assertGreaterThan(3650, count($result));
-        $year = (int) (new \DateTime())->format('Y');
         static::assertEquals($year - 5 . '0101', $result[0]['DateKey']);
-        static::assertEquals($year + 5 . '0101', $result[count($result) - 1]['DateKey']);
+        static::assertEquals($year + 4 . '1231', $result[count($result) - 1]['DateKey']);
     }
 }

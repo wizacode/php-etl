@@ -49,16 +49,18 @@ class DateDimension extends Extractor
     public function __construct()
     {
         if (!isset($this->startDate)) {
-            $date = new \DateTime();
-            $date->sub(new \DateInterval('P5Y'))
-                ->setDate((int) $date->format('Y'), 1, 1);
-            $this->startDate = $date->format('c');
+            $start = new \DateTime();
+            $start->sub(new \DateInterval('P5Y'))
+                ->setDate((int) $start->format('Y'), 1, 1)
+                ->setTime(0, 0);
+            $this->startDate = $start->format('c');
         }
         if (!isset($this->endDate)) {
-            $date = new \DateTime();
-            $date->add(new \DateInterval('P5Y'))
-                ->setDate((int) $date->format('Y'), 1, 1);
-            $this->endDate = $date->format('c');
+            $end = new \DateTime();
+            $end->add(new \DateInterval('P5Y'))
+                ->setDate((int) $end->format('Y'), 1, 1)
+                ->sub(new \DateInterval('P1D'));
+            $this->endDate = $end->format('c');
         }
     }
 
