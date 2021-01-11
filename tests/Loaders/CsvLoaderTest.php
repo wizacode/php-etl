@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace Tests\Loaders;
 
 use Tests\TestCase;
+use Wizaplace\Etl\Exception\IoException;
 use Wizaplace\Etl\Loaders\CsvLoader;
 use Wizaplace\Etl\Row;
 
@@ -90,72 +91,6 @@ class CsvLoaderTest extends TestCase
         static::assertEquals('Chair,305.75,|A #|deluxe chair#|. You need it!|', trim($line));
     }
 
-    /** @dataProvider provideGetFileUriData */
-    public function testGetFileUri(
-        string $output,
-        string $fileUri,
-        int $linePerFile,
-        int $fileCounter
-    ): void {
-        $loaderR = new \ReflectionClass(
-            CsvLoader::class
-        );
-
-        $linePerFileR = $loaderR->getProperty('linePerFile');
-        $linePerFileR->setAccessible(true);
-
-        $fileCounterR = $loaderR->getProperty('fileCounter');
-        $fileCounterR->setAccessible(true);
-
-        $getFileUriR = $loaderR->getMethod('getFileUri');
-        $getFileUriR->setAccessible(true);
-
-        $this->csvLoader->output($output);
-        $linePerFileR->setValue(
-            $this->csvLoader,
-            $linePerFile
-        );
-        $fileCounterR->setValue(
-            $this->csvLoader,
-            $fileCounter
-        );
-
-        static::assertEquals(
-            $fileUri,
-            $getFileUriR->invoke($this->csvLoader)
-        );
-    }
-
-    public function provideGetFileUriData(): array
-    {
-        return [
-            'Unique file without extension' => [
-                'output' => 'relative/path/to/a/file',
-                'fileUri' => 'relative/path/to/a/file',
-                'linePerFile' => -1,
-                'fileCounter' => 1,
-            ],
-            'Unique file with extension' => [
-                'output' => '/hello/world.tsv',
-                'fileUri' => '/hello/world.tsv',
-                'linePerFile' => -1,
-                'fileCounter' => 1,
-            ],
-            'Multiple files with extension' => [
-                'output' => '/bye/people',
-                'fileUri' => '/bye/people_42',
-                'linePerFile' => 1,
-                'fileCounter' => 42,
-            ],
-            'Multiple relative path files without extension' => [
-                'output' => 'AFILE.CSV',
-                'fileUri' => './AFILE_42.CSV',
-                'linePerFile' => 1,
-                'fileCounter' => 42,
-            ]
-        ];
-    }
-
     /**
      * Test CSV loading with 3 rows and 1 row per file
      */
@@ -184,16 +119,10 @@ class CsvLoaderTest extends TestCase
             3 => 'Desk;12.2;"Basic, really boring."',
         ];
 
-        [
-            'dirname' => $dirname,
-            'filename' => $filename,
-            'extension' => $extension,
-        ] = \pathinfo($this->outputPath);
-
         // We should have 3 files
         for ($i = 1; $i <= 3; $i++) {
             $handle = fopen(
-                "{$dirname}/{$filename}_{$i}.{$extension}",
+                $this->csvLoader->getFileUri($this->outputPath, 1, $i),
                 'r'
             );
 

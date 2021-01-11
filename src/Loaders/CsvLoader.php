@@ -116,31 +116,6 @@ class CsvLoader extends Loader
         $this->loaderCounter++;
     }
 
-    protected function getFileUri(): string
-    {
-        $pathinfo = \pathinfo($this->output);
-
-        if (0 < $this->linePerFile) {
-            $suffix = "_{$this->fileCounter}";
-        } else {
-            $suffix = '';
-        }
-
-        if (\array_key_exists('extension', $pathinfo)) {
-            $extension = ".{$pathinfo['extension']}";
-        } else {
-            $extension = '';
-        }
-
-        return (
-            $pathinfo['dirname']
-            . DIRECTORY_SEPARATOR
-            . $pathinfo['filename']
-            . $suffix
-            . $extension
-        );
-    }
-
     /**
      * CSV headers generation
      *
@@ -155,7 +130,11 @@ class CsvLoader extends Loader
 
     protected function openFile(): void
     {
-        $fileUri = $this->getFileUri();
+        $fileUri = $this->getFileUri(
+            $this->output,
+            $this->linePerFile,
+            $this->fileCounter
+        );
         $this->checkOrCreateDir($fileUri);
         $this->fileHandler = @\fopen($fileUri, 'w+');
 
