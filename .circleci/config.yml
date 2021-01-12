@@ -123,6 +123,9 @@ workflows:
       - phpcs7-4:
           requires:
             - composer7-4
+      - phpcsfixer7-4:
+          requires:
+            - composer7-4
       - phpstan7-4:
           requires:
             - composer7-4
