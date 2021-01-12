@@ -63,6 +63,8 @@ class Transaction
 
     /**
      * Run the given callback inside a transaction.
+     *
+     * @throws \Exception
      */
     public function run(callable $callback): void
     {
@@ -75,8 +77,9 @@ class Transaction
         try {
             call_user_func($callback);
         } catch (\Exception $exception) {
-            $this->pdo->rollBack();
-
+            if ($this->pdo->inTransaction()) {
+                $this->pdo->commit();
+            }
             throw $exception;
         }
 
@@ -119,7 +122,9 @@ class Transaction
         $this->open = false;
         $this->count = 0;
 
-        $this->pdo->commit();
+        if ($this->pdo->inTransaction()) {
+            $this->pdo->commit();
+        }
     }
 
     /**

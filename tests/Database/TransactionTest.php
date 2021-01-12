@@ -14,7 +14,12 @@ namespace Tests\Database;
 use Exception;
 use PHPUnit\Framework\MockObject\MockObject;
 use Tests\TestCase;
+use Wizaplace\Etl\Database\ConnectionFactory;
+use Wizaplace\Etl\Database\Manager;
 use Wizaplace\Etl\Database\Transaction;
+use Wizaplace\Etl\Etl;
+use Wizaplace\Etl\Extractors\Collection;
+use Wizaplace\Etl\Loaders\Insert;
 
 class TransactionTest extends TestCase
 {
@@ -77,6 +82,7 @@ class TransactionTest extends TestCase
     private function runCleanly(int $calls, int $expectedTransactions): void
     {
         $this->connection->expects(static::exactly($expectedTransactions))->method('beginTransaction');
+        $this->connection->expects(static::exactly($expectedTransactions))->method('inTransaction')->willReturn(true);
         $this->connection->expects(static::exactly($expectedTransactions))->method('commit');
         $this->connection->expects(static::exactly(0))->method('rollBack');
 
@@ -94,13 +100,70 @@ class TransactionTest extends TestCase
         );
 
         $this->connection->expects(static::exactly(2))->method('beginTransaction');
-        $this->connection->expects(static::exactly(1))->method('rollBack');
-        $this->connection->expects(static::exactly(1))->method('commit');
+        $this->connection->expects(static::exactly(0))->method('rollBack');
+        $this->connection->expects(static::exactly(2))->method('inTransaction')->willReturn(true);
+        $this->connection->expects(static::exactly(2))->method('commit');
 
         $this->transaction->size(2);
 
         $this->expectException('Exception');
 
         $this->transaction(4);
+    }
+
+    /**
+     * If an exception is thrown, we should not lose rows that have already been processed.
+     *
+     * @test
+     */
+    public function transactionPreservesIngestedRows(): void
+    {
+        // Set up connection to SQLite test database.
+        $connection = 'default';
+        $config = ['driver' => 'sqlite', 'database' => ':memory:'];
+        $manager = new Manager(new ConnectionFactory());
+        $manager->addConnection($config, $connection);
+
+        // Instantiate a table for testing.
+        $database = $manager->pdo($connection);
+        $table = 'unit';
+        $column = 'value';
+        $database->exec("CREATE TABLE $table ($column INT, CHECK ($column < 9))");
+        $database->exec("DELETE FROM $table");
+
+        $data = [1, 2, 3, 4, 5, 6, 7, 8, 'zzz'];
+        foreach ($data as &$datum) {
+            $datum = [$column => $datum];
+        }
+        $options = [
+            'columns' => ['value'],
+            'timestamps' => false,
+            'transaction' => true,
+            'commit_size' => 3,
+        ];
+
+        // Perform the insertion. Only the last row, the cause of the exception, should be lost.
+        try {
+            $pipeline = new Etl();
+            $pipeline->extract(new Collection(), new \ArrayIterator($data), [])
+                ->load(new Insert($manager), $table, $options)
+                ->run();
+            static::fail('An exception should have been thrown');
+        } catch (\Exception $exception) {
+            static::assertEquals(
+                [
+                    ['value' => 1],
+                    ['value' => 2],
+                    ['value' => 3],
+                    ['value' => 4],
+                    ['value' => 5],
+                    ['value' => 6],
+                    ['value' => 7],
+                    ['value' => 8],
+                ],
+                $database->query("SELECT * FROM $table")->fetchAll(\PDO::FETCH_ASSOC)
+            );
+            static::assertEquals(8, $database->query("SELECT COUNT(*) FROM $table")->fetchColumn());
+        }
     }
 }
