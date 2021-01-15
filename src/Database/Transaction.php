@@ -78,7 +78,11 @@ class Transaction
             call_user_func($callback);
         } catch (\Exception $exception) {
             if ($this->pdo->inTransaction()) {
-                $this->pdo->commit();
+                if (0 === $this->size) {
+                    $this->pdo->rollBack();
+                } else {
+                    $this->pdo->commit();
+                }
             }
             throw $exception;
         }

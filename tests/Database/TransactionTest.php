@@ -11,7 +11,6 @@ declare(strict_types=1);
 
 namespace Tests\Database;
 
-use Exception;
 use PHPUnit\Framework\MockObject\MockObject;
 use Tests\TestCase;
 use Wizaplace\Etl\Database\ConnectionFactory;
@@ -91,12 +90,33 @@ class TransactionTest extends TestCase
     }
 
     /** @test */
-    public function rollsBackTheLastTransactionAndStopsExecutionOnError(): void
+    public function rollsBackLastTransactionAndStopsExecutionOnError(): void
     {
         $this->callback->expects(static::exactly(3))->method('callback')->willReturnOnConsecutiveCalls(
             null,
             null,
-            static::throwException(new Exception())
+            static::throwException(new \Exception())
+        );
+
+        $this->connection->expects(static::exactly(1))->method('beginTransaction');
+        $this->connection->expects(static::exactly(1))->method('rollBack');
+        $this->connection->expects(static::exactly(1))->method('inTransaction')->willReturn(true);
+        $this->connection->expects(static::exactly(0))->method('commit');
+
+        $this->transaction->size(0);
+
+        $this->expectException('Exception');
+
+        $this->transaction(4);
+    }
+
+    /** @test */
+    public function commitsLastTransactionAndStopsExecutionOnError(): void
+    {
+        $this->callback->expects(static::exactly(3))->method('callback')->willReturnOnConsecutiveCalls(
+            null,
+            null,
+            static::throwException(new \Exception())
         );
 
         $this->connection->expects(static::exactly(2))->method('beginTransaction');
