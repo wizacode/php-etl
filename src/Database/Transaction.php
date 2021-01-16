@@ -46,7 +46,11 @@ class Transaction
      */
     public function __destruct()
     {
-        $this->close();
+        if ($this->size > 0) {
+            $this->close();
+        } elseif ($this->pdo->inTransaction()) {
+            $this->pdo->rollBack();
+        }
     }
 
     /**

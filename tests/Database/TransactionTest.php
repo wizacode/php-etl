@@ -78,15 +78,24 @@ class TransactionTest extends TestCase
         unset($this->transaction);
     }
 
-    private function runCleanly(int $calls, int $expectedTransactions): void
+    /** @test */
+    public function transactionClosesOnDestroy2(): void
     {
+        $this->transaction->size(0);
+        $this->runCleanly(7, 1, 1);
+        unset($this->transaction);
+    }
+
+    private function runCleanly(int $rows, int $expectedTransactions, int $expectedRollbacks = 0): void
+    {
+        $expectedCommits = $expectedTransactions - $expectedRollbacks;
         $this->connection->expects(static::exactly($expectedTransactions))->method('beginTransaction');
         $this->connection->expects(static::exactly($expectedTransactions))->method('inTransaction')->willReturn(true);
-        $this->connection->expects(static::exactly($expectedTransactions))->method('commit');
-        $this->connection->expects(static::exactly(0))->method('rollBack');
+        $this->connection->expects(static::exactly($expectedCommits))->method('commit');
+        $this->connection->expects(static::exactly($expectedRollbacks))->method('rollBack');
 
-        $this->callback->expects(static::exactly($calls))->method('callback');
-        $this->transaction($calls);
+        $this->callback->expects(static::exactly($rows))->method('callback');
+        $this->transaction($rows);
     }
 
     /** @test */
