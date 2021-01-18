@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.3.1
+
+**Bufixes**
+
+* Fixes the DateDimension generator. Contribution by [kdebisschop](https://github.com/kdebisschop).
+
 ## 1.3
 
 **New features**
