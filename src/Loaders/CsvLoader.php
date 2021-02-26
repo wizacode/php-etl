@@ -26,7 +26,7 @@ class CsvLoader extends Loader
     /**
      * Count how many files have been created
      */
-    protected $fileCounter = 1;
+    protected int $fileCounter = 1;
 
     /**
      * CSV file handler
