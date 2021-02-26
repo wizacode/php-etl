@@ -32,8 +32,9 @@ $extendedInfoIterator = (new Etl())
     ->toIterator()
 ;
 
-# merge this two data sources
-$mergedData = (new Etl())
+# merge these two data sources, capture result in "completeUserData.csv".
+$pipeline = new Etl();
+$pipeline
     ->extract(
         new Aggregator(),
         [
@@ -49,8 +50,7 @@ $mergedData = (new Etl())
         new CsvLoader(),
         'completeUserData.csv'
     )
-    ->run()
-;
+    ->run();
 ```
 
 ## Options
@@ -76,15 +76,19 @@ A `Row` is yield when all specified columns have been found for the matching ind
 | array | `null`        |
 
 ```php
-$options = ['columns' => ['id', 'name', 'email']];
+$options = [
+    'columns' => [
+        'id',
+        'name',
+        'email'
+    ]
+];
 ```
 
 ### Strict
 
-When all Iterators input are fully consummed, if we have any remaining incomplete rows:
+When all Iterators input are fully consumed, if we have any remaining incomplete rows, an `IncompleteDataException` is thrown if `strict` is `true`
 
-- if *true*: Throw an `IncompleteDataException`
-- if *false*: yield the incomplete remaining `Row` flagged as `incomplete`
 
 | Type    | Default value |
 |---------|---------------|
@@ -92,4 +96,16 @@ When all Iterators input are fully consummed, if we have any remaining incomplet
 
 ```php
 $options = ['strict' => false];
+```
+
+### Discard
+
+If `strict` is `false` and `discard` is `true` we yield the incomplete remaining `Rows` flagged as `incomplete`
+
+| Type    | Default value |
+|---------|---------------|
+| boolean | `false`        |
+
+```php
+$options = ['discard' => false];
 ```

@@ -21,8 +21,7 @@ class CsvLoaderTest extends TestCase
     /** @var string|false|mixed */
     protected $outputPath;
 
-    /** @var CsvLoader */
-    private $csvLoader;
+    private CsvLoader $csvLoader;
 
     protected function setUp(): void
     {
