@@ -11,6 +11,7 @@ $etl->load($csvLoader, 'outputFileName', $options);
 ## Options
 
 ### Delimiter
+
 Field delimiter (one character only).
 
 | Type | Default value |
@@ -18,10 +19,11 @@ Field delimiter (one character only).
 | string | ; |
 
 ```php
-$options = ['delimiter' => ';'];
+$options = [CsvLoader::DELIMITER => ';'];
 ```
 
 ### Enclosure
+
 Enclosure character (one character only).
 
 | Type | Default value |
@@ -29,10 +31,11 @@ Enclosure character (one character only).
 | string | " |
 
 ```php
-$options = ['enclosure' => '"'];
+$options = [CsvLoader::ENCLOSURE => '"'];
 ```
 
 ### Escaping character
+
 Escaping character (one character only).
 
 | Type | Default value |
@@ -40,10 +43,11 @@ Escaping character (one character only).
 | string | \\ |
 
 ```php
-$options = ['escapeChar' => '\\'];
+$options = [CsvLoader::ESCAPE_CHAR' => '\\'];
 ```
 
 ### Line per file
+
 How many lines each file should contains at max (-1 = no limit).
 
 If **no limit**, the loader will output in one file
@@ -58,5 +62,5 @@ Else the loader will split the data into multiple files, with their names suffix
 | integer | -1 |
 
 ```php
-$options = ['linePerFile' => 1000];
+$options = [CsvLoader::LINE_PER_FILE => 1000];
 ```

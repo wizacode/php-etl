@@ -18,7 +18,7 @@ Columns that will be transformed. If `empty`, the transformation is applied to a
 | array | `[]` |
 
 ```php
-$options = ['columns' => ['name', 'email']];
+$options = [Trim::COLUMNS => ['name', 'email']];
 ```
 
 ### Type
@@ -29,7 +29,7 @@ The options `trim` &#124; `all` &#124; `both` will trim both sides, `ltrim` &#12
 | string | both |
 
 ```php
-$options = ['type' => 'right'];
+$options = [Trim::TYPE => 'right'];
 ```
 
 ### Mask
@@ -40,5 +40,5 @@ The stripped characters. Simply list all characters that you want to be stripped
 | string | "&nbsp;\t\n\r\0\x0B" |
 
 ```php
-$options = ['mask' => '|'];
+$options = [Trim::MASK => '|'];
 ```

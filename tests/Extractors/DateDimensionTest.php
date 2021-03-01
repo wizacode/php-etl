@@ -90,7 +90,12 @@ class DateDimensionTest extends TestCase
         ];
 
         $extractor = new DateDimension();
-        $extractor->options(['startDate' => '2020-04-04T00:00:00+0', 'endDate' => '2020-04-06T00:00:00+0']);
+        $extractor->options(
+            [
+                $extractor::START_DATE => '2020-04-04T00:00:00+0',
+                $extractor::END_DATE => '2020-04-06T00:00:00+0',
+            ]
+        );
         static::assertEquals($expected, iterator_to_array($extractor->extract()));
     }
 
@@ -123,9 +128,9 @@ class DateDimensionTest extends TestCase
 
         $extractor = new DateDimension();
         $extractor->options([
-            'startDate' => '2020-01-01T06:00:00-4',
-            'endDate' => '2020-01-03T06:00:00-4',
-            'columns' => ['DateKey', 'DateFull', 'Year', 'Month', 'DayOfMonth'],
+            $extractor::START_DATE => '2020-01-01T06:00:00-4',
+            $extractor::END_DATE => '2020-01-03T06:00:00-4',
+            $extractor::COLUMNS => ['DateKey', 'DateFull', 'Year', 'Month', 'DayOfMonth'],
         ]);
         static::assertEquals($expected, iterator_to_array($extractor->extract()));
     }
@@ -169,9 +174,7 @@ class DateDimensionTest extends TestCase
         $offset = (new \DateTime())->format('P');
 
         $extractor = new DateDimension();
-        $extractor->options([
-            'columns' => ['DateKey', 'DateFull'],
-        ]);
+        $extractor->options([$extractor::COLUMNS => ['DateKey', 'DateFull']]);
         $result = iterator_to_array($extractor->extract());
 
         static::assertStringEndsWith("00:00:00$offset", $result[0]['DateFull']);

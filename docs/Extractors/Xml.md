@@ -21,7 +21,7 @@ To select which columns will be extracted, use the path (without the loop path) 
 
 ```php
 $options = [
-    'columns' => [
+    Xml::COLUMNS => [
         'id' => '/@id',
         'name' => '/profile/name',
         'email' => '/profile/email',
@@ -40,5 +40,5 @@ The path to loop through.
 To select which columns will be extracted, use the path (without the loop path) of the value. Use `@` to select attributes:
 
 ```php
-$options = ['loop' => '/users/user'];
+$options = [Xml::LOOP => '/users/user'];
 ```

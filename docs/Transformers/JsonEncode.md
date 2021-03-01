@@ -18,7 +18,7 @@ Columns that will be transformed. If `empty`, the transformation is applied to a
 | array | `[]` |
 
 ```php
-$options = ['columns' => ['preferences']];
+$options = [JsonEncode::COLUMNS => ['preferences']];
 ```
 
 ### Options
@@ -29,7 +29,7 @@ Bitmask consisting of JSON_HEX_QUOT, JSON_HEX_TAG, JSON_HEX_AMP, JSON_HEX_APOS, 
 | int | 0 |
 
 ```php
-$options = ['options' => JSON_FORCE_OBJECT];
+$options = [JsonEncode::OPTIONS => JSON_FORCE_OBJECT];
 ```
 
 ### Depth
@@ -40,5 +40,5 @@ The maximum depth. Must be greater than zero.
 | int | 512 |
 
 ```php
-$options = ['depth' => 32];
+$options = [JsonEncode::DEPTH => 32];
 ```

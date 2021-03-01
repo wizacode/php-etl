@@ -19,12 +19,12 @@ Columns that will be loaded. If `null`, all columns in the process will be inser
 
 To select which columns will be loaded, use an array with the columns list:
 ```php
-$options = ['columns' => ['id', 'name', 'email']];
+$options = [InsertUpdate::COLUMNS => ['id', 'name', 'email']];
 ```
 
 To map columns from the etl process to the database table, use an associative array where the `key` is the name of the process column and the `value` is the table column:
 ```php
-$options = ['columns' => [
+$options = [InsertUpdate::COLUMNS => [
     'id' => 'user_id',
     'name' => 'full_name',
 ]];
@@ -38,7 +38,7 @@ Name of the database connection to use.
 | string | default |
 
 ```php
-$options = ['connection' => 'app'];
+$options = [InsertUpdate::CONNECTION => 'app'];
 ```
 
 ### Key
@@ -49,13 +49,13 @@ List of primary keys or identifiers of the table.
 | array | `['id']` |
 
 ```php
-$options = ['key' => ['id', 'type']];
+$options = [InsertUpdate::KEY => ['id', InsertUpdate::TYPE]];
 ```
 
 ### DoUpdates
 When this option is enabled, new rows (based on key) will be inserted, but existing rows will be left unchanged.
 
-The boolean option 'doUpdates' defaults to true, preserving the previous behavior. When set to false, rows that have
+The boolean option Option::DO_UPDATES defaults to true, preserving the previous behavior. When set to false, rows that have
 keys already present in the destination are skipped rather than updated. This allows new rows to be brought into the
 ETL without overwriting any manual edits to the destination table. A future enhancement could be to make it so the
 list of columns to update is a subset of the list of columns that are inserted.
@@ -65,7 +65,7 @@ list of columns to update is a subset of the list of columns that are inserted.
 | boolean | `true` |
 
 ```php
-$options = ['doUpdates' => false];
+$options = [InsertUpdate::DO_UPDATES => false];
 ```
 
 ### Timestamps
@@ -76,7 +76,7 @@ Populates the `created_at` and/or `updated_at` columns with the current timestam
 | boolean | `false` |
 
 ```php
-$options = ['timestamps' => true];
+$options = [InsertUpdate::TIMESTAMPS => true];
 ```
 
 ### Transaction
@@ -91,7 +91,7 @@ accepted by the destination database.
 | boolean | `true` |
 
 ```php
-$options = ['transaction' => false];
+$options = [InsertUpdate::TRANSACTION => false];
 ```
 
 ### Commit Size
@@ -114,5 +114,5 @@ ETL process is not atomic, at least we can be durable.
 | int | 100 |
 
 ```php
-$options = ['commit_size' => 500];
+$options = [InsertUpdate::COMMIT_SIZE => 500];
 ```

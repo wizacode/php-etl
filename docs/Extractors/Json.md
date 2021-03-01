@@ -20,8 +20,10 @@ Columns that will be extracted. If `null`, the first level key/value pairs of th
 For more control over the columns, you may use JSON path:
 
 ```php
-$options = ['columns' => [
-    'id' => '$..bindings[*].id.value',
-    'name' => '$..bindings[*].name.value',
-]];
+$options = [
+    Json::COLUMNS => [
+        'id' => '$..bindings[*].id.value',
+        'name' => '$..bindings[*].name.value',
+    ]
+];
 ```

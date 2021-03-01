@@ -20,7 +20,7 @@ Without additional parameter, any column that doesn't match the name of this par
 | array | `[]` |
 
 ```php
-$options = ['columns' => ['name', 'email']];
+$options = [ColumnFilterTransformer::COLUMNS => ['name', 'email']];
 ```
 
 ### Callback
@@ -34,7 +34,7 @@ Callback function to apply on each column, taking the column name and value as p
 For example, to exclude empty columns:
 ```php
 $options = [
-    'callback' => function (string $columnName, $value): bool {
+    ColumnFilterTransformer::CALLBACK => function (string $columnName, $value): bool {
         return !empty($columnName) && !empty($value);
     },
 ];

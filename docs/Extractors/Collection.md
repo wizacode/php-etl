@@ -20,5 +20,5 @@ Columns from the iterable item that will be extracted.
 | array | `null`        |
 
 ```php
-$options = ['columns' => ['id', 'name', 'email']];
+$options = [Collection::COLUMNS => ['id', 'name', 'email']];
 ```

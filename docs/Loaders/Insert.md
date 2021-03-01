@@ -19,12 +19,12 @@ Columns that will be loaded. If `null`, all columns in the process will be inser
 
 To select which columns will be loaded, use an array with the columns list:
 ```php
-$options = ['columns' => ['id', 'name', 'email']];
+$options = [Insert::COLUMNS => ['id', 'name', 'email']];
 ```
 
 To map columns from the etl process to the database table, use an associative array where the `key` is the name of the process column and the `value` is the table column:
 ```php
-$options = ['columns' => [
+$options = [Insert::COLUMNS => [
     'id' => 'user_id',
     'name' => 'full_name',
 ]];
@@ -38,7 +38,7 @@ Name of the database connection to use.
 | string | default |
 
 ```php
-$options = ['connection' => 'app'];
+$options = [Insert::CONNECTION => 'app'];
 ```
 
 ### Timestamps
@@ -49,7 +49,7 @@ Populates the `created_at` column with the current timestamp when inserting a ro
 | boolean | `false` |
 
 ```php
-$options = ['timestamps' => true];
+$options = [Insert::TIMESTAMPS => true];
 ```
 
 ### Transaction
@@ -64,7 +64,7 @@ accepted by the destination database.
 | boolean | `true` |
 
 ```php
-$options = ['transaction' => false];
+$options = [Insert::TRANSACTION => false];
 ```
 
 ### Commit Size
@@ -87,5 +87,5 @@ ETL process is not atomic, at least we can be durable.
 | int | 100 |
 
 ```php
-$options = ['commit_size' => 500];
+$options = [Insert::COMMIT_SIZE => 500];
 ```

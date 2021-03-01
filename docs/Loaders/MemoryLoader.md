@@ -22,5 +22,5 @@ The name of `Row` column to uses as in-memory map index.
 
 For example, a row extracted from a CSV with a column named `Identifier` would be loaded with this option set:
 ```php
-$options = ['index' => 'Identifier'];
+$options = [MemoryLoader::INDEX => 'Identifier'];
 ```

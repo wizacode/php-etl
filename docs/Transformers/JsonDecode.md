@@ -18,7 +18,7 @@ Columns that will be transformed. If `empty`, the transformation is applied to a
 | array | `[]` |
 
 ```php
-$options = ['columns' => ['preferences']];
+$options = [JsonDecode::COLUMNS => ['preferences']];
 ```
 
 ### Associative
@@ -29,7 +29,7 @@ Indicates if objects will be converted to associative arrays.
 | bool | `false` |
 
 ```php
-$options = ['assoc' => true];
+$options = [JsonDecode::ASSOC => true];
 ```
 
 ### Depth
@@ -40,7 +40,7 @@ The maximum depth. Must be greater than zero.
 | int | 512 |
 
 ```php
-$options = ['depth' => 32];
+$options = [JsonDecode::DEPTH => 32];
 ```
 
 ### Options
@@ -51,5 +51,5 @@ Bitmask of JSON decode options. Currently there are two supported options. The f
 | int | 0 |
 
 ```php
-$options = ['options' => JSON_FORCE_OBJECT];
+$options = [JsonDecode::OPTIONS => JSON_FORCE_OBJECT];
 ```

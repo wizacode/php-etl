@@ -18,7 +18,7 @@ Name of the database connection to use.
 | string | default |
 
 ```php
-$options = ['connection' => 'app'];
+$options = [Query::CONNECTION => 'app'];
 ```
 
 ### Bindings
@@ -32,11 +32,11 @@ Values to bind to the query statement.
 Using prepared statement with named placeholders `select * from users where status = :status`:
 
 ```php
-$options = ['bindings' => ['status' => 'active']];
+$options = [Query::BINDINGS => ['status' => 'active']];
 ```
 
 Using prepared statement with question mark placeholders `select * from users where status = ?`:
 
 ```php
-$options = ['bindings' => ['active']];
+$options = [Query::BINDINGS => ['active']];
 ```

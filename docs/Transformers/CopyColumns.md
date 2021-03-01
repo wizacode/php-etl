@@ -22,7 +22,9 @@ Columns that will be transformed. The `key` is the old name and the `value` is t
 | array | `[]` |
 
 ```php
-$options = ['columns' => [
-    'email_address' => 'email',
-]];
+$options = [
+    CopyColumns::COLUMNS => [
+        'email_address' => 'email',
+    ]
+];
 ```

@@ -18,7 +18,7 @@ Columns that will be transformed. If `empty`, the transformation is applied to a
 | array | `[]` |
 
 ```php
-$options = ['columns' => ['name', 'email']];
+$options = [ConvertCase::COLUMNS => ['name', 'email']];
 ```
 
 ### Mode
@@ -29,7 +29,7 @@ The mode of the conversion. It can be `lower`/`lowercase`, `upper`/`uppercase` o
 | string | lower |
 
 ```php
-$options = ['mode' => 'upper'];
+$options = [ConvertCase::MODE => 'upper'];
 ```
 
 ### Encoding
@@ -40,5 +40,5 @@ The character encoding.
 | string | utf-8 |
 
 ```php
-$options = ['encoding' => 'ASCII'];
+$options = [ConvertCase::ENCODING => 'ASCII'];
 ```

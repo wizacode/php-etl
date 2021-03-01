@@ -22,7 +22,7 @@ Columns that will be transformed. The `key` is the old name and the `value` is t
 | array | `[]` |
 
 ```php
-$options = ['columns' => ['name']];
+$options = [Callback::COLUMNS => ['name']];
 ```
 
 ### Callback (required)
@@ -34,7 +34,7 @@ The callback function, which takes two arguments: the Row object, and the column
 
 ```php
 use Wizaplace\Etl\Row;
-$options = ['callback' => function(Row $row, $columnName) {
+$options = [Callback::CALLBACK => function(Row $row, $columnName) {
     return "{$row->get($columnName)} <{$row->get('someOtherColumn')}>";
 }];
 ```

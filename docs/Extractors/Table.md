@@ -20,7 +20,7 @@ Columns that will be extracted. If `null`, all columns of the table will be extr
 To select which columns will be extracted, use an array with the columns list:
 
 ```php
-$options = ['columns' => ['id', 'name', 'email']];
+$options = [Table::COLUMNS => ['id', 'name', 'email']];
 ```
 
 ### Connection
@@ -32,7 +32,7 @@ Name of the database connection to use.
 | string | default       |
 
 ```php
-$options = ['connection' => 'app'];
+$options = [Table::CONNECTION => 'app'];
 ```
 
 ### Where
@@ -49,8 +49,10 @@ If you need more flexibility in the query creation, you may use the [Query extra
 | array | `[]`          |
 
 ```php
-$options = ['where' => [
-    'status' => 'active', // 'key' equals 'value'
-    'colName' => ['<', 'comparisonValue'], // 'key' comparesTo 'value'
-]];
+$options = [
+    Table::WHERE => [
+        'status' => 'active', // 'key' equals 'value'
+        'colName' => ['<', 'comparisonValue'], // 'key' comparesTo 'value'
+    ]
+];
 ```

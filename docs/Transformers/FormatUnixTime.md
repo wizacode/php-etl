@@ -22,7 +22,7 @@ Columns that will be transformed.
 | array | `[]`         |
 
 ```php
-$options = ['columns' => ['timestamp']];
+$options = [FormatUnixTime::COLUMNS => ['timestamp']];
 ```
 
 ### Format
@@ -33,7 +33,7 @@ The desired output format, as used in DateTime::format().
 | string | `Ymd`         |
 
 ```php
-$options = ['format' => 'Y-m-d H:i:s'];
+$options = [FormatUnixTime::FORMAT => 'Y-m-d H:i:s'];
 ```
 
 ### Timezone
@@ -44,5 +44,5 @@ The timezone for which the time should be rendered, uses PHP setting if not spec
 | string | `null`        |
 
 ```php
-$options = ['timezone' => 'UTC'];
+$options = [FormatUnixTime::TIMEZONE => 'UTC'];
 ```

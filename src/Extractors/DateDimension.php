@@ -18,6 +18,9 @@ use Wizaplace\Etl\Row;
  */
 class DateDimension extends Extractor
 {
+    public const END_DATE = 'endDate';
+    public const START_DATE = 'startDate';
+
     /**
      * A string representing the start date of the requested dimension table.
      */
@@ -35,7 +38,11 @@ class DateDimension extends Extractor
      *
      * @var string[]
      */
-    protected array $availableOptions = ['columns', 'startDate', 'endDate'];
+    protected array $availableOptions = [
+        self::COLUMNS,
+        self::START_DATE,
+        self::END_DATE,
+    ];
 
     public function __construct()
     {

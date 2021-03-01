@@ -18,7 +18,7 @@ Columns used in the row comparison. If `empty`, all columns will be used.
 | array | `[]` |
 
 ```php
-$options = ['columns' => ['name', 'email']];
+$options = [UniqueRows::COLUMNS => ['name', 'email']];
 ```
 
 ### Consecutive
@@ -29,5 +29,5 @@ Indicates if only consecutive duplicates will be removed.
 | bool | `false` |
 
 ```php
-$options = ['consecutive' => true];
+$options = [UniqueRows::CONSECUTIVE => true];
 ```

@@ -18,7 +18,7 @@ Columns that will be transformed. The `key` is the old name and the `value` is t
 | array | `[]` |
 
 ```php
-$options = ['columns' => [
+$options = [RenameColumns::COLUMNS => [
     'email_address' => 'email',
 ]];
 ```
