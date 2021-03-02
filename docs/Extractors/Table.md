@@ -53,6 +53,6 @@ $options = [
     Table::WHERE => [
         'status' => 'active', // 'key' equals 'value'
         'colName' => ['<', 'comparisonValue'], // 'key' comparesTo 'value'
-    ]
+    ],
 ];
 ```

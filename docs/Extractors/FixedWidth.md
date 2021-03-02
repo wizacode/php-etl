@@ -14,7 +14,7 @@ $etl->extract($fixedWidth, 'path/to/file.txt', $options);
 Columns that will be extracted.
 
 | Type  | Default value |
-|-------|---------------|
+| ----- | ------------- |
 | array | `null`        |
 
 Associative array where the `key` is the name of the column and the `value` is an array containing the start position and the length of the column;

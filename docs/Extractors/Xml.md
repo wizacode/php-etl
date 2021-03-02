@@ -14,7 +14,7 @@ $etl->extract($xml, 'path/to/file.xml', $options);
 Columns that will be extracted. If `null`, all tags and attributes within the loop path will be extracted.
 
 | Type  | Default value |
-|-------| ------------- |
+| ----- | ------------- |
 | array | `null`        |
 
 To select which columns will be extracted, use the path (without the loop path) of the value. Use `@` to select attributes:
@@ -34,7 +34,7 @@ $options = [
 The path to loop through.
 
 | Type   | Default value |
-|--------|---------------|
+| ------ | ------------- |
 | string | /             |
 
 To select which columns will be extracted, use the path (without the loop path) of the value. Use `@` to select attributes:

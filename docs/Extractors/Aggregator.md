@@ -60,7 +60,7 @@ $pipeline
 An array of column names common in all data sources. Note: be careful when using numerical values, they must be of the same type.
 
 | Type  | Default value |
-|-------|---------------|
+| ----- | ------------- |
 | array | `null`        |
 
 ```php
@@ -72,7 +72,7 @@ $options = [Aggregator::INDEX => ['email']];
 A `Row` is yield when all specified columns have been found for the matching index.
 
 | Type  | Default value |
-|-------|---------------|
+| ----- | ------------- |
 | array | `null`        |
 
 ```php
@@ -89,9 +89,8 @@ $options = [
 
 When all Iterators input are fully consumed, if we have any remaining incomplete rows, an `IncompleteDataException` is thrown if `strict` is `true`
 
-
 | Type    | Default value |
-|---------|---------------|
+| ------- | ------------- |
 | boolean | `true`        |
 
 ```php
@@ -103,8 +102,8 @@ $options = [Aggregator::STRICT => false];
 If `strict` is `false` and `discard` is `true` we yield the incomplete remaining `Rows` flagged as `incomplete`
 
 | Type    | Default value |
-|---------|---------------|
-| boolean | `false`        |
+| ------- | ------------- |
+| boolean | `false`       |
 
 ```php
 $options = [Aggregator::DISCARD' => false];

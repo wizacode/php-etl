@@ -18,7 +18,7 @@ $etl->extract(
 Columns that will be extracted. If `null`, all columns will be extracted and the first line will be used as the columns names.
 
 | Type  | Default value |
-|-------|---------------|
+| ----- | ------------- |
 | array | `null`        |
 
 To select which columns will be extracted, use an array with the columns list:
@@ -62,7 +62,7 @@ $options = [
 Field delimiter (one character only).
 
 | Type   | Default value |
-|--------|---------------|
+| ------ | ------------- |
 | string | ,             |
 
 ```php
@@ -74,7 +74,7 @@ $options = [Csv::DELIMITER => ';'];
 Field enclosure character (one character only).
 
 | Type   | Default value |
-|--------|---------------|
+| ------ | ------------- |
 | string |               |
 
 ```php
@@ -88,7 +88,7 @@ encounters any input issue during the data processing. Default value
 is set to false to keep backward compatibility.
 
 | Type    | Default value |
-|---------|---------------|
+| ------- | ------------- |
 | boolean | false         |
 
 ```php

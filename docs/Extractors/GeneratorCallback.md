@@ -39,7 +39,7 @@ $pipeline->extract($extractor, $iterable, $options);
 A callback function that takes a row array as its input and returns an iterable object.
 
 | Type     | Default value |
-|----------|---------------|
+| -------- | ------------- |
 | callable | `null`        |
 
 ```php

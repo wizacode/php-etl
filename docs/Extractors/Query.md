@@ -13,9 +13,9 @@ $etl->extract($query, 'select * from users', $options);
 
 Name of the database connection to use.
 
-| Type | Default value |
-|----- | ------------- |
-| string | default |
+| Type   | Default value |
+| ------ | ------------- |
+| string | default       |
 
 ```php
 $options = [Query::CONNECTION => 'app'];
@@ -25,9 +25,9 @@ $options = [Query::CONNECTION => 'app'];
 
 Values to bind to the query statement.
 
-| Type | Default value |
-|----- | ------------- |
-| array | `[]` |
+| Type  | Default value |
+| ----- | ------------- |
+| array | `[]`          |
 
 Using prepared statement with named placeholders `select * from users where status = :status`:
 
