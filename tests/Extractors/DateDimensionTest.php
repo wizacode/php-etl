@@ -127,17 +127,19 @@ class DateDimensionTest extends TestCase
         ];
 
         $extractor = new DateDimension();
-        $extractor->options([
-            $extractor::START_DATE => '2020-01-01T06:00:00-4',
-            $extractor::END_DATE => '2020-01-03T06:00:00-4',
-            $extractor::COLUMNS => [
-                $extractor::ROW_DATE_KEY,
-                $extractor::ROW_DATE_FULL,
-                $extractor::ROW_YEAR,
-                $extractor::ROW_MONTH,
-                $extractor::ROW_DAY_OF_MONTH,
-            ],
-        ]);
+        $extractor->options(
+            [
+                $extractor::START_DATE => '2020-01-01T06:00:00-4',
+                $extractor::END_DATE => '2020-01-03T06:00:00-4',
+                $extractor::COLUMNS => [
+                    $extractor::ROW_DATE_KEY,
+                    $extractor::ROW_DATE_FULL,
+                    $extractor::ROW_YEAR,
+                    $extractor::ROW_MONTH,
+                    $extractor::ROW_DAY_OF_MONTH,
+                ],
+            ]
+        );
         static::assertEquals($expected, iterator_to_array($extractor->extract()));
     }
 
@@ -164,14 +166,16 @@ class DateDimensionTest extends TestCase
         }
 
         $extractor = new DateDimension();
-        $extractor->options([
-            $extractor::START_DATE => '2021-01-01T06:00:00-4',
-            $extractor::END_DATE => '2021-12-31T06:00:00-4',
-            $extractor::COLUMNS => [
-                $extractor::ROW_QUARTER,
-                $extractor::ROW_QUARTER_NAME
-            ],
-        ]);
+        $extractor->options(
+            [
+                $extractor::START_DATE => '2021-01-01T06:00:00-4',
+                $extractor::END_DATE => '2021-12-31T06:00:00-4',
+                $extractor::COLUMNS => [
+                    $extractor::ROW_QUARTER,
+                    $extractor::ROW_QUARTER_NAME,
+                ],
+            ]
+        );
         static::assertEquals($expected, iterator_to_array($extractor->extract()));
     }
 
@@ -188,7 +192,7 @@ class DateDimensionTest extends TestCase
                 $extractor::COLUMNS => [
                     $extractor::ROW_DATE_KEY,
                     $extractor::ROW_DATE_FULL,
-                ]
+                ],
             ]
         );
 
