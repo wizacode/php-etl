@@ -130,7 +130,13 @@ class DateDimensionTest extends TestCase
         $extractor->options([
             $extractor::START_DATE => '2020-01-01T06:00:00-4',
             $extractor::END_DATE => '2020-01-03T06:00:00-4',
-            $extractor::COLUMNS => ['DateKey', 'DateFull', 'Year', 'Month', 'DayOfMonth'],
+            $extractor::COLUMNS => [
+                $extractor::ROW_DATE_KEY,
+                $extractor::ROW_DATE_FULL,
+                $extractor::ROW_YEAR,
+                $extractor::ROW_MONTH,
+                $extractor::ROW_DAY_OF_MONTH,
+            ],
         ]);
         static::assertEquals($expected, iterator_to_array($extractor->extract()));
     }
@@ -159,22 +165,37 @@ class DateDimensionTest extends TestCase
 
         $extractor = new DateDimension();
         $extractor->options([
-            'startDate' => '2021-01-01T06:00:00-4',
-            'endDate' => '2021-12-31T06:00:00-4',
-            'columns' => ['Quarter', 'QuarterName'],
+            $extractor::START_DATE => '2021-01-01T06:00:00-4',
+            $extractor::END_DATE => '2021-12-31T06:00:00-4',
+            $extractor::COLUMNS => [
+                $extractor::ROW_QUARTER,
+                $extractor::ROW_QUARTER_NAME
+            ],
         ]);
         static::assertEquals($expected, iterator_to_array($extractor->extract()));
     }
 
-    /** @test */
+    /**
+     * @test
+     */
     public function defaultStart(): void
     {
-        ini_set('date.timezone', 'America/New_York');
-        $year = (int) (new \DateTime())->format('Y');
-        $offset = (new \DateTime())->format('P');
+        date_default_timezone_set('America/New_York');
 
         $extractor = new DateDimension();
-        $extractor->options([$extractor::COLUMNS => ['DateKey', 'DateFull']]);
+        $extractor->options(
+            [
+                $extractor::COLUMNS => [
+                    $extractor::ROW_DATE_KEY,
+                    $extractor::ROW_DATE_FULL,
+                ]
+            ]
+        );
+
+        $firstDay = new \DateTime('first day of January');
+        $year = (int) $firstDay->format('Y');
+        $offset = $firstDay->format('P');
+
         $result = iterator_to_array($extractor->extract());
 
         static::assertStringEndsWith("00:00:00$offset", $result[0]['DateFull']);
