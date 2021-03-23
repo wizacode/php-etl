@@ -326,7 +326,7 @@ class DateDimensionTest extends TestCase
         foreach ($extractor->extract() as $date) {
             $currentDayTimestamp = (new \DateTimeImmutable($date[$extractor::ROW_DATE_FULL]))->getTimestamp();
 
-            if ($previousDayTimestamp !== null) {
+            if (null !== $previousDayTimestamp) {
                 $delta = $currentDayTimestamp - $previousDayTimestamp - static::DAY_AS_SECONDS;
             }
 
