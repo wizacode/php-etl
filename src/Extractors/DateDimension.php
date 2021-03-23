@@ -43,6 +43,8 @@ class DateDimension extends Extractor
     public const ROW_WEEK_DAY_NAME = 'WeekDayName';
     public const ROW_IS_WORK_DAY_KEY = 'IsWorkDayKey';
 
+    private const CENTER_DATE_FORMAT = 'Y-m-d';
+
     /**
      * A string representing the start date of the requested dimension table.
      */
@@ -66,21 +68,18 @@ class DateDimension extends Extractor
         self::END_DATE,
     ];
 
-    private ?\DateInterval $oneDay;
-    private ?\DateTimeImmutable $firstDay;
-
     public function __construct()
     {
         $defaultInterval = new \DateInterval('P5Y');
 
-        $this->startDate ??= $this->getFirstDay()
+        $this->startDate ??= $this->getCenterDateTime()
             ->sub($defaultInterval)
-            ->format('c');
+            ->format(static::CENTER_DATE_FORMAT);
 
-        $this->endDate ??= $this->getFirstDay()
+        $this->endDate ??= $this->getCenterDateTime()
             ->add($defaultInterval)
-            ->sub($this->getOneDayInterval())
-            ->format('c');
+            ->sub($this->getDayInterval())
+            ->format(static::CENTER_DATE_FORMAT);
     }
 
     /**
@@ -124,24 +123,25 @@ class DateDimension extends Extractor
         }
     }
 
-    private function getFirstDay(): \DateTimeImmutable
+    private function getCenterDateTime(): \DateTimeImmutable
     {
-        return $this->firstDay ??= (new \DateTimeImmutable('first day of January'))
-            ->setTime(0, 0, 0);
+        return new \DateTimeImmutable(
+            'first day of January',
+        );
     }
 
-    private function getOneDayInterval(): \DateInterval
+    private function getDayInterval(): \DateInterval
     {
-        return $this->oneDay ??= new \DateInterval('P1D');
+        return new \DateInterval('P1D');
     }
 
     private function getDatePeriod(): \DatePeriod
     {
         return new \DatePeriod(
             new \DateTime($this->startDate),
-            $this->getOneDayInterval(),
+            $this->getDayInterval(),
             (new \DateTime($this->endDate))
-                ->add($this->getOneDayInterval())
+                ->add($this->getDayInterval())
         );
     }
 }
