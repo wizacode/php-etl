@@ -24,78 +24,78 @@ class DateDimensionTest extends TestCase
     {
         $expected = [
             new Row([
-                'DateKey' => '20200404',
-                'DateFullName' => 'April 4, 2020',
-                'DateFull' => '2020-04-04T00:00:00+00:00',
-                'Year' => '2020',
-                'Quarter' => 2,
-                'QuarterName' => 'Q2',
-                'QuarterKey' => 2,
-                'Month' => '4',
-                'MonthKey' => '4',
-                'MonthName' => 'April',
-                'DayOfMonth' => '4',
-                'NumberOfDaysInTheMonth' => '30',
-                'DayOfYear' => 95,
-                'WeekOfYear' => '14',
-                'WeekOfYearKey' => '14',
-                'ISOWeek' => '14',
-                'ISOWeekKey' => '14',
-                'WeekDay' => '6',
-                'WeekDayName' => 'Saturday',
-                'IsWorkDayKey' => 0,
+                DateDimension::ROW_DATE_KEY => '20200404',
+                DateDimension::ROW_DATE_FULL_NAME => 'April 4, 2020',
+                DateDimension::ROW_DATE_FULL => '2020-04-04T00:00:00+00:00',
+                DateDimension::ROW_YEAR => '2020',
+                DateDimension::ROW_QUARTER => 2,
+                DateDimension::ROW_QUARTER_NAME => 'Q2',
+                DateDimension::ROW_QUARTER_KEY => 2,
+                DateDimension::ROW_MONTH => '4',
+                DateDimension::ROW_MONTH_KEY => '4',
+                DateDimension::ROW_MONTH_NAME => 'April',
+                DateDimension::ROW_DAY_OF_MONTH => '4',
+                DateDimension::ROW_NUMBER_OF_DAYS_IN_THE_MONTH => '30',
+                DateDimension::ROW_DAY_OF_YEAR => 95,
+                DateDimension::ROW_WEEK_OF_YEAR => '14',
+                DateDimension::ROW_WEEK_OF_YEAR_KEY => '14',
+                DateDimension::ROW_ISO_WEEK => '14',
+                DateDimension::ROW_ISO_WEEK_KEY => '14',
+                DateDimension::ROW_WEEK_DAY => '6',
+                DateDimension::ROW_WEEK_DAY_NAME => 'Saturday',
+                DateDimension::ROW_IS_WORK_DAY_KEY => 0,
             ]),
             new Row([
-                'DateKey' => '20200405',
-                'DateFullName' => 'April 5, 2020',
-                'DateFull' => '2020-04-05T00:00:00+00:00',
-                'Year' => '2020',
-                'Quarter' => 2,
-                'QuarterName' => 'Q2',
-                'QuarterKey' => 2,
-                'Month' => '4',
-                'MonthKey' => '4',
-                'MonthName' => 'April',
-                'DayOfMonth' => '5',
-                'NumberOfDaysInTheMonth' => '30',
-                'DayOfYear' => 96,
-                'WeekOfYear' => '14',
-                'WeekOfYearKey' => '14',
-                'ISOWeek' => '14',
-                'ISOWeekKey' => '14',
-                'WeekDay' => '0',
-                'WeekDayName' => 'Sunday',
-                'IsWorkDayKey' => 0,
+                DateDimension::ROW_DATE_KEY => '20200405',
+                DateDimension::ROW_DATE_FULL_NAME => 'April 5, 2020',
+                DateDimension::ROW_DATE_FULL => '2020-04-05T00:00:00+00:00',
+                DateDimension::ROW_YEAR => '2020',
+                DateDimension::ROW_QUARTER => 2,
+                DateDimension::ROW_QUARTER_NAME => 'Q2',
+                DateDimension::ROW_QUARTER_KEY => 2,
+                DateDimension::ROW_MONTH => '4',
+                DateDimension::ROW_MONTH_KEY => '4',
+                DateDimension::ROW_MONTH_NAME => 'April',
+                DateDimension::ROW_DAY_OF_MONTH => '5',
+                DateDimension::ROW_NUMBER_OF_DAYS_IN_THE_MONTH => '30',
+                DateDimension::ROW_DAY_OF_YEAR => 96,
+                DateDimension::ROW_WEEK_OF_YEAR => '14',
+                DateDimension::ROW_WEEK_OF_YEAR_KEY => '14',
+                DateDimension::ROW_ISO_WEEK => '14',
+                DateDimension::ROW_ISO_WEEK_KEY => '14',
+                DateDimension::ROW_WEEK_DAY => '0',
+                DateDimension::ROW_WEEK_DAY_NAME => 'Sunday',
+                DateDimension::ROW_IS_WORK_DAY_KEY => 0,
             ]),
             new Row([
-                'DateKey' => '20200406',
-                'DateFullName' => 'April 6, 2020',
-                'DateFull' => '2020-04-06T00:00:00+00:00',
-                'Year' => '2020',
-                'Quarter' => 2,
-                'QuarterName' => 'Q2',
-                'QuarterKey' => 2,
-                'Month' => '4',
-                'MonthKey' => '4',
-                'MonthName' => 'April',
-                'DayOfMonth' => '6',
-                'NumberOfDaysInTheMonth' => '30',
-                'DayOfYear' => 97,
-                'WeekOfYear' => '15',
-                'WeekOfYearKey' => '15',
-                'ISOWeek' => '15',
-                'ISOWeekKey' => '15',
-                'WeekDay' => '1',
-                'WeekDayName' => 'Monday',
-                'IsWorkDayKey' => 1,
+                DateDimension::ROW_DATE_KEY => '20200406',
+                DateDimension::ROW_DATE_FULL_NAME => 'April 6, 2020',
+                DateDimension::ROW_DATE_FULL => '2020-04-06T00:00:00+00:00',
+                DateDimension::ROW_YEAR => '2020',
+                DateDimension::ROW_QUARTER => 2,
+                DateDimension::ROW_QUARTER_NAME => 'Q2',
+                DateDimension::ROW_QUARTER_KEY => 2,
+                DateDimension::ROW_MONTH => '4',
+                DateDimension::ROW_MONTH_KEY => '4',
+                DateDimension::ROW_MONTH_NAME => 'April',
+                DateDimension::ROW_DAY_OF_MONTH => '6',
+                DateDimension::ROW_NUMBER_OF_DAYS_IN_THE_MONTH => '30',
+                DateDimension::ROW_DAY_OF_YEAR => 97,
+                DateDimension::ROW_WEEK_OF_YEAR => '15',
+                DateDimension::ROW_WEEK_OF_YEAR_KEY => '15',
+                DateDimension::ROW_ISO_WEEK => '15',
+                DateDimension::ROW_ISO_WEEK_KEY => '15',
+                DateDimension::ROW_WEEK_DAY => '1',
+                DateDimension::ROW_WEEK_DAY_NAME => 'Monday',
+                DateDimension::ROW_IS_WORK_DAY_KEY => 1,
             ]),
         ];
 
         $extractor = new DateDimension();
         $extractor->options(
             [
-                $extractor::START_DATE => '2020-04-04T00:00:00+0',
-                $extractor::END_DATE => '2020-04-06T00:00:00+0',
+                DateDimension::START_DATE => '2020-04-04T00:00:00+0',
+                DateDimension::END_DATE => '2020-04-06T00:00:00+0',
             ]
         );
         static::assertEquals($expected, iterator_to_array($extractor->extract()));
@@ -106,39 +106,39 @@ class DateDimensionTest extends TestCase
     {
         $expected = [
             new Row([
-                'DateKey' => '20200101',
-                'DateFull' => '2020-01-01T06:00:00-04:00',
-                'Year' => '2020',
-                'Month' => '1',
-                'DayOfMonth' => '1',
+                DateDimension::ROW_DATE_KEY => '20200101',
+                DateDimension::ROW_DATE_FULL => '2020-01-01T06:00:00-04:00',
+                DateDimension::ROW_YEAR => '2020',
+                DateDimension::ROW_MONTH => '1',
+                DateDimension::ROW_DAY_OF_MONTH => '1',
             ]),
             new Row([
-                'DateKey' => '20200102',
-                'DateFull' => '2020-01-02T06:00:00-04:00',
-                'Year' => '2020',
-                'Month' => '1',
-                'DayOfMonth' => '2',
+                DateDimension::ROW_DATE_KEY => '20200102',
+                DateDimension::ROW_DATE_FULL => '2020-01-02T06:00:00-04:00',
+                DateDimension::ROW_YEAR => '2020',
+                DateDimension::ROW_MONTH => '1',
+                DateDimension::ROW_DAY_OF_MONTH => '2',
             ]),
             new Row([
-                'DateKey' => '20200103',
-                'DateFull' => '2020-01-03T06:00:00-04:00',
-                'Year' => '2020',
-                'Month' => '1',
-                'DayOfMonth' => '3',
+                DateDimension::ROW_DATE_KEY => '20200103',
+                DateDimension::ROW_DATE_FULL => '2020-01-03T06:00:00-04:00',
+                DateDimension::ROW_YEAR => '2020',
+                DateDimension::ROW_MONTH => '1',
+                DateDimension::ROW_DAY_OF_MONTH => '3',
             ]),
         ];
 
         $extractor = new DateDimension();
         $extractor->options(
             [
-                $extractor::START_DATE => '2020-01-01T06:00:00-4',
-                $extractor::END_DATE => '2020-01-03T06:00:00-4',
-                $extractor::COLUMNS => [
-                    $extractor::ROW_DATE_KEY,
-                    $extractor::ROW_DATE_FULL,
-                    $extractor::ROW_YEAR,
-                    $extractor::ROW_MONTH,
-                    $extractor::ROW_DAY_OF_MONTH,
+                DateDimension::START_DATE => '2020-01-01T06:00:00-4',
+                DateDimension::END_DATE => '2020-01-03T06:00:00-4',
+                DateDimension::COLUMNS => [
+                    DateDimension::ROW_DATE_KEY,
+                    DateDimension::ROW_DATE_FULL,
+                    DateDimension::ROW_YEAR,
+                    DateDimension::ROW_MONTH,
+                    DateDimension::ROW_DAY_OF_MONTH,
                 ],
             ]
         );
@@ -164,17 +164,22 @@ class DateDimensionTest extends TestCase
         );
         $expected = [];
         foreach ($quarters as $quarter) {
-            $expected[] = new Row(['Quarter' => $quarter, 'QuarterName' => "Q$quarter"]);
+            $expected[] = new Row(
+                [
+                    DateDimension::ROW_QUARTER => $quarter,
+                    DateDimension::ROW_QUARTER_NAME => "Q$quarter",
+                ]
+            );
         }
 
         $extractor = new DateDimension();
         $extractor->options(
             [
-                $extractor::START_DATE => '2021-01-01T06:00:00-4',
-                $extractor::END_DATE => '2021-12-31T06:00:00-4',
-                $extractor::COLUMNS => [
-                    $extractor::ROW_QUARTER,
-                    $extractor::ROW_QUARTER_NAME,
+                DateDimension::START_DATE => '2021-01-01T06:00:00-4',
+                DateDimension::END_DATE => '2021-12-31T06:00:00-4',
+                DateDimension::COLUMNS => [
+                    DateDimension::ROW_QUARTER,
+                    DateDimension::ROW_QUARTER_NAME,
                 ],
             ]
         );
@@ -189,9 +194,9 @@ class DateDimensionTest extends TestCase
         $extractor = new DateDimension();
         $extractor->options(
             [
-                $extractor::COLUMNS => [
-                    $extractor::ROW_DATE_KEY,
-                    $extractor::ROW_DATE_FULL,
+                DateDimension::COLUMNS => [
+                    DateDimension::ROW_DATE_KEY,
+                    DateDimension::ROW_DATE_FULL,
                 ],
             ]
         );
@@ -205,16 +210,16 @@ class DateDimensionTest extends TestCase
 
         static::assertStringMatchesFormat(
             '%d-%d-%dT00:00:00-%d:00',
-            $firstRow[$extractor::ROW_DATE_FULL]
+            $firstRow[DateDimension::ROW_DATE_FULL]
         );
         static::assertStringMatchesFormat(
             '%d-%d-%dT00:00:00-%d:00',
-            $lastRow[$extractor::ROW_DATE_FULL]
+            $lastRow[DateDimension::ROW_DATE_FULL]
         );
-        static::assertStringContainsString('12-31', $lastRow[$extractor::ROW_DATE_FULL]);
+        static::assertStringContainsString('12-31', $lastRow[DateDimension::ROW_DATE_FULL]);
         static::assertGreaterThan(3650, count($result));
-        static::assertEquals($year - 5 . '0101', $firstRow[$extractor::ROW_DATE_KEY]);
-        static::assertEquals($year + 4 . '1231', $lastRow[$extractor::ROW_DATE_KEY]);
+        static::assertEquals($year - 5 . '0101', $firstRow[DateDimension::ROW_DATE_KEY]);
+        static::assertEquals($year + 4 . '1231', $lastRow[DateDimension::ROW_DATE_KEY]);
     }
 
     /** @test */
@@ -225,11 +230,11 @@ class DateDimensionTest extends TestCase
         $extractor = new DateDimension();
         $extractor->options(
             [
-                $extractor::START_DATE => '2016-01-01',
-                $extractor::END_DATE => '2025-12-31',
-                $extractor::COLUMNS => [
-                    $extractor::ROW_DATE_KEY,
-                    $extractor::ROW_DATE_FULL,
+                DateDimension::START_DATE => '2016-01-01',
+                DateDimension::END_DATE => '2025-12-31',
+                DateDimension::COLUMNS => [
+                    DateDimension::ROW_DATE_KEY,
+                    DateDimension::ROW_DATE_FULL,
                 ],
             ]
         );
@@ -249,11 +254,11 @@ class DateDimensionTest extends TestCase
         $extractor = new DateDimension();
         $extractor->options(
             [
-                $extractor::START_DATE => '2019-01-01',
-                $extractor::END_DATE => '2020-07-01',
-                $extractor::COLUMNS => [
-                    $extractor::ROW_DATE_KEY,
-                    $extractor::ROW_DATE_FULL,
+                DateDimension::START_DATE => '2019-01-01',
+                DateDimension::END_DATE => '2020-07-01',
+                DateDimension::COLUMNS => [
+                    DateDimension::ROW_DATE_KEY,
+                    DateDimension::ROW_DATE_FULL,
                 ],
             ]
         );
@@ -273,9 +278,9 @@ class DateDimensionTest extends TestCase
         $extractor = new DateDimension();
         $extractor->options(
             [
-                $extractor::COLUMNS => [
-                    $extractor::ROW_DATE_KEY,
-                    $extractor::ROW_DATE_FULL,
+                DateDimension::COLUMNS => [
+                    DateDimension::ROW_DATE_KEY,
+                    DateDimension::ROW_DATE_FULL,
                 ],
             ]
         );
@@ -296,11 +301,11 @@ class DateDimensionTest extends TestCase
         $extractor = new DateDimension();
         $extractor->options(
             [
-                $extractor::START_DATE => '2022-01-01',
-                $extractor::END_DATE => '2022-12-31',
-                $extractor::COLUMNS => [
-                    $extractor::ROW_DATE_KEY,
-                    $extractor::ROW_DATE_FULL,
+                DateDimension::START_DATE => '2022-01-01',
+                DateDimension::END_DATE => '2022-12-31',
+                DateDimension::COLUMNS => [
+                    DateDimension::ROW_DATE_KEY,
+                    DateDimension::ROW_DATE_FULL,
                 ],
             ]
         );
@@ -318,13 +323,13 @@ class DateDimensionTest extends TestCase
         $commonDays = 0;
         $shortDays = 0;
         $longDays = 0;
-
         $gainedTime = 0;
+
         $previousDayTimestamp = null;
         $delta = 0;
 
         foreach ($extractor->extract() as $date) {
-            $currentDayTimestamp = (new \DateTimeImmutable($date[$extractor::ROW_DATE_FULL]))->getTimestamp();
+            $currentDayTimestamp = (new \DateTimeImmutable($date[DateDimension::ROW_DATE_FULL]))->getTimestamp();
 
             if (null !== $previousDayTimestamp) {
                 $delta = $currentDayTimestamp - $previousDayTimestamp - static::DAY_AS_SECONDS;
