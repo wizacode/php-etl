@@ -17,7 +17,7 @@ use Wizaplace\Etl\Row;
 
 class DateDimensionTest extends TestCase
 {
-    const DAY_AS_SECONDS = 24 * 60 * 60;
+    private const DAY_AS_SECONDS = 24 * 60 * 60;
 
     /** @test */
     public function defaultOptions(): void
@@ -239,8 +239,8 @@ class DateDimensionTest extends TestCase
             ]
         );
 
-        [$days, $longDays, $shortDays, $gainedTime] = $this->iterateDimensions($extractor);
-        self::assertEquals(3633, $days);
+        [$commonDays, $longDays, $shortDays, $gainedTime] = $this->iterateDimensions($extractor);
+        self::assertEquals(3633, $commonDays);
         self::assertEquals(10, $longDays);
         self::assertEquals(10, $shortDays);
         self::assertEquals(0, $gainedTime);

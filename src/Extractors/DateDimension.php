@@ -70,15 +70,16 @@ class DateDimension extends Extractor
 
     public function __construct()
     {
-        $defaultInterval = new \DateInterval('P5Y');
+        $defaultBoundInterval = new \DateInterval('P5Y');
+        $dayInterval = new \DateInterval('P1D');
 
         $this->startDate ??= $this->getCenterDateTime()
-            ->sub($defaultInterval)
+            ->sub($defaultBoundInterval)
             ->format(static::CENTER_DATE_FORMAT);
 
         $this->endDate ??= $this->getCenterDateTime()
-            ->add($defaultInterval)
-            ->sub($this->getDayInterval())
+            ->add($defaultBoundInterval)
+            ->sub($dayInterval)
             ->format(static::CENTER_DATE_FORMAT);
     }
 
@@ -130,18 +131,15 @@ class DateDimension extends Extractor
         );
     }
 
-    private function getDayInterval(): \DateInterval
-    {
-        return new \DateInterval('P1D');
-    }
-
     private function getDatePeriod(): \DatePeriod
     {
+        $dayInterval = new \DateInterval('P1D');
+
         return new \DatePeriod(
             new \DateTime($this->startDate),
-            $this->getDayInterval(),
+            $dayInterval,
             (new \DateTime($this->endDate))
-                ->add($this->getDayInterval())
+                ->add($dayInterval)
         );
     }
 }
