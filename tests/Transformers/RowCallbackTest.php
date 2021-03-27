@@ -13,18 +13,21 @@ namespace Tests\Transformers;
 
 use Tests\TestCase;
 use Wizaplace\Etl\Row;
-use Wizaplace\Etl\Transformers\Validator;
+use Wizaplace\Etl\Transformers\RowCallback;
 
-class ValidatorTest extends TestCase
+class RowCallbackTest extends TestCase
 {
     /** @test */
-    public function validator(): void
+    public function rowCallbackAsValidator(): void
     {
-        $validationClosure = function (Row $row): bool {
-            return false !== \filter_var(
-                $row->get('email'),
-                FILTER_VALIDATE_EMAIL
-            );
+        $validationClosure = function (Row $row): Row {
+            return
+                \filter_var(
+                    $row->get('email'),
+                    FILTER_VALIDATE_EMAIL
+                )
+                ? $row
+                : $row->discard();
         };
 
         $data = [
@@ -41,7 +44,7 @@ class ValidatorTest extends TestCase
             new Row(['id' => '4', 'name' => 'bar', 'email' => 'bar@email.com']),
         ];
 
-        $transformer = new Validator();
+        $transformer = new RowCallback();
         $transformer->options(
             [
                 $transformer::CALLBACK => $validationClosure,

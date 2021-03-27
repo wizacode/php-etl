@@ -13,7 +13,7 @@ namespace Wizaplace\Etl\Transformers;
 
 use Wizaplace\Etl\Row;
 
-class Validator extends Transformer
+class RowCallback extends Transformer
 {
     public const CALLBACK = 'callback';
 
@@ -38,13 +38,6 @@ class Validator extends Transformer
      */
     public function transform(Row $row): void
     {
-        if (false === $this->getCallback()($row)) {
-            $row->discard();
-        }
-    }
-
-    private function getCallback(): callable
-    {
-        return $this->callback;
+        ($this->callback)($row);
     }
 }
