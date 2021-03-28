@@ -23,7 +23,8 @@ class ValidatorTest extends TestCase
     /** @test */
     public function anonymousTransformerAsValidator(): void
     {
-        $validator = new class() extends Transformer {
+        $validator = new class extends Transformer
+        {
             public function transform(Row $row): void
             {
                 if ('1' === $row->get('id')) {
