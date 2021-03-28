@@ -23,11 +23,10 @@ class ValidatorTest extends TestCase
     /** @test */
     public function anonymousTransformerAsValidator(): void
     {
-        $validator = new class () extends Transformer
-        {
+        $validator = new class() extends Transformer {
             public function transform(Row $row): void
             {
-                if ($row->get('id') === '1') {
+                if ('1' === $row->get('id')) {
                     $row->discard();
                 }
             }
@@ -63,7 +62,7 @@ class ValidatorTest extends TestCase
     public function rowCallbackAsValidator(): void
     {
         $validator = function (Row $row): void {
-            if ($row->get('id') === '1') {
+            if ('1' === $row->get('id')) {
                 $row->discard();
             }
         };
