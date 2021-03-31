@@ -23,8 +23,9 @@ class ValidatorTest extends TestCase
     /** @test */
     public function anonymousTransformerAsValidator(): void
     {
-        $validator = new class extends Transformer
-        {
+        // php-cs-fixer and phpcs disagree about this :|
+        // phpcs:ignore
+        $validator = new class() extends Transformer {
             public function transform(Row $row): void
             {
                 if ('1' === $row->get('id')) {
