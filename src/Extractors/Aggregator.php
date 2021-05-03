@@ -186,14 +186,12 @@ class Aggregator extends Extractor
 
     protected function defaultRow(array $data): Row
     {
-        $defaultData = \array_map(
-            fn () => null,
-            \array_flip($this->columns)
-        );
-
         return new Row(
             \array_merge(
-                $defaultData,
+                \array_fill_keys(
+                    $this->columns,
+                    null
+                ),
                 $data
             )
         );
