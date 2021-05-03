@@ -79,7 +79,7 @@ class Aggregator extends Extractor
                 if (true === \is_array($line)) {
                     $row = $this->build($line);
                     if (true === \is_array($row)) {
-                        yield new Row($row);
+                        yield $this->defaultRow($row);
                     }
                 }
                 $iterator->next();
@@ -113,7 +113,7 @@ class Aggregator extends Extractor
         // then yield the incomplete remaining rows
         if (false === $this->discard) {
             foreach ($this->data as $row) {
-                yield (new Row($row))->setIncomplete();
+                yield $this->defaultRow($row)->setIncomplete();
             }
         }
     }
@@ -182,6 +182,21 @@ class Aggregator extends Extractor
         }
 
         return false;
+    }
+
+    protected function defaultRow(array $data): Row
+    {
+        $defaultData = \array_map(
+            fn () => null,
+            \array_flip($this->columns)
+        );
+
+        return new Row(
+            \array_merge(
+                $defaultData,
+                $data
+            )
+        );
     }
 
     /**
