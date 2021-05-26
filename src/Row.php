@@ -69,7 +69,6 @@ class Row implements \ArrayAccess
     /**
      * Get a row attribute, and remove it.
      *
-     * @param string $key
      * @return mixed
      */
     public function pull(string $key)
