@@ -9,7 +9,7 @@ $etl->extract(/* ... */)
     ->run();
 ```
 
-To return the resulting data as an iterator (ex.: [Chaining ETL's usecase](../tests/UseCases/ChainingTest.php)), you may use the `toIterator` method:
+To return the resulting data as an iterator (ex.: [Chaining ETL's usecase](../tests/Usecases/ChainingTest.php)), you may use the `toIterator` method:
 
 ```php
 $iterator = $etl->extract(/* ... */)
