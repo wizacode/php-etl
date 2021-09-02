@@ -5,7 +5,7 @@ Copy columns.
 ```php
 /**
  * @var \Wizaplace\Etl\Etl $pipeline
- * @var \Wizaplace\Etl\Transformers\RenameColumns $transformer
+ * @var \Wizaplace\Etl\Transformers\CopyColumns $transformer
  * @var array $options
  */
 $pipeline->transform($transformer, $options);
