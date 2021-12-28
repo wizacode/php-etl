@@ -26,3 +26,5 @@
   - [MemoryLoader](Loaders/MemoryLoader.md)
 - [Helpers](Helpers.md)
 - [Running Processes](RunningProcesses.md)
+- Examples
+  - [Overriding components: an example with a progress bar](Examples/ProgressBar.md)

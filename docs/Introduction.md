@@ -27,6 +27,8 @@ $etl->extract($extractor, '/path/to/users.csv')
     ->run();
 ```
 
-Note that in this above example, we manually instantiate all the object.
+Note that in this above example, we manually instantiate all the objects.
 However WP-ETL is fully compatible with any DI system, and we highly recommend
-to do use DI. See the _Getting started_ section for more details.
+to use DI. See the _Getting started_ section for more details.
+
+You can also easily create your own components (Extractors for instance) and integrate them in the pipeline.
