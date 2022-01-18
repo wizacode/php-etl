@@ -42,8 +42,21 @@ use Wizaplace\Etl\Loaders\Insert;
 use Wizaplace\Etl\Database\Manager;
 use Wizaplace\Etl\Database\ConnectionFactory;
 
-$connexionFactory = new ConnectionFactory();
-$manager = new Manager($connexionFactory);
+// Get your database settings :
+$config = [
+    'driver'    => 'mysql',
+    'host'      => 'localhost',
+    'port'      => '3306',
+    'database'  => 'myDatabase',
+    'username'  => 'foo',
+    'password'  => 'bar',
+    'charset'   => 'utf8',
+    'collation' => 'utf8_unicode_ci',
+];
+
+// Instanciate all the components (manually or automatically with DI)
+$manager = new Manager(new ConnectionFactory());
+$manager->addConnection($config);
 $etl = new Etl();
 $extractor = new Csv();
 $transformer = new Trim();
@@ -61,7 +74,7 @@ $etl->extract($extractor, '/path/to/users.csv')
 The library is fully compatible with any PHP project.
 For instance, with Symfony, you can fully benefit from the autowiring. On the following example, you enable it on the
 main ETL object, with the _shared_ parameter to _false_ in order to have the possibility to get
-different instance of the ETL (optionnal).
+different instance of the ETL (optional).
 
 _services.yaml_
 
