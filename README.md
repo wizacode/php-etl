@@ -32,7 +32,7 @@ composer require wizaplace/php-etl
 
 ## Example :light_rail:
 
-In the example below, we will extract data from a csv file, trim white spaces from the name and email columns and then insert the values into the users table:
+In the example below, we will extract data from a csv file, trim white spaces from the name and email columns and then insert the values into the _users_ table:
 
 ```php
 use Wizaplace\Etl\Etl;
