@@ -1,5 +1,11 @@
 # Changelog
 
+## Next version
+
+**New features**
+
+* The Insert/Update loader has a new parameter _DoInserts_ (default to _true_) allowing to perform updates only if set to false.
+
 ## 2.0
 
 **New features**

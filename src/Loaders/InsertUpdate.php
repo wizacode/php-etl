@@ -22,6 +22,7 @@ class InsertUpdate extends Loader
     public const TIMESTAMPS = 'timestamps';
     public const TRANSACTION = 'transaction';
     public const DO_UPDATES = 'doUpdates';
+    public const DO_INSERTS = 'doInserts';
 
     /**
      * The connection name.
@@ -46,6 +47,11 @@ class InsertUpdate extends Loader
      * Indicates if existing destination rows in table should be updated.
      */
     protected bool $doUpdates = true;
+
+    /**
+     * Indicates if non-existing destination rows in table should be inserted.
+     */
+    protected bool $doInserts = true;
 
     /**
      * Indicates if the table has timestamps columns.
@@ -110,6 +116,7 @@ class InsertUpdate extends Loader
         self::TIMESTAMPS,
         self::TRANSACTION,
         self::DO_UPDATES,
+        self::DO_INSERTS,
     ];
 
     /**
@@ -256,6 +263,10 @@ class InsertUpdate extends Loader
      */
     protected function insert(array $row): void
     {
+        if (false === $this->doInserts) {
+            return;
+        }
+
         if (null === $this->insert) {
             $this->prepareInsert($row);
         }

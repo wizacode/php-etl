@@ -56,6 +56,16 @@ List of primary keys or identifiers of the table.
 $options = [InsertUpdate::KEY => ['id', InsertUpdate::TYPE]];
 ```
 
+### DoInserts
+
+When set to false, new rows are skipped rather than inserted. This allows, when the _DoUpdates_ parameter is kept
+to _true_, to performs only updates and ignore new entries.
+
+| Type    | Default value |
+| ------- | ------------- |
+| boolean | `true`        |
+
+
 ### DoUpdates
 
 When set to false, rows that have

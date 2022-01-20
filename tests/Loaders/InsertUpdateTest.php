@@ -111,6 +111,8 @@ class InsertUpdateTest extends TestCase
         $this->selectStatement->expects(static::once())->method('where')->with(['id']);
         $this->selectStatement->expects(static::once())->method('prepare');
         $this->select->expects(static::once())->method('execute')->with(['id' => '1']);
+
+        // The entry does not exist
         $this->select->expects(static::once())->method('fetch')->willReturn(false);
 
         $this->statement->expects(static::once())->method('insert')->with('table', ['id', 'name', 'email']);
@@ -134,6 +136,8 @@ class InsertUpdateTest extends TestCase
         $this->selectStatement->expects(static::once())->method('where')->with(['id']);
         $this->selectStatement->expects(static::once())->method('prepare');
         $this->select->expects(static::once())->method('execute')->with(['id' => '1']);
+
+        // An existing entry is found
         $this->select->expects(static::once())->method('fetch')->willReturn(['name' => 'Jane']);
 
         $this->statement->expects(static::once())->method('update')->with('table', ['name', 'email']);
@@ -152,13 +156,15 @@ class InsertUpdateTest extends TestCase
     }
 
     /** @test */
-    public function insertRowEvenIfUpdatesAreSuppressed(): void
+    public function insertNewRowsEvenIfUpdatesAreSuppressed(): void
     {
         $this->loader->options([$this->loader::DO_UPDATES => false]);
         $this->statement->expects(static::once())->method('select')->with('table');
         $this->selectStatement->expects(static::once())->method('where')->with(['id']);
         $this->selectStatement->expects(static::once())->method('prepare');
         $this->select->expects(static::once())->method('execute')->with(['id' => '1']);
+
+        // The entry does not exist
         $this->select->expects(static::once())->method('fetch')->willReturn(false);
 
         $this->statement->expects(static::once())->method('insert')->with('table', ['id', 'name', 'email']);
@@ -176,14 +182,44 @@ class InsertUpdateTest extends TestCase
     }
 
     /** @test */
-    public function doNotUpdateOrInsertRowIfUpdatesAreSuppressed(): void
+    public function doNotUpdateOrInsertRowIfUpdatesAreSuppressedIfEntryAlreadyExists(): void
     {
         $this->loader->options([$this->loader::DO_UPDATES => false]);
         $this->statement->expects(static::once())->method('select')->with('table');
         $this->selectStatement->expects(static::once())->method('where')->with(['id']);
         $this->selectStatement->expects(static::once())->method('prepare');
         $this->select->expects(static::once())->method('execute')->with(['id' => '1']);
+
+        // An existing entry is found
         $this->select->expects(static::once())->method('fetch')->willReturn(['name' => 'Jane']);
+
+        $this->statement->expects(static::never())->method('update')->with('table', ['name', 'email']);
+        $this->statement->expects(static::never())->method('insert')->with('table', ['id', 'name', 'email']);
+        $this->updateStatement->expects(static::never())->method('where')->with(['id']);
+        $this->updateStatement->expects(static::never())->method('prepare');
+        $this->update->expects(static::never())->method('execute')
+            ->with(['id' => '1', 'name' => 'Jane Doe', 'email' => 'janedoe@example.com']);
+
+        $this->insert->expects(static::never())->method('execute');
+
+        $this->transaction->expects(static::once())->method('size')->with(0);
+        $this->transaction->expects(static::once())->method('run');
+        $this->transaction->expects(static::once())->method('close');
+
+        $this->execute($this->loader, [$this->row]);
+    }
+
+    /** @test */
+    public function doNotInsertNewRowsIfUpdatesAreEnabledButInsertAreSuppressed(): void
+    {
+        $this->loader->options([$this->loader::DO_INSERTS => false]);
+        $this->statement->expects(static::once())->method('select')->with('table');
+        $this->selectStatement->expects(static::once())->method('where')->with(['id']);
+        $this->selectStatement->expects(static::once())->method('prepare');
+        $this->select->expects(static::once())->method('execute')->with(['id' => '1']);
+
+        // The entry does not exist
+        $this->select->expects(static::once())->method('fetch')->willReturn(false);
 
         $this->statement->expects(static::never())->method('update')->with('table', ['name', 'email']);
         $this->statement->expects(static::never())->method('insert')->with('table', ['id', 'name', 'email']);
