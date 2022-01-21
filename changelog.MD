@@ -1,5 +1,10 @@
 # Changelog
 
+## New version
+**New features**
+* Added a new _Update_ loader in order to perform update operations while ignoring new entries.
+
+
 ## 2.0
 
 **New features**

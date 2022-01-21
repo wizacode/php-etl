@@ -11,4 +11,5 @@ $etl->load($type, $destination, $options);
 
 - [Insert](Insert.md)
 - [Insert/Update](InsertUpdate.md)
+- [Update](Update.md)
 - [MemoryLoader](MemoryLoader.md)
