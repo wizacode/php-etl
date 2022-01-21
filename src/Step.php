@@ -26,15 +26,19 @@ abstract class Step
     /**
      * Set the step options.
      *
+     * @param bool $strictMode if set to true, will throw an exception if an unknown option is given
+     *
      * @return $this
      */
-    public function options(array $options): Step
+    public function options(array $options, bool $strictMode = false): Step
     {
         foreach ($options as $option => $value) {
             $option = lcfirst(implode('', array_map('ucfirst', explode('_', $option))));
 
             if (in_array($option, $this->availableOptions, true)) {
                 $this->$option = $value;
+            } elseif (true === $strictMode) {
+                throw new \InvalidArgumentException("Unknown option: '$option' with value '$value'");
             }
         }
 

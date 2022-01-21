@@ -1,5 +1,10 @@
 # Changelog
 
+## New version
+
+**Miscellaneous**
+* Added a strict mode to the step _options_ method. Default value is _false_.
+
 ## 2.0
 
 **New features**
