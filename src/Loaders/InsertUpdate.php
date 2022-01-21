@@ -11,22 +11,15 @@ declare(strict_types=1);
 
 namespace Wizaplace\Etl\Loaders;
 
-use Wizaplace\Etl\Database\Manager;
-use Wizaplace\Etl\Database\Transaction;
 use Wizaplace\Etl\Row;
 
-class InsertUpdate extends Loader
+class InsertUpdate extends Insert
 {
     public const CONNECTION = 'connection';
     public const KEY = 'key';
     public const TIMESTAMPS = 'timestamps';
     public const TRANSACTION = 'transaction';
     public const DO_UPDATES = 'doUpdates';
-
-    /**
-     * The connection name.
-     */
-    protected string $connection = 'default';
 
     /**
      * The primary key.
@@ -36,36 +29,9 @@ class InsertUpdate extends Loader
     protected $key = ['id'];
 
     /**
-     * The columns to insert/update.
-     *
-     * @var string[]
-     */
-    protected array $columns = [];
-
-    /**
      * Indicates if existing destination rows in table should be updated.
      */
     protected bool $doUpdates = true;
-
-    /**
-     * Indicates if the table has timestamps columns.
-     */
-    protected bool $timestamps = false;
-
-    /**
-     * Indicates if the loader will perform transactions.
-     */
-    protected bool $transaction = true;
-
-    /**
-     * Transaction commit size.
-     */
-    protected int $commitSize = 0;
-
-    /**
-     * Time for timestamps columns.
-     */
-    protected string $time;
 
     /**
      * The select statement.
@@ -75,28 +41,11 @@ class InsertUpdate extends Loader
     protected $select = null;
 
     /**
-     * The insert statement.
-     *
-     * @var \PDOStatement|false|null
-     */
-    protected $insert = null;
-
-    /**
      * The update statement.
      *
      * @var \PDOStatement|false|null
      */
     protected $update = null;
-
-    /**
-     * The database transaction manager.
-     */
-    protected Transaction $transactionManager;
-
-    /**
-     * The database manager.
-     */
-    protected Manager $db;
 
     /**
      * Properties that can be set via the options method.
@@ -111,29 +60,6 @@ class InsertUpdate extends Loader
         self::TRANSACTION,
         self::DO_UPDATES,
     ];
-
-    /**
-     * Create a new InsertUpdate Loader instance.
-     */
-    public function __construct(Manager $manager)
-    {
-        $this->db = $manager;
-    }
-
-    public function initialize(): void
-    {
-        if ($this->timestamps) {
-            $this->time = date('Y-m-d G:i:s');
-        }
-
-        if ($this->transaction) {
-            $this->transactionManager = $this->db->transaction($this->connection)->size($this->commitSize);
-        }
-
-        if ([] !== $this->columns && array_keys($this->columns) === range(0, count($this->columns) - 1)) {
-            $this->columns = array_combine($this->columns, $this->columns);
-        }
-    }
 
     /**
      * Load the given row.
@@ -152,41 +78,11 @@ class InsertUpdate extends Loader
     }
 
     /**
-     * Finalize the step.
-     */
-    public function finalize(): void
-    {
-        if ($this->transaction) {
-            $this->transactionManager->close();
-        }
-    }
-
-    /**
      * Prepare the select statement.
      */
     protected function prepareSelect(): void
     {
         $this->select = $this->db->statement($this->connection)->select($this->output)->where($this->key)->prepare();
-    }
-
-    /**
-     * Prepare the insert statement.
-     *
-     * @param string[] $sample
-     */
-    protected function prepareInsert(array $sample): void
-    {
-        if ([] !== $this->columns) {
-            $columns = array_values($this->columns);
-        } else {
-            $columns = array_keys($sample);
-        }
-
-        if ($this->timestamps) {
-            array_push($columns, 'created_at', 'updated_at');
-        }
-
-        $this->insert = $this->db->statement($this->connection)->insert($this->output, $columns)->prepare();
     }
 
     /**
@@ -217,6 +113,17 @@ class InsertUpdate extends Loader
      */
     protected function execute(array $row): void
     {
+        [$row, $current] = $this->prepareEntry($row);
+
+        if (false === $current) {
+            $this->insert($row);
+        } else {
+            $this->update($row, $current);
+        }
+    }
+
+    protected function prepareEntry(array $row): array
+    {
         if (null === $this->select) {
             $this->prepareSelect();
         }
@@ -244,11 +151,8 @@ class InsertUpdate extends Loader
         }
 
         $current = $this->select->fetch();
-        if (false === $current) {
-            $this->insert($row);
-        } else {
-            $this->update($row, $current);
-        }
+
+        return [$row, $current];
     }
 
     /**
@@ -256,7 +160,7 @@ class InsertUpdate extends Loader
      */
     protected function insert(array $row): void
     {
-        if (null === $this->insert) {
+        if (!isset($this->insert)) {
             $this->prepareInsert($row);
         }
 

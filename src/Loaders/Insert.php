@@ -11,11 +11,9 @@ declare(strict_types=1);
 
 namespace Wizaplace\Etl\Loaders;
 
-use Wizaplace\Etl\Database\Manager;
-use Wizaplace\Etl\Database\Transaction;
 use Wizaplace\Etl\Row;
 
-class Insert extends Loader
+class Insert extends AbstractDbLoader
 {
     public const CONNECTION = 'connection';
     public const TIMESTAMPS = 'timestamps';
@@ -23,51 +21,9 @@ class Insert extends Loader
     public const COMMIT_SIZE = 'commitSize';
 
     /**
-     * The connection name.
-     */
-    protected string $connection = 'default';
-
-    /**
-     * The columns to insert.
-     *
-     * @var string[]
-     */
-    protected array $columns = [];
-
-    /**
-     * Indicates if the table has timestamps columns.
-     */
-    protected bool $timestamps = false;
-
-    /**
-     * Indicates if the loader will perform transactions.
-     */
-    protected bool $transaction = true;
-
-    /**
-     * Transaction commit size.
-     */
-    protected int $commitSize = 0;
-
-    /**
-     * Time for timestamps columns.
-     */
-    protected string $time;
-
-    /**
      * The insert statement.
      */
     protected \PDOStatement $insert;
-
-    /**
-     * The database transaction manager.
-     */
-    protected Transaction $transactionManager;
-
-    /**
-     * The database manager.
-     */
-    protected Manager $db;
 
     /**
      * Properties that can be set via the options method.
@@ -83,29 +39,6 @@ class Insert extends Loader
     ];
 
     /**
-     * Create a new Insert Loader instance.
-     */
-    public function __construct(Manager $manager)
-    {
-        $this->db = $manager;
-    }
-
-    public function initialize(): void
-    {
-        if ($this->timestamps) {
-            $this->time = date('Y-m-d G:i:s');
-        }
-
-        if ($this->transaction) {
-            $this->transactionManager = $this->db->transaction($this->connection)->size($this->commitSize);
-        }
-
-        if ([] !== $this->columns && array_keys($this->columns) === range(0, count($this->columns) - 1)) {
-            $this->columns = array_combine($this->columns, $this->columns);
-        }
-    }
-
-    /**
      * Load the given row.
      */
     public function load(Row $row): void
@@ -118,16 +51,6 @@ class Insert extends Loader
             });
         } else {
             $this->insert($row);
-        }
-    }
-
-    /**
-     * Finalize the step.
-     */
-    public function finalize(): void
-    {
-        if ($this->transaction) {
-            $this->transactionManager->close();
         }
     }
 
