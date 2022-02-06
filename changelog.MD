@@ -1,9 +1,12 @@
 # Changelog
 
-## New version
+## 2.1
+
 **New features**
 * Added a new _Update_ loader in order to perform update operations while ignoring new entries.
 
+**Miscellaneous**
+* Added a strict mode to the step _options_ method. Default value is _false_.
 
 ## 2.0
 
