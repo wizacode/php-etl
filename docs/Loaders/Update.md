@@ -1,10 +1,10 @@
-# Insert/Update Loader
+# Update Loader
 
-Inserts and/or updates data into a database table.
+Updates existing data into a database table.
 
 ```php
-/** @var \Wizaplace\Etl\Loaders\InsertUpdate $insertUpdate */
-$etl->load($insertUpdate, 'table_name', $options);
+/** @var \Wizaplace\Etl\Loaders\Update $update */
+$etl->load($update, 'table_name', $options);
 ```
 
 ## Options
@@ -20,13 +20,13 @@ Columns that will be loaded. If `null`, all columns in the process will be inser
 To select which columns will be loaded, use an array with the columns list:
 
 ```php
-$options = [InsertUpdate::COLUMNS => ['id', 'name', 'email']];
+$options = [Update::COLUMNS => ['id', 'name', 'email']];
 ```
 
 To map columns from the etl process to the database table, use an associative array where the `key` is the name of the process column and the `value` is the table column:
 
 ```php
-$options = [InsertUpdate::COLUMNS => [
+$options = [Update::COLUMNS => [
     'id' => 'user_id',
     'name' => 'full_name',
 ]];
@@ -41,7 +41,7 @@ Name of the database connection to use.
 | string | default       |
 
 ```php
-$options = [InsertUpdate::CONNECTION => 'app'];
+$options = [Update::CONNECTION => 'app'];
 ```
 
 ### Key
@@ -53,22 +53,7 @@ List of primary keys or identifiers of the table.
 | array | `['id']`      |
 
 ```php
-$options = [InsertUpdate::KEY => ['id', InsertUpdate::TYPE]];
-```
-
-### DoUpdates
-
-When set to false, rows that have
-keys already present in the destination are skipped rather than updated. This allows new rows to be brought into the
-ETL without overwriting any manual edits to the destination table. A future enhancement could be to make it so the
-list of columns to update is a subset of the list of columns that are inserted.
-
-| Type    | Default value |
-| ------- | ------------- |
-| boolean | `true`        |
-
-```php
-$options = [InsertUpdate::DO_UPDATES => false];
+$options = [Update::KEY => ['id', Update::TYPE]];
 ```
 
 ### Timestamps
@@ -80,7 +65,7 @@ Populates the `created_at` and/or `updated_at` columns with the current timestam
 | boolean | `false`       |
 
 ```php
-$options = [InsertUpdate::TIMESTAMPS => true];
+$options = [Update::TIMESTAMPS => true];
 ```
 
 ### Transaction
@@ -96,7 +81,7 @@ accepted by the destination database.
 | boolean | `true`        |
 
 ```php
-$options = [InsertUpdate::TRANSACTION => false];
+$options = [Update::TRANSACTION => false];
 ```
 
 ### Commit Size
@@ -120,5 +105,5 @@ ETL process is not atomic, at least we can be durable.
 | int  | 100           |
 
 ```php
-$options = [InsertUpdate::COMMIT_SIZE => 500];
+$options = [Update::COMMIT_SIZE => 500];
 ```
