@@ -334,6 +334,52 @@ class InsertUpdateTest extends TestCase
         $this->execute($this->loader, [$this->row]);
     }
 
+    /**
+     * @test
+     *
+     * This test has been added to check strict comparison.
+     * Before the fix, we had a loose comparison making skip updates because in PHP 'false' == true.
+     */
+    public function updateWithTrickyTypesComparison(): void
+    {
+        $row = $this->createMock('Wizaplace\Etl\Row');
+        $row->expects(static::any())->method('toArray')
+            ->willReturn(
+                [
+                    'name' => 'Jane',
+                    'birth_date' => '1962-06-18',
+                    'active' => true,
+                ]
+            );
+
+        $this->select->expects(static::once())->method('fetch')->willReturn(
+            [
+                'name' => 'Jane',
+                'birth_date' => '1962-06-18',
+                'active' => 'false',
+            ]
+        );
+
+        // Updates
+
+        $this->statement->expects(static::once())->method('update')->with(
+            'table',
+            [
+                'name',
+                'birth_date',
+                'active',
+            ]
+        );
+
+        $this->update->expects(static::once())->method('execute')->with([
+            'name' => 'Jane',
+            'birth_date' => '1962-06-18',
+            'active' => true,
+        ]);
+
+        $this->execute($this->loader, [$row]);
+    }
+
     /** @test */
     public function insertDataIntoDatabaseWithoutTransactions(): void
     {

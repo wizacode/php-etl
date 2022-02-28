@@ -185,7 +185,7 @@ class InsertUpdate extends Insert
             $this->prepareUpdate($row);
         }
 
-        if ($row == array_intersect_key($current, $row)) {
+        if ($row === array_intersect_key($current, $row)) {
             return;
         }
 
