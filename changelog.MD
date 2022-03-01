@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.1.1
+
+**Bugfixes**
+* Added a strict comparison in the DB Loaders. Without the fix, since with a loose comparison 'false' == true, some updates were skipped.
+
 ## 2.1
 
 **New features**
