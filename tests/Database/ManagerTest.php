@@ -96,4 +96,32 @@ class ManagerTest extends TestCase
 
         $manager->pdo('invalid');
     }
+
+    /** @test */
+    public function testRemoveConnection(): void
+    {
+        $factory = $this->createMock('Wizaplace\Etl\Database\ConnectionFactory');
+        $factory->expects(static::once())->method('make')->with(['options2'])->willReturn($this->createMock('PDO'));
+
+        $manager = new Manager($factory);
+        $manager->addConnection(['options']);
+        $manager->addConnection(['options2'], 'theOtherConnection');
+
+        static::assertEquals(
+            ['default' => ['options'], 'theOtherConnection' => ['options2']],
+            $manager->getConfig()
+        );
+
+        $manager->removeConnection('default');
+        static::assertEquals(
+            ['theOtherConnection' => ['options2']],
+            $manager->getConfig()
+        );
+        static::assertInstanceOf(\PDO::class, $manager->pdo('theOtherConnection'));
+
+        $manager->removeConnection('theOtherConnection');
+        static::expectException(\InvalidArgumentException::class);
+        static::expectExceptionMessage('Database [theOtherConnection] not configured.');
+        $manager->pdo('theOtherConnection');
+    }
 }

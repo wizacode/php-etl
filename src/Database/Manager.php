@@ -44,6 +44,17 @@ class Manager
         $this->config[$name] = $config;
     }
 
+    public function removeConnection(string $name = 'default'): void
+    {
+        if (true === array_key_exists($name, $this->config)) {
+            unset($this->config[$name]);
+        }
+
+        if (true === array_key_exists($name, $this->connections)) {
+            unset($this->connections[$name]);
+        }
+    }
+
     public function getConfig(): array
     {
         return $this->config;
