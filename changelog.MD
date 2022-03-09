@@ -1,5 +1,10 @@
 # Changelog
 
+### Next version
+
+**New features**
+* Added a _removeConnection()_ method in the connection manager class.
+
 ## 2.1.1
 
 **Bugfixes**
