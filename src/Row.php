@@ -174,11 +174,8 @@ class Row implements \ArrayAccess
      * Get the value for a given offset.
      *
      * @param mixed $offset
-     *
-     * @return mixed
      */
-    #[\ReturnTypeWillChange]
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
         return $this->attributes[$offset];
     }
