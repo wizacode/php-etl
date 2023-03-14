@@ -107,6 +107,10 @@ class Csv extends Extractor
                 $message = "Row with index #{$this->currentRow} does not have the '{$column}' field.";
                 throw new InvalidInputException($message);
             }
+            $offset = $index - 1;
+            if (false === array_key_exists($offset, $row)) {
+                throw new InvalidInputException("Undefined array key $offset");
+            }
             $data[$column] = $row[$index - 1];
         }
 

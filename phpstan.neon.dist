@@ -31,7 +31,7 @@ parameters:
             path: src/Extractors\Xml.php
         -
             message: '~Variable method call on Wizaplace\\Etl\\Step\.~'
-            path: tests/TestCase.php
+            path: tests/Tools/AbstractTestCase.php
         -
             message: '~Access to an undefined property Wizaplace\\Etl\\Row::\$name\.~'
-            path: tests/RowTest.php
+            path: tests/Unit/RowTest.php

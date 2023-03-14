@@ -16,7 +16,7 @@ class Transaction
     /**
      * The database connection.
      */
-    protected \PDO $pdo;
+    protected ?\PDO $pdo = null;
 
     /**
      * Current transaction count.
@@ -60,7 +60,7 @@ class Transaction
     {
         if ($this->size > 0) {
             $this->close();
-        } elseif ($this->pdo->inTransaction()) {
+        } elseif (null !== $this->pdo && $this->pdo->inTransaction()) {
             $this->pdo->rollBack();
         }
     }

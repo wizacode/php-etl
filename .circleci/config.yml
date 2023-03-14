@@ -1,13 +1,5 @@
 version: '2.1'
 executors:
-  php7-4:
-    docker:
-      - image: php:7.4-alpine
-    working_directory: ~/repo
-  php8-0:
-    docker:
-      - image: php:8.0-alpine
-    working_directory: ~/repo
   php8-1:
     docker:
       - image: php:8.1-alpine
@@ -19,109 +11,6 @@ executors:
 
 jobs:
   # In the minimum PHP version supported, run all our quality checks.
-  composer7-4:
-    executor: php7-4
-    steps:
-      - run:
-          name: Install alpine requirements for checkout
-          command: apk add git openssh-client curl
-      - checkout
-      - restore_cache:
-          key: composer-{{ checksum "composer.json" }}-{{ checksum "composer.lock" }}
-      - run:
-          name: composer
-          command: |
-            if [[ ! -f vendor/autoload.php ]]; then
-                curl https://getcomposer.org/composer-stable.phar --location --silent  --output /usr/bin/composer; \
-                chmod +x /usr/bin/composer; \
-                composer install --no-progress --no-interaction; \
-            fi
-      - save_cache:
-          key: composer-{{ checksum "composer.json" }}-{{ checksum "composer.lock" }}
-          paths:
-            - ./vendor
-      - persist_to_workspace:
-          root: .
-          paths:
-            - vendor
-
-  phpcsfixer7-4:
-    executor: php7-4
-    steps:
-      - checkout
-      - attach_workspace:
-          at: .
-      - run:
-          name: phpcs
-          command: vendor/bin/php-cs-fixer fix -v --dry-run --allow-risky=yes
-
-  phpcs7-4:
-    executor: php7-4
-    steps:
-      - checkout
-      - attach_workspace:
-          at: .
-      - run:
-          name: phpcs
-          command: vendor/bin/phpcs -n
-
-  phpstan7-4:
-    executor: php7-4
-    steps:
-      - checkout
-      - attach_workspace:
-          at: .
-      - run:
-          name: phpstan
-          command: vendor/bin/phpstan analyse --memory-limit=256M
-
-  phpunit7-4:
-    executor: php7-4
-    steps:
-      - checkout
-      - attach_workspace:
-          at: .
-      - run:
-          name: phpunit
-          command: vendor/bin/phpunit --testdox
-
-  # In higher versions of PHP, run only PHPUnit.
-  composer8-0:
-    executor: php8-0
-    steps:
-      - run:
-          name: Install alpine requirements for checkout
-          command: apk add git openssh-client curl
-      - checkout
-      - restore_cache:
-          key: composer-{{ checksum "composer.json" }}-{{ checksum "composer.lock" }}
-      - run:
-          name: composer
-          command: |
-            if [[ ! -f vendor/autoload.php ]]; then
-                curl https://getcomposer.org/composer-stable.phar --location --silent  --output /usr/bin/composer; \
-                chmod +x /usr/bin/composer; \
-                composer install --no-progress --no-interaction; \
-            fi
-      - save_cache:
-          key: composer-{{ checksum "composer.json" }}-{{ checksum "composer.lock" }}
-          paths:
-            - ./vendor
-      - persist_to_workspace:
-          root: .
-          paths:
-            - vendor
-
-  phpunit8-0:
-    executor: php8-0
-    steps:
-      - checkout
-      - attach_workspace:
-          at: .
-      - run:
-          name: phpunit
-          command: vendor/bin/phpunit --testdox
-
   composer8-1:
     executor: php8-1
     steps:
@@ -148,6 +37,36 @@ jobs:
           paths:
             - vendor
 
+  phpcsfixer8-1:
+    executor: php8-1
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run:
+          name: phpcs
+          command: vendor/bin/php-cs-fixer fix -v --dry-run --allow-risky=yes
+
+  phpcs8-1:
+    executor: php8-1
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run:
+          name: phpcs
+          command: vendor/bin/phpcs -n
+
+  phpstan8-1:
+    executor: php8-1
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run:
+          name: phpstan
+          command: vendor/bin/phpstan analyse --memory-limit=256M
+
   phpunit8-1:
     executor: php8-1
     steps:
@@ -158,6 +77,7 @@ jobs:
           name: phpunit
           command: vendor/bin/phpunit --testdox
 
+  # In higher versions of PHP, run only PHPUnit.
   composer8-2:
     executor: php8-2
     steps:
@@ -198,25 +118,17 @@ workflows:
   version: '2.1'
   Code quality:
     jobs:
-      - composer7-4
-      - composer8-0
       - composer8-1
       - composer8-2
-      - phpcs7-4:
+      - phpcs8-1:
           requires:
-            - composer7-4
-      - phpcsfixer7-4:
+            - composer8-1
+      - phpcsfixer8-1:
           requires:
-            - composer7-4
-      - phpstan7-4:
+            - composer8-1
+      - phpstan8-1:
           requires:
-            - composer7-4
-      - phpunit7-4:
-          requires:
-            - composer7-4
-      - phpunit8-0:
-          requires:
-            - composer8-0
+            - composer8-1
       - phpunit8-1:
           requires:
             - composer8-1
