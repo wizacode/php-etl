@@ -15,6 +15,9 @@ use Wizaplace\Etl\Extractors\Extractor;
 use Wizaplace\Etl\Loaders\Loader;
 use Wizaplace\Etl\Transformers\Transformer;
 
+/**
+ * @mixin Pipeline
+ */
 class Etl
 {
     /**
