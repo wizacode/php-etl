@@ -13,6 +13,7 @@ namespace Tests\Unit\Database;
 
 use PHPUnit\Framework\MockObject\MockObject;
 use Tests\Tools\AbstractTestCase;
+use Tests\Tools\CallbackClass;
 use Wizaplace\Etl\Database\ConnectionFactory;
 use Wizaplace\Etl\Database\Manager;
 use Wizaplace\Etl\Database\Transaction;
@@ -35,7 +36,8 @@ class TransactionTest extends AbstractTestCase
         parent::setUp();
 
         $this->connection = $this->createMock('PDO');
-        $this->callback = $this->getMockBuilder('stdClass')->addMethods(['callback'])->getMock();
+
+        $this->callback = $this->getMockBuilder(CallbackClass::class)->getMock();
 
         $this->transaction = new Transaction($this->connection);
     }
