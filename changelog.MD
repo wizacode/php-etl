@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.3
+* Add the PHPDoc _@mixin Pipeline_ to the Etl class.
+* Add _mixed_ return type to _Wizaplace\Etl\Row\offsetGet_.
+* Drop support of PHP 8.0 and below.
+
 ## 2.2
 
 **New features**
