@@ -40,7 +40,7 @@ $options = [Table::CONNECTION => 'app'];
 Array of conditions, each condition is either:
 
 - `key` equals `value` , or
-- `key` _comparesTo_ `value` (comparesTo can be: =, <, <=, =>, >, or <>).
+- `key` _comparesTo_ `value` (comparesTo can be: =, <, <=, >=, >, or <>).
 
 If you need more flexibility in the query creation, you may use the [Query extractor](Query.md).
 

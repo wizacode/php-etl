@@ -76,11 +76,14 @@ class Query
      *
      * @return $this
      */
-    public function select(string $table, array $columns = ['*']): Query
+    public function select(string $table, ?array $columns = null): Query
     {
-        $columns = $this->implode($columns);
 
-        $this->query[] = "select $columns from $table";
+        $columns = \is_null($columns)
+            ? '*'
+            : $this->implode($columns, '`{column}`');
+
+        $this->query[] = "SELECT $columns FROM `$table`";
 
         return $this;
     }
@@ -96,9 +99,9 @@ class Query
 
         $values = $this->implode($columns, '?');
 
-        $columns = $this->implode(array_keys($columns));
+        $columns = $this->implode(array_keys($columns), '`{column}`');
 
-        $this->query[] = "insert into $table ($columns) values ($values)";
+        $this->query[] = "INSERT INTO `$table` ($columns) VALUES ($values)";
 
         return $this;
     }
@@ -112,9 +115,12 @@ class Query
     {
         $this->bindings = array_merge($this->bindings, array_values($columns));
 
-        $columns = $this->implode(array_keys($columns), '{column} = ?');
+        $columns = $this->implode(
+            array_keys($columns),
+            '`{column}` = ?'
+        );
 
-        $this->query[] = "update $table set $columns";
+        $this->query[] = "UPDATE `$table` SET $columns";
 
         return $this;
     }
@@ -126,7 +132,7 @@ class Query
      */
     public function delete(string $table): Query
     {
-        $this->query[] = "delete from {$table}";
+        $this->query[] = "DELETE FROM `$table`";
 
         return $this;
     }
@@ -139,14 +145,20 @@ class Query
     public function where(array $columns): Query
     {
         foreach ($columns as $column => $value) {
-            $condition = ['type' => 'Where', 'column' => $column, 'boolean' => 'and'];
+            $condition = [
+                WhereStatement::TYPE => WhereType::Where,
+                WhereStatement::COLUMN => $column,
+                WhereStatement::BOOLEAN => WhereBoolean::And,
+            ];
+
             if (is_scalar($value)) {
-                $condition['operator'] = '=';
-                $condition['value'] = $value;
+                $condition[WhereStatement::OPERATOR] = WhereOperator::Equal;
+                $condition[WhereStatement::VALUE] = $value;
             } else {
-                $condition['operator'] = $value[0];
-                $condition['value'] = $value[1];
+                $condition[WhereStatement::OPERATOR] = WhereOperator::from($value[0]);
+                $condition[WhereStatement::VALUE] = $value[1];
             }
+
             $this->wheres[] = $condition;
         }
 
@@ -160,23 +172,26 @@ class Query
      *
      * @return $this
      */
-    public function whereIn($column, array $values, string $operator = 'in'): Query
-    {
+    public function whereIn(
+        $column,
+        array $values,
+        WhereOperator $operator = WhereOperator::In
+    ): Query {
         if (is_string($column)) {
             $this->wheres[] = [
-                'type' => 'WhereIn',
-                'column' => $column,
-                'values' => $values,
-                'operator' => $operator,
-                'boolean' => 'and',
+                WhereStatement::TYPE => WhereType::WhereIn,
+                WhereStatement::COLUMN => $column,
+                WhereStatement::MULTIPLE_VALUES => $values,
+                WhereStatement::OPERATOR => $operator,
+                WhereStatement::BOOLEAN => WhereBoolean::And,
             ];
         } else {
             $this->wheres[] = [
-                'type' => 'CompositeWhereIn',
-                'columns' => $column,
-                'values' => $values,
-                'operator' => $operator,
-                'boolean' => 'and',
+                WhereStatement::TYPE => WhereType::CompositeWhereIn,
+                WhereStatement::MULTIPLE_COLUMNS => $column,
+                WhereStatement::MULTIPLE_VALUES  => $values,
+                WhereStatement::OPERATOR => $operator,
+                WhereStatement::BOOLEAN => WhereBoolean::And,
             ];
         }
 
@@ -192,7 +207,7 @@ class Query
      */
     public function whereNotIn($column, array $values): Query
     {
-        return $this->whereIn($column, $values, 'not in');
+        return $this->whereIn($column, $values, WhereOperator::NotIn);
     }
 
     /**
@@ -204,13 +219,13 @@ class Query
             return;
         }
 
-        $this->query[] = 'where';
+        $this->query[] = 'WHERE';
 
         foreach ($this->wheres as $index => $condition) {
-            $method = 'compile' . $condition['type'];
+            $method = 'compile' . $condition[WhereStatement::TYPE]->value;
 
             if (0 == $index) {
-                $condition['boolean'] = '';
+                $condition[WhereStatement::BOOLEAN] = WhereBoolean::Nothing;
             }
 
             $this->query[] = trim($this->{$method}($condition));
@@ -223,14 +238,14 @@ class Query
     protected function compileWhere(array $where): string
     {
         // All these if, empty, are here to clean the legacy code before the fork. See the git history.
-        $boolean = array_key_exists('boolean', $where) ? $where['boolean'] : null;
-        $column = array_key_exists('column', $where) ? $where['column'] : null;
-        $operator = array_key_exists('operator', $where) ? $where['operator'] : null;
-        $value = array_key_exists('value', $where) ? $where['value'] : null;
+        $boolean = array_key_exists(WhereStatement::BOOLEAN, $where) ? $where[WhereStatement::BOOLEAN]->value : null;
+        $column = array_key_exists(WhereStatement::COLUMN, $where) ? $where[WhereStatement::COLUMN] : null;
+        $operator = array_key_exists(WhereStatement::OPERATOR, $where) ? $where[WhereStatement::OPERATOR]->value : null;
+        $value = array_key_exists(WhereStatement::VALUE, $where) ? $where[WhereStatement::VALUE] : null;
 
         $this->bindings[] = $value;
 
-        return "$boolean $column $operator ?";
+        return "$boolean `$column` $operator ?";
     }
 
     /**
@@ -239,34 +254,34 @@ class Query
     protected function compileWhereIn(array $where): string
     {
         // All these if, empty, are here to clean the legacy code before the fork. See the git history.
-        $boolean = array_key_exists('boolean', $where) ? $where['boolean'] : null;
-        $column = array_key_exists('column', $where) ? $where['column'] : null;
-        $operator = array_key_exists('operator', $where) ? $where['operator'] : null;
-        $values = array_key_exists('values', $where) ? $where['values'] : null;
+        $boolean = array_key_exists(WhereStatement::BOOLEAN, $where) ? $where[WhereStatement::BOOLEAN]->value : null;
+        $column = array_key_exists(WhereStatement::COLUMN, $where) ? $where[WhereStatement::COLUMN] : null;
+        $operator = array_key_exists(WhereStatement::OPERATOR, $where) ? $where[WhereStatement::OPERATOR]->value : null;
+        $multipleValues = array_key_exists(WhereStatement::MULTIPLE_VALUES, $where) ? $where[WhereStatement::MULTIPLE_VALUES] : null;
 
-        $this->bindings = array_merge($this->bindings, $values);
+        $this->bindings = array_merge($this->bindings, $multipleValues);
 
-        $parameters = $this->implode($values, '?');
+        $parameters = $this->implode($multipleValues, '?');
 
-        return "$boolean $column $operator ($parameters)";
+        return "$boolean `$column` $operator ($parameters)";
     }
 
     /**
-     * Compile the composite where in statement.
+     * Compile the composite where in statecolumnment.
      */
     protected function compileCompositeWhereIn(array $where): string
     {
         // All these if, empty, are here to clean the legacy code before the fork. See the git history.
-        $boolean = array_key_exists('boolean', $where) ? $where['boolean'] : null;
-        $columns = array_key_exists('columns', $where) ? $where['columns'] : null;
-        $operator = array_key_exists('operator', $where) ? $where['operator'] : null;
-        $values = array_key_exists('values', $where) ? $where['values'] : null;
+        $boolean = array_key_exists(WhereStatement::BOOLEAN, $where) ? $where[WhereStatement::BOOLEAN]->value : null;
+        $multipleColumns = array_key_exists(WhereStatement::MULTIPLE_COLUMNS, $where) ? $where[WhereStatement::MULTIPLE_COLUMNS] : null;
+        $operator = array_key_exists(WhereStatement::OPERATOR, $where) ? $where[WhereStatement::OPERATOR]->value : null;
+        $multipleValues = array_key_exists(WhereStatement::MULTIPLE_VALUES, $where) ? $where[WhereStatement::MULTIPLE_VALUES] : null;
 
-        sort($columns);
+        sort($multipleColumns);
 
         $parameters = [];
 
-        foreach ($values as $value) {
+        foreach ($multipleValues as $value) {
             ksort($value);
 
             $this->bindings = array_merge($this->bindings, array_values($value));
@@ -276,9 +291,9 @@ class Query
 
         $parameters = $this->implode($parameters);
 
-        $columns = $this->implode($columns);
+        $multipleColumns = $this->implode($multipleColumns, '`{column}`');
 
-        return "$boolean ($columns) $operator ($parameters)";
+        return "$boolean ($multipleColumns) $operator ($parameters)";
     }
 
     /**

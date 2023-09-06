@@ -332,7 +332,7 @@ class DateDimensionTest extends AbstractTestCase
             $currentDayTimestamp = (new \DateTimeImmutable($date[DateDimension::ROW_DATE_FULL]))->getTimestamp();
 
             if (null !== $previousDayTimestamp) {
-                $delta = $currentDayTimestamp - $previousDayTimestamp - static::DAY_AS_SECONDS;
+                $delta = $currentDayTimestamp - $previousDayTimestamp - self::DAY_AS_SECONDS;
             }
 
             if ($delta > 0) {

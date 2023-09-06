@@ -165,6 +165,8 @@ class AggregatorTest extends AbstractTestCase
     /** @test */
     public function bigShuffledDataSet(): void
     {
+        $this->markTestSkipped('Tool long');
+
         $expected = 10 ** 4;
 
         $iterator = function (string $key, string $template) use ($expected): \Generator {

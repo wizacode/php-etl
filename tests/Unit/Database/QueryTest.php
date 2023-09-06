@@ -22,12 +22,12 @@ class QueryTest extends AbstractTestCase
         $query = new Query($this->createMock('PDO'));
         $query->select('users');
 
-        static::assertEquals('select * from users', $query->toSql());
+        static::assertEquals('SELECT * FROM `users`', $query->toSql());
 
         $query = new Query($this->createMock('PDO'));
         $query->select('users', ['name', 'email']);
 
-        static::assertEquals('select name, email from users', $query->toSql());
+        static::assertEquals('SELECT `name`, `email` FROM `users`', $query->toSql());
     }
 
     /** @test */
@@ -36,7 +36,7 @@ class QueryTest extends AbstractTestCase
         $query = new Query($this->createMock('PDO'));
         $query->insert('users', ['name' => 'Jane Doe', 'email' => 'janedoe@example.com']);
 
-        static::assertEquals('insert into users (name, email) values (?, ?)', $query->toSql());
+        static::assertEquals('INSERT INTO `users` (`name`, `email`) VALUES (?, ?)', $query->toSql());
         static::assertEquals(['Jane Doe', 'janedoe@example.com'], $query->getBindings());
     }
 
@@ -46,7 +46,7 @@ class QueryTest extends AbstractTestCase
         $query = new Query($this->createMock('PDO'));
         $query->update('users', ['name' => 'Jane Doe', 'email' => 'janedoe@example.com']);
 
-        static::assertEquals('update users set name = ?, email = ?', $query->toSql());
+        static::assertEquals('UPDATE `users` SET `name` = ?, `email` = ?', $query->toSql());
         static::assertEquals(['Jane Doe', 'janedoe@example.com'], $query->getBindings());
     }
 
@@ -56,7 +56,7 @@ class QueryTest extends AbstractTestCase
         $query = new Query($this->createMock('PDO'));
         $query->delete('users');
 
-        static::assertEquals('delete from users', $query->toSql());
+        static::assertEquals('DELETE FROM `users`', $query->toSql());
         static::assertEquals([], $query->getBindings());
     }
 
@@ -66,7 +66,7 @@ class QueryTest extends AbstractTestCase
         $query = new Query($this->createMock('PDO'));
         $query->where(['name' => 'Jane Doe', 'email' => 'janedoe@example.com']);
 
-        static::assertEquals('where name = ? and email = ?', $query->toSql());
+        static::assertEquals('WHERE `name` = ? AND `email` = ?', $query->toSql());
         static::assertEquals(['Jane Doe', 'janedoe@example.com'], $query->getBindings());
     }
 
@@ -76,7 +76,7 @@ class QueryTest extends AbstractTestCase
         $query = new Query($this->createMock('PDO'));
         $query->whereIn('id', ['1', '2']);
 
-        static::assertEquals('where id in (?, ?)', $query->toSql());
+        static::assertEquals('WHERE `id` IN (?, ?)', $query->toSql());
         static::assertEquals(['1', '2'], $query->getBindings());
     }
 
@@ -86,7 +86,7 @@ class QueryTest extends AbstractTestCase
         $query = new Query($this->createMock('PDO'));
         $query->whereNotIn('id', ['1', '2']);
 
-        static::assertEquals('where id not in (?, ?)', $query->toSql());
+        static::assertEquals('WHERE `id` NOT IN (?, ?)', $query->toSql());
         static::assertEquals(['1', '2'], $query->getBindings());
     }
 
@@ -96,7 +96,7 @@ class QueryTest extends AbstractTestCase
         $query = new Query($this->createMock('PDO'));
         $query->whereIn(['id', 'company'], [['id' => '1', 'company' => '1'], ['id' => '2', 'company' => '1']]);
 
-        static::assertEquals('where (company, id) in ((?, ?), (?, ?))', $query->toSql());
+        static::assertEquals('WHERE (`company`, `id`) IN ((?, ?), (?, ?))', $query->toSql());
         static::assertEquals(['1', '1', '1', '2'], $query->getBindings());
     }
 
@@ -106,7 +106,7 @@ class QueryTest extends AbstractTestCase
         $query = new Query($this->createMock('PDO'));
         $query->whereNotIn(['id', 'company'], [['id' => '1', 'company' => '1'], ['id' => '2', 'company' => '1']]);
 
-        static::assertEquals('where (company, id) not in ((?, ?), (?, ?))', $query->toSql());
+        static::assertEquals('WHERE (`company`, `id`) NOT IN ((?, ?), (?, ?))', $query->toSql());
         static::assertEquals(['1', '1', '1', '2'], $query->getBindings());
     }
 
