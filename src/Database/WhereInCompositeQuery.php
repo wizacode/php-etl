@@ -34,13 +34,13 @@ class WhereInCompositeQuery implements WhereInterface
 
             $parameters[] = \sprintf(
                 "(%s)",
-                Query::implode($value, '?')
+                Helpers::implode($value, '?')
             );
         }
 
-        $parameters = Query::implode($parameters);
+        $parameters = Helpers::implode($parameters);
 
-        $multipleColumns = Query::implode($this->multipleColumns, Query::BACKTICKED_MASK);
+        $multipleColumns = Helpers::implode($this->multipleColumns, Helpers::BACKTICKED_MASK);
 
         return new WhereCompileResult(
             \trim(

@@ -72,7 +72,7 @@ class Statement
     {
         $columns = \is_null($columns)
             ? '*'
-            : Query::implode($columns, Query::BACKTICKED_MASK);
+            : Helpers::implode($columns, Helpers::BACKTICKED_MASK);
 
         $this->query[] = "SELECT $columns FROM `$table`";
 
@@ -86,9 +86,9 @@ class Statement
      */
     public function insert(string $table, array $columns): Statement
     {
-        $values = Query::implode($columns, ':{column}');
+        $values = Helpers::implode($columns, ':{column}');
 
-        $columns = Query::implode($columns, Query::BACKTICKED_MASK);
+        $columns = Helpers::implode($columns, Helpers::BACKTICKED_MASK);
 
         $this->query[] = "INSERT INTO `$table` ($columns) values ($values)";
 
@@ -102,12 +102,12 @@ class Statement
      */
     public function update(string $table, array $columns): Statement
     {
-        $columns = Query::implode(
+        $columns = Helpers::implode(
             $columns,
             \sprintf(
                 '%s = :%s',
-                Query::BACKTICKED_MASK,
-                Query::DEFAULT_MASK,
+                Helpers::BACKTICKED_MASK,
+                Helpers::DEFAULT_MASK,
             )
         );
 

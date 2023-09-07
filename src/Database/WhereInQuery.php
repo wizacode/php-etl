@@ -23,7 +23,7 @@ class WhereInQuery implements WhereInterface
 
     public function compile(int $index): WhereCompileResult
     {
-        $parameters = Query::implode($this->multipleValues, '?');
+        $parameters = Helpers::implode($this->multipleValues, '?');
 
         return new WhereCompileResult(
             \trim(

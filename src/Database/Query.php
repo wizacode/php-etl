@@ -13,9 +13,6 @@ namespace Wizaplace\Etl\Database;
 
 class Query
 {
-    public const DEFAULT_MASK = '{column}';
-    public const BACKTICKED_MASK = '`{column}`';
-
     /**
      * The database connection.
      */
@@ -88,7 +85,7 @@ class Query
 
         $columns = \is_null($columns)
             ? '*'
-            : self::implode($columns, self::BACKTICKED_MASK);
+            : Helpers::implode($columns, Helpers::BACKTICKED_MASK);
 
         $this->query[] = "SELECT $columns FROM `$table`";
 
@@ -104,9 +101,9 @@ class Query
     {
         $this->bindings = array_merge($this->bindings, array_values($columns));
 
-        $values = self::implode($columns, '?');
+        $values = Helpers::implode($columns, '?');
 
-        $columns = self::implode(array_keys($columns), self::BACKTICKED_MASK);
+        $columns = Helpers::implode(array_keys($columns), Helpers::BACKTICKED_MASK);
 
         $this->query[] = "INSERT INTO `$table` ($columns) VALUES ($values)";
 
@@ -122,9 +119,9 @@ class Query
     {
         $this->bindings = array_merge($this->bindings, array_values($columns));
 
-        $columns = self::implode(
+        $columns = Helpers::implode(
             array_keys($columns),
-            sprintf("%s = ?", self::BACKTICKED_MASK),
+            sprintf("%s = ?", Helpers::BACKTICKED_MASK),
         );
 
         $this->query[] = "UPDATE `$table` SET $columns";
@@ -233,17 +230,5 @@ class Query
                 $result->bindings,
             );
         }
-    }
-
-    /**
-     * Join array elements using a string mask.
-     */
-    public static function implode(array $columns, string $mask = self::DEFAULT_MASK): string
-    {
-        $columns = array_map(function ($column) use ($mask): string {
-            return str_replace(self::DEFAULT_MASK, $column, $mask);
-        }, $columns);
-
-        return implode(', ', $columns);
     }
 }
