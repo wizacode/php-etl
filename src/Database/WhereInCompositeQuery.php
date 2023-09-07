@@ -11,7 +11,7 @@ declare(strict_types=1);
 
 namespace Wizaplace\Etl\Database;
 
-class WhereInCompositeStatement implements WhereStatementInterface
+class WhereInCompositeQuery implements WhereInterface
 {
     public function __construct(
         private WhereBoolean $boolean,

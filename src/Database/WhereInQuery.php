@@ -11,28 +11,31 @@ declare(strict_types=1);
 
 namespace Wizaplace\Etl\Database;
 
-class WhereStatement implements WhereInterface
+class WhereInQuery implements WhereInterface
 {
     public function __construct(
         private WhereBoolean $boolean,
         private WhereOperator $operator,
         private string $column,
+        private array $multipleValues,
     ) {
     }
 
     public function compile(int $index): WhereCompileResult
     {
+        $parameters = Query::implode($this->multipleValues, '?');
+
         return new WhereCompileResult(
             \trim(
                 \sprintf(
-                    '%s `%s` %s :%s',
+                    '%s `%s` %s (%s)',
                     $index > 0 ? $this->boolean->value : '',
                     $this->column,
                     $this->operator->value,
-                    $this->column,
+                    $parameters,
                 )
             ),
-            [],
+            $this->multipleValues,
         );
     }
 }

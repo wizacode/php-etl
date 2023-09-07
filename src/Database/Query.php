@@ -13,7 +13,7 @@ namespace Wizaplace\Etl\Database;
 
 class Query
 {
-    private const DEFAULT_MASK = '{column}';
+    public const DEFAULT_MASK = '{column}';
     public const BACKTICKED_MASK = '`{column}`';
 
     /**
@@ -33,9 +33,9 @@ class Query
 
     /**
      * The where constraints for the query.
-     * @var WhereStatementInterface[]
+     * @var WhereInterface[]
      */
-    protected array $whereStatements = [];
+    protected array $whereQueries = [];
 
     /**
      * Create a new Query instance.
@@ -159,7 +159,7 @@ class Query
                 $value = $value[1];
             }
 
-            $this->whereStatements[] = new WhereStatement(
+            $this->whereQueries[] = new WhereQuery(
                 boolean: WhereBoolean::And,
                 operator: $operator,
                 column: $column,
@@ -183,14 +183,14 @@ class Query
         WhereOperator $operator = WhereOperator::In
     ): Query {
         if (is_string($column)) {
-            $this->whereStatements[] = new WhereInStatement(
+            $this->whereQueries[] = new WhereInQuery(
                 boolean: WhereBoolean::And,
                 operator: $operator,
                 column: $column,
                 multipleValues: $values,
             );
         } else {
-            $this->whereStatements[] = new WhereInCompositeStatement(
+            $this->whereQueries[] = new WhereInCompositeQuery(
                 boolean: WhereBoolean::And,
                 operator: $operator,
                 multipleColumns: $column, // :|
@@ -218,16 +218,16 @@ class Query
      */
     protected function compileWheres(): void
     {
-        if ([] === $this->whereStatements) {
+        if ([] === $this->whereQueries) {
             return;
         }
 
         $this->query[] = 'WHERE';
 
-        foreach ($this->whereStatements as $index => $statement) {
-            $result = $statement->compile($index);
+        foreach ($this->whereQueries as $index => $whereQuery) {
+            $result = $whereQuery->compile($index);
 
-            $this->query[] = $result->statement;
+            $this->query[] = $result->output;
             $this->bindings = \array_merge(
                 $this->bindings,
                 $result->bindings,

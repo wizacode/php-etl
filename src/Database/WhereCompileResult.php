@@ -14,7 +14,7 @@ namespace Wizaplace\Etl\Database;
 class WhereCompileResult
 {
     public function __construct(
-        public string $statement,
+        public string $output,
         public array $bindings,
     ) {
     }

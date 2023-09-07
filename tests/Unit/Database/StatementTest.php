@@ -24,12 +24,12 @@ class StatementTest extends AbstractTestCase
         $statement = new Statement($this->createMock('PDO'));
         $statement->select('users');
 
-        static::assertEquals('select * from users', $statement->toSql());
+        static::assertEquals('SELECT * FROM `users`', $statement->toSql());
 
         $statement = new Statement($this->createMock('PDO'));
         $statement->select('users', ['name', 'email']);
 
-        static::assertEquals('select name, email from users', $statement->toSql());
+        static::assertEquals('SELECT `name`, `email` FROM `users`', $statement->toSql());
     }
 
     /** @test */
@@ -38,7 +38,7 @@ class StatementTest extends AbstractTestCase
         $statement = new Statement($this->createMock('PDO'));
         $statement->insert('users', ['name', 'email']);
 
-        static::assertEquals('insert into users (name, email) values (:name, :email)', $statement->toSql());
+        static::assertEquals('INSERT INTO `users` (`name`, `email`) values (:name, :email)', $statement->toSql());
     }
 
     /** @test */
@@ -47,7 +47,7 @@ class StatementTest extends AbstractTestCase
         $statement = new Statement($this->createMock('PDO'));
         $statement->update('users', ['name', 'email']);
 
-        static::assertEquals('update users set name = :name, email = :email', $statement->toSql());
+        static::assertEquals('UPDATE `users` SET `name` = :name, `email` = :email', $statement->toSql());
     }
 
     /** @test */
@@ -56,7 +56,7 @@ class StatementTest extends AbstractTestCase
         $statement = new Statement($this->createMock('PDO'));
         $statement->delete('users');
 
-        static::assertEquals('delete from users', $statement->toSql());
+        static::assertEquals('DELETE FROM `users`', $statement->toSql());
     }
 
     /** @test */
@@ -65,7 +65,7 @@ class StatementTest extends AbstractTestCase
         $statement = new Statement($this->createMock('PDO'));
         $statement->where(['name', 'email']);
 
-        static::assertEquals('where name = :name and email = :email', $statement->toSql());
+        static::assertEquals('WHERE `name` = :name AND `email` = :email', $statement->toSql());
     }
 
     /** @test */
@@ -102,7 +102,7 @@ class StatementTest extends AbstractTestCase
             $statement->prepare();
             static::fail('An exception should have been thrown');
         } catch (\PDOException $exception) {
-            static::assertEquals('SQLSTATE[HY000]: General error: 1 near ">": syntax error', $exception->getMessage());
+            static::assertEquals('SQLSTATE[HY000]: General error: 1 no such table: foo', $exception->getMessage());
         } catch (\Exception $exception) {
             static::fail('An instance of ' . \PDOException::class . ' should have been thrown');
         }

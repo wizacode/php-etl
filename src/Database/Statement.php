@@ -26,7 +26,7 @@ class Statement
     /**
      * The where constraints for the query.
      */
-    protected array $wheres = [];
+    protected array $whereStatements = [];
 
     /**
      * Create a new Statement instance.
@@ -68,11 +68,13 @@ class Statement
      *
      * @return $this
      */
-    public function select(string $table, array $columns = ['*']): Statement
+    public function select(string $table, ?array $columns = null): Statement
     {
-        $columns = $this->implode($columns);
+        $columns = \is_null($columns)
+            ? '*'
+            : Query::implode($columns, Query::BACKTICKED_MASK);
 
-        $this->query[] = "select $columns from $table";
+        $this->query[] = "SELECT $columns FROM `$table`";
 
         return $this;
     }
@@ -84,11 +86,11 @@ class Statement
      */
     public function insert(string $table, array $columns): Statement
     {
-        $values = $this->implode($columns, ':{column}');
+        $values = Query::implode($columns, ':{column}');
 
-        $columns = $this->implode($columns);
+        $columns = Query::implode($columns, Query::BACKTICKED_MASK);
 
-        $this->query[] = "insert into $table ($columns) values ($values)";
+        $this->query[] = "INSERT INTO `$table` ($columns) values ($values)";
 
         return $this;
     }
@@ -100,9 +102,16 @@ class Statement
      */
     public function update(string $table, array $columns): Statement
     {
-        $columns = $this->implode($columns, '{column} = :{column}');
+        $columns = Query::implode(
+            $columns,
+            \sprintf(
+                '%s = :%s',
+                Query::BACKTICKED_MASK,
+                Query::DEFAULT_MASK,
+            )
+        );
 
-        $this->query[] = "update $table set $columns";
+        $this->query[] = "UPDATE `$table` SET $columns";
 
         return $this;
     }
@@ -114,7 +123,7 @@ class Statement
      */
     public function delete(string $table): Statement
     {
-        $this->query[] = "delete from $table";
+        $this->query[] = "DELETE FROM `$table`";
 
         return $this;
     }
@@ -127,9 +136,11 @@ class Statement
     public function where(array $columns): Statement
     {
         foreach ($columns as $column) {
-            $this->wheres[] = [
-                'type' => 'Where', 'column' => $column, 'operator' => '=', 'boolean' => 'and',
-            ];
+            $this->whereStatements[] = new WhereStatement(
+                boolean: WhereBoolean::And,
+                operator: WhereOperator::Equal,
+                column: $column,
+            );
         }
 
         return $this;
@@ -140,45 +151,16 @@ class Statement
      */
     protected function compileWheres(): void
     {
-        if ([] === $this->wheres) {
+        if ([] === $this->whereStatements) {
             return;
         }
 
-        $this->query[] = 'where';
+        $this->query[] = 'WHERE';
 
-        foreach ($this->wheres as $index => $condition) {
-            $method = 'compile' . $condition['type'];
+        foreach ($this->whereStatements as $index => $whereQuery) {
+            $result = $whereQuery->compile($index);
 
-            if (0 == $index) {
-                $condition['boolean'] = '';
-            }
-
-            $this->query[] = trim($this->{$method}($condition));
+            $this->query[] = $result->output;
         }
-    }
-
-    /**
-     * Compile the basic where statement.
-     */
-    protected function compileWhere(array $where): string
-    {
-        // This code is here to remove the use of the extract() method in the original repo. See the git history.
-        $boolean = array_key_exists('boolean', $where) ? $where['boolean'] : null;
-        $column = array_key_exists('column', $where) ? $where['column'] : null;
-        $operator = array_key_exists('operator', $where) ? $where['operator'] : null;
-
-        return "$boolean $column $operator :$column";
-    }
-
-    /**
-     * Join array elements using a string mask.
-     */
-    protected function implode(array $columns, string $mask = '{column}'): string
-    {
-        $columns = array_map(function ($column) use ($mask): string {
-            return str_replace('{column}', $column, $mask);
-        }, $columns);
-
-        return implode(', ', $columns);
     }
 }

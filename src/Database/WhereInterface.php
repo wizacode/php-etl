@@ -11,7 +11,7 @@ declare(strict_types=1);
 
 namespace Wizaplace\Etl\Database;
 
-interface WhereStatementInterface
+interface WhereInterface
 {
     public function compile(int $index): WhereCompileResult;
 }
