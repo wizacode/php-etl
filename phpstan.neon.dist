@@ -9,10 +9,6 @@ parameters:
     ignoreErrors:
         -
             message: '~^Variable method call on ~'
-            path: src/Database/Query.php
-
-        -
-            message: '~^Variable method call on ~'
             path: src/Database/Statement.php
 
         -

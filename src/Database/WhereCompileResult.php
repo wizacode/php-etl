@@ -11,9 +11,11 @@ declare(strict_types=1);
 
 namespace Wizaplace\Etl\Database;
 
-enum WhereType: string
+class WhereCompileResult
 {
-    case Where = 'Where';
-    case WhereIn = 'WhereIn';
-    case CompositeWhereIn = 'CompositeWhereIn';
+    public function __construct(
+        public string $statement,
+        public array $bindings,
+    ) {
+    }
 }

@@ -6,7 +6,7 @@ phpcbf:
 
 phpstan:
 	vendor/bin/phpstan clear-result-cache
-	vendor/bin/phpstan analyse
+	php -d memory_limit=2G vendor/bin/phpstan analyse
 
 phpcsfixer:
 	vendor/bin/php-cs-fixer fix --dry-run --allow-risky=yes --diff
