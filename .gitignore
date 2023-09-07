@@ -14,3 +14,4 @@ var/
 phpcs.xml
 phpstan.neon
 phpunit.xml
+cov.xml
