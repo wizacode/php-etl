@@ -23,8 +23,6 @@ class InsertUpdate extends Insert
 
     /**
      * The primary key.
-     *
-     * @var mixed
      */
     protected $key = ['id'];
 
@@ -38,14 +36,14 @@ class InsertUpdate extends Insert
      *
      * @var \PDOStatement|false|null
      */
-    protected $select = null;
+    protected $select;
 
     /**
      * The update statement.
      *
      * @var \PDOStatement|false|null
      */
-    protected $update = null;
+    protected $update;
 
     /**
      * Properties that can be set via the options method.

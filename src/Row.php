@@ -38,8 +38,6 @@ class Row implements \ArrayAccess
 
     /**
      * Set a row attribute.
-     *
-     * @param mixed $value
      */
     public function set(string $key, $value): self
     {
@@ -50,8 +48,6 @@ class Row implements \ArrayAccess
 
     /**
      * Get a row attribute.
-     *
-     * @return mixed
      */
     public function get(string $key)
     {
@@ -68,8 +64,6 @@ class Row implements \ArrayAccess
 
     /**
      * Get a row attribute, and remove it.
-     *
-     * @return mixed
      */
     public function pull(string $key)
     {
@@ -142,8 +136,6 @@ class Row implements \ArrayAccess
 
     /**
      * Dynamically retrieve attributes on the row.
-     *
-     * @return mixed
      */
     public function __get(string $key)
     {
@@ -152,8 +144,6 @@ class Row implements \ArrayAccess
 
     /**
      * Dynamically set attributes on the row.
-     *
-     * @param mixed $value
      */
     public function __set(string $key, $value): void
     {
@@ -162,8 +152,6 @@ class Row implements \ArrayAccess
 
     /**
      * Determine if the given attribute exists.
-     *
-     * @param mixed $offset
      */
     public function offsetExists($offset): bool
     {
@@ -172,8 +160,6 @@ class Row implements \ArrayAccess
 
     /**
      * Get the value for a given offset.
-     *
-     * @param mixed $offset
      */
     public function offsetGet($offset): mixed
     {
@@ -182,9 +168,6 @@ class Row implements \ArrayAccess
 
     /**
      * Set the value for a given offset.
-     *
-     * @param mixed $offset
-     * @param mixed $value
      */
     public function offsetSet($offset, $value): void
     {
@@ -193,8 +176,6 @@ class Row implements \ArrayAccess
 
     /**
      * Unset the value for a given offset.
-     *
-     * @param mixed $offset
      */
     public function offsetUnset($offset): void
     {

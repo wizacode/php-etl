@@ -33,7 +33,7 @@ class WhereInCompositeQuery implements WhereInterface
             $bindings = array_merge($bindings, array_values($value));
 
             $parameters[] = \sprintf(
-                "(%s)",
+                '(%s)',
                 Helpers::implode($value, '?')
             );
         }

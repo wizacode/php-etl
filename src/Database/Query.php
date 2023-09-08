@@ -30,6 +30,7 @@ class Query
 
     /**
      * The where constraints for the query.
+     *
      * @var WhereInterface[]
      */
     protected array $whereQueries = [];
@@ -75,14 +76,10 @@ class Query
     /**
      * Select statement.
      *
-
-    /**
-
      * @return $this
      */
-    public function select(string $table, ?array $columns = null): Query
+    public function select(string $table, array $columns = null): Query
     {
-
         $columns = \is_null($columns)
             ? '*'
             : Helpers::implode($columns, Helpers::BACKTICKED_MASK);
@@ -121,7 +118,7 @@ class Query
 
         $columns = Helpers::implode(
             array_keys($columns),
-            sprintf("%s = ?", Helpers::BACKTICKED_MASK),
+            sprintf('%s = ?', Helpers::BACKTICKED_MASK),
         );
 
         $this->query[] = "UPDATE `$table` SET $columns";

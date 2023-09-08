@@ -69,8 +69,6 @@ class UniqueRows extends Transformer
 
     /**
      * Prepare the given row for comparison.
-     *
-     * @return mixed
      */
     protected function prepare(Row $row)
     {
@@ -85,8 +83,6 @@ class UniqueRows extends Transformer
 
     /**
      * Verify if the subject is duplicate.
-     *
-     * @param mixed $subject
      */
     protected function isDuplicate($subject): bool
     {
@@ -95,8 +91,6 @@ class UniqueRows extends Transformer
 
     /**
      * Register the subject for future comparison.
-     *
-     * @param mixed $subject
      */
     protected function register($subject): void
     {

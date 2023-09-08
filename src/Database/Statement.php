@@ -68,7 +68,7 @@ class Statement
      *
      * @return $this
      */
-    public function select(string $table, ?array $columns = null): Statement
+    public function select(string $table, array $columns = null): Statement
     {
         $columns = \is_null($columns)
             ? '*'

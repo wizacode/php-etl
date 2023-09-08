@@ -28,7 +28,7 @@ class Etl
     /**
      * Create a new Etl instance.
      */
-    public function __construct(?Pipeline $pipeline = null)
+    public function __construct(Pipeline $pipeline = null)
     {
         $this->pipeline = $pipeline ?? new Pipeline();
     }
@@ -40,7 +40,6 @@ class Etl
      * Etl\Extractor\Csv needs a string
      * Etl\Extractor\Collection an \Iterator
      *
-     * @param mixed $input
      * @param array $options
      *
      * @return $this
