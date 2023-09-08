@@ -10,11 +10,9 @@ parameters:
         -
             message: '~^Variable method call on ~'
             path: src/Etl.php
-
         -
             message: '~^Variable property access on ~'
             path: src/Row.php
-
         -
             message: '~^Variable property access on ~'
             path: src/Step.php
@@ -27,7 +25,4 @@ parameters:
         -
             message: '~Access to an undefined property Wizaplace\\Etl\\Row::\$name\.~'
             path: tests/Unit/RowTest.php
-        -
-            message: '~Method Wizaplace\\Etl\\Row::offsetGet\(\) has no return typehint specified.~'
-            path: src/Row.php
 

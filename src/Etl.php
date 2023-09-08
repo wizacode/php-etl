@@ -44,7 +44,7 @@ class Etl
      *
      * @return $this
      */
-    public function extract(Extractor $extractor, $input, $options = []): Etl
+    public function extract(Extractor $extractor, mixed $input, $options = []): Etl
     {
         $extractor->input($input)->options($options);
 

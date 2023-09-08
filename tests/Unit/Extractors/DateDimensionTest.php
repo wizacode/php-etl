@@ -205,7 +205,7 @@ class DateDimensionTest extends AbstractTestCase
         $year = (int) $firstDay->format('Y');
 
         $result = \iterator_to_array($extractor->extract());
-        $firstRow = reset($result[0]);
+        $firstRow = reset($result);
         $lastRow = end($result);
 
         static::assertStringMatchesFormat(

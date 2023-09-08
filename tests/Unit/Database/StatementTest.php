@@ -98,13 +98,9 @@ class StatementTest extends AbstractTestCase
         $statement = new Statement($database);
         $statement->select('foo', ['>']);
 
-        try {
-            $statement->prepare();
-            static::fail('An exception should have been thrown');
-        } catch (\PDOException $exception) {
-            static::assertEquals('SQLSTATE[HY000]: General error: 1 no such table: foo', $exception->getMessage());
-        } catch (\Exception $exception) {
-            static::fail('An instance of ' . \PDOException::class . ' should have been thrown');
-        }
+        $this->expectExceptionObject(
+            new \PDOException('SQLSTATE[HY000]: General error: 1 no such table: foo')
+        );
+        $statement->prepare();
     }
 }

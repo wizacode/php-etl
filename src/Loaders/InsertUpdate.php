@@ -23,8 +23,10 @@ class InsertUpdate extends Insert
 
     /**
      * The primary key.
+    
+     * @var string[]
      */
-    protected $key = ['id'];
+    protected array $key = ['id'];
 
     /**
      * Indicates if existing destination rows in table should be updated.

@@ -230,7 +230,7 @@ class AggregatorTest extends AbstractTestCase
         $simpleDataSet =
             [
                 [
-                    static::arrayToIterator([
+                    self::arrayToIterator([
                         ['id' => 1, 'name' => 'John Doe', 'email' => 'johndoe@email.com'],
                         [], // should not happen
                         ['impossible error'], // should not happen as well
@@ -238,7 +238,7 @@ class AggregatorTest extends AbstractTestCase
                         ['id' => 3, 'name' => 'Incomplete1', 'email' => 'incomplete1@dirtydata'],
                         ['id' => 4, 'name' => 'Incomplete2', 'email' => 'incomplete2@dirtydata'],
                     ]),
-                    static::arrayToIterator([
+                    self::arrayToIterator([
                         ['email' => 'janedoe@email.com', 'twitter' => '@jane'],
                         ['email' => 'johndoe@email.com', 'twitter' => '@john'],
                         ['impossible error'], // should not happen as well

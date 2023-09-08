@@ -39,7 +39,7 @@ class Row implements \ArrayAccess
     /**
      * Set a row attribute.
      */
-    public function set(string $key, $value): self
+    public function set(string $key, mixed $value): self
     {
         $this->attributes[$key] = $value;
 
@@ -48,6 +48,8 @@ class Row implements \ArrayAccess
 
     /**
      * Get a row attribute.
+     *
+     * @return mixed
      */
     public function get(string $key)
     {
@@ -65,7 +67,7 @@ class Row implements \ArrayAccess
     /**
      * Get a row attribute, and remove it.
      */
-    public function pull(string $key)
+    public function pull(string $key): mixed
     {
         $value = $this->attributes[$key] ?? null;
 
@@ -137,7 +139,7 @@ class Row implements \ArrayAccess
     /**
      * Dynamically retrieve attributes on the row.
      */
-    public function __get(string $key)
+    public function __get(string $key): mixed
     {
         return $this->attributes[$key];
     }
@@ -145,7 +147,7 @@ class Row implements \ArrayAccess
     /**
      * Dynamically set attributes on the row.
      */
-    public function __set(string $key, $value): void
+    public function __set(string $key, mixed $value): void
     {
         $this->attributes[$key] = $value;
     }
