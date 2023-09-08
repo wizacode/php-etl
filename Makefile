@@ -2,7 +2,7 @@ dev:
 	nix shell github:loophp/nix-shell --impure
 
 phpcs:
-	vendor/bin/phpcs -n
+	vendor/bin/phpcs -n --parallel=8
 
 phpcbf:
 	vendor/bin/phpcbf
@@ -18,7 +18,7 @@ test:
 	vendor/bin/phpunit --testdox
 
 infection:
-	vendor/bin/infection
+	XDEBUG_MODE=coverage vendor/bin/infection -j8
 
 PHPUNIT_REPORT_PATH = /tmp/phpunit_coverage_report
 coverage:
