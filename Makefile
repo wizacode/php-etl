@@ -1,3 +1,6 @@
+dev:
+	nix shell github:loophp/nix-shell --impure
+
 phpcs:
 	vendor/bin/phpcs -n
 
