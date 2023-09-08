@@ -23,7 +23,7 @@ class InsertUpdate extends Insert
 
     /**
      * The primary key.
-    
+     *
      * @var string[]
      */
     protected array $key = ['id'];

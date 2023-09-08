@@ -25,14 +25,14 @@ class TableTest extends AbstractTestCase
     /** @test */
     public function defaultOptions(): void
     {
-        /** @var MockObject | \PDOStatement */
+        /** @var MockObject|\PDOStatement */
         $statement = $this->createMock(\PDOStatement::class);
         $statement
             ->expects(static::exactly(3))
             ->method('fetch')
             ->willReturn(['row1'], ['row2'], null);
 
-        /** @var MockObject | Query */
+        /** @var MockObject|Query */
         $query = $this->createMock(Query::class);
         $query
             ->expects(static::once())
@@ -49,7 +49,7 @@ class TableTest extends AbstractTestCase
             ->method('execute')
             ->willReturn($statement);
 
-        /** @var MockObject | Manager */
+        /** @var MockObject|Manager */
         $manager = $this->createMock(Manager::class);
         $manager
             ->expects(static::once())
@@ -67,7 +67,7 @@ class TableTest extends AbstractTestCase
     /** @test */
     public function customConnectionColumnsAndWhereClause(): void
     {
-        /** @var MockObject | \PDOStatement */
+        /** @var MockObject|\PDOStatement */
         $statement = $this
             ->createMock(\PDOStatement::class);
         $statement
@@ -75,7 +75,7 @@ class TableTest extends AbstractTestCase
             ->method('fetch')
             ->willReturn(['row1'], ['row2'], null);
 
-        /** @var MockObject | Query */
+        /** @var MockObject|Query */
         $query = $this->createMock(Query::class);
         $query
             ->expects(static::once())
@@ -92,7 +92,7 @@ class TableTest extends AbstractTestCase
             ->method('execute')
             ->willReturn($statement);
 
-        /** @var MockObject | Manager */
+        /** @var MockObject|Manager */
         $manager = $this->createMock(Manager::class);
         $manager
             ->expects(static::once())

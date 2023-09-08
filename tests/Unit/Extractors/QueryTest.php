@@ -59,7 +59,6 @@ class QueryTest extends AbstractTestCase
     /** @test */
     public function customConnectionAndBindings(): void
     {
-
         /** @var MockObject|\PDOStatement */
         $statement = $this->createMock(\PDOStatement::class);
         $statement

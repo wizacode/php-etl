@@ -48,10 +48,8 @@ class Row implements \ArrayAccess
 
     /**
      * Get a row attribute.
-     *
-     * @return mixed
      */
-    public function get(string $key)
+    public function get(string $key): mixed
     {
         return $this->attributes[$key] ?? null;
     }

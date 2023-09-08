@@ -69,8 +69,8 @@ class UniqueRows extends Transformer
 
     /**
      * Prepare the given row for comparison.
-     * 
-     * @return Row | string
+     *
+     * @return Row|string
      */
     protected function prepare(Row $row): mixed
     {
