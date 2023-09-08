@@ -86,7 +86,7 @@ class Row implements \ArrayAccess
         }
 
         foreach ($columns as $column) {
-            $this->$column = $callback($this->$column);
+            $this->attributes[$column] = $callback($this->attributes[$column]);
         }
     }
 

@@ -12,9 +12,6 @@ parameters:
             path: src/Etl.php
         -
             message: '~^Variable property access on ~'
-            path: src/Row.php
-        -
-            message: '~^Variable property access on ~'
             path: src/Step.php
         -
             message: '~^Dynamic call to static method XMLReader::open\(\)\.~'
