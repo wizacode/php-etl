@@ -19,11 +19,19 @@ class Helpers
     /**
      * Join array elements using a string mask.
      */
-    public static function implode(array $columns, string $mask = self::DEFAULT_MASK): string
-    {
-        $columns = array_map(function ($column) use ($mask): string {
-            return str_replace(self::DEFAULT_MASK, $column, $mask);
-        }, $columns);
+    public static function implode(
+        array $columns,
+        string $mask = self::DEFAULT_MASK,
+        array $ignoreMask = ['*'] // No backticks for *
+    ): string {
+        $columns = array_map(
+            function ($column) use ($mask, $ignoreMask): string {
+                return \in_array($column, $ignoreMask, true)
+                    ? $column
+                    : str_replace(self::DEFAULT_MASK, $column, $mask);
+            },
+            $columns
+        );
 
         return implode(', ', $columns);
     }
