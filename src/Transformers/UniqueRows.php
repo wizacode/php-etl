@@ -70,9 +70,9 @@ class UniqueRows extends Transformer
     /**
      * Prepare the given row for comparison.
      *
-     * @return mixed
+     * @return Row|string
      */
-    protected function prepare(Row $row)
+    protected function prepare(Row $row): mixed
     {
         $row = $row->toArray();
 
@@ -80,26 +80,28 @@ class UniqueRows extends Transformer
             $row = array_intersect_key($row, array_flip($this->columns));
         }
 
-        return $this->consecutive ? $row : md5(serialize($row));
+        return $this->consecutive
+            ? $row
+            : md5(serialize($row));
     }
 
     /**
      * Verify if the subject is duplicate.
-     *
-     * @param mixed $subject
      */
-    protected function isDuplicate($subject): bool
+    protected function isDuplicate(mixed $subject): bool
     {
-        return $this->consecutive ? $subject === $this->control : in_array($subject, $this->hashTable, true);
+        return $this->consecutive
+            ? $subject === $this->control
+            : in_array($subject, $this->hashTable, true);
     }
 
     /**
      * Register the subject for future comparison.
-     *
-     * @param mixed $subject
      */
-    protected function register($subject): void
+    protected function register(mixed $subject): void
     {
-        $this->consecutive ? $this->control = $subject : $this->hashTable[] = $subject;
+        $this->consecutive
+            ? $this->control = $subject
+            : $this->hashTable[] = $subject;
     }
 }

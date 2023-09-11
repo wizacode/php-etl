@@ -75,12 +75,12 @@ class DateDimension extends Extractor
 
         $this->startDate ??= $this->getCenterDateTime()
             ->sub($defaultBoundInterval)
-            ->format(static::CENTER_DATE_FORMAT);
+            ->format(self::CENTER_DATE_FORMAT);
 
         $this->endDate ??= $this->getCenterDateTime()
             ->add($defaultBoundInterval)
             ->sub($dayInterval)
-            ->format(static::CENTER_DATE_FORMAT);
+            ->format(self::CENTER_DATE_FORMAT);
     }
 
     /**

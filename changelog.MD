@@ -1,5 +1,14 @@
 # Changelog
 
+## Next version
+
+**Bugfixes**
+* Use backticks `` ` `` for table and column names in `Wizaplace\Etl\Database\*` classes (see https://github.com/wizacode/php-etl/issues/117)
+
+**Miscellaneous**
+* Nix shell dev environment `Makefile` command
+* Code coverage `Makefile` command
+
 ## 2.3
 * Add the PHPDoc _@mixin Pipeline_ to the Etl class.
 * Add _mixed_ return type to _Wizaplace\Etl\Row\offsetGet_.

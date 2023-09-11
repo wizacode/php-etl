@@ -30,8 +30,10 @@ class Query
 
     /**
      * The where constraints for the query.
+     *
+     * @var WhereInterface[]
      */
-    protected array $wheres = [];
+    protected array $whereQueries = [];
 
     /**
      * Create a new Query instance.
@@ -76,11 +78,13 @@ class Query
      *
      * @return $this
      */
-    public function select(string $table, array $columns = ['*']): Query
+    public function select(string $table, array $columns = null): Query
     {
-        $columns = $this->implode($columns);
+        $columns = \is_null($columns)
+            ? '*'
+            : Helpers::implode($columns, Helpers::BACKTICKED_MASK);
 
-        $this->query[] = "select $columns from $table";
+        $this->query[] = "SELECT $columns FROM `$table`";
 
         return $this;
     }
@@ -94,11 +98,11 @@ class Query
     {
         $this->bindings = array_merge($this->bindings, array_values($columns));
 
-        $values = $this->implode($columns, '?');
+        $values = Helpers::implode($columns, '?');
 
-        $columns = $this->implode(array_keys($columns));
+        $columns = Helpers::implode(array_keys($columns), Helpers::BACKTICKED_MASK);
 
-        $this->query[] = "insert into $table ($columns) values ($values)";
+        $this->query[] = "INSERT INTO `$table` ($columns) VALUES ($values)";
 
         return $this;
     }
@@ -112,9 +116,12 @@ class Query
     {
         $this->bindings = array_merge($this->bindings, array_values($columns));
 
-        $columns = $this->implode(array_keys($columns), '{column} = ?');
+        $columns = Helpers::implode(
+            array_keys($columns),
+            sprintf('%s = ?', Helpers::BACKTICKED_MASK),
+        );
 
-        $this->query[] = "update $table set $columns";
+        $this->query[] = "UPDATE `$table` SET $columns";
 
         return $this;
     }
@@ -126,7 +133,7 @@ class Query
      */
     public function delete(string $table): Query
     {
-        $this->query[] = "delete from {$table}";
+        $this->query[] = "DELETE FROM `$table`";
 
         return $this;
     }
@@ -139,15 +146,19 @@ class Query
     public function where(array $columns): Query
     {
         foreach ($columns as $column => $value) {
-            $condition = ['type' => 'Where', 'column' => $column, 'boolean' => 'and'];
             if (is_scalar($value)) {
-                $condition['operator'] = '=';
-                $condition['value'] = $value;
+                $operator = WhereOperator::Equal;
             } else {
-                $condition['operator'] = $value[0];
-                $condition['value'] = $value[1];
+                $operator = WhereOperator::from($value[0]);
+                $value = $value[1];
             }
-            $this->wheres[] = $condition;
+
+            $this->whereQueries[] = new WhereQuery(
+                boolean: WhereBoolean::And,
+                operator: $operator,
+                column: $column,
+                value: $value,
+            );
         }
 
         return $this;
@@ -160,24 +171,25 @@ class Query
      *
      * @return $this
      */
-    public function whereIn($column, array $values, string $operator = 'in'): Query
-    {
+    public function whereIn(
+        $column,
+        array $values,
+        WhereOperator $operator = WhereOperator::In
+    ): Query {
         if (is_string($column)) {
-            $this->wheres[] = [
-                'type' => 'WhereIn',
-                'column' => $column,
-                'values' => $values,
-                'operator' => $operator,
-                'boolean' => 'and',
-            ];
+            $this->whereQueries[] = new WhereInQuery(
+                boolean: WhereBoolean::And,
+                operator: $operator,
+                column: $column,
+                multipleValues: $values,
+            );
         } else {
-            $this->wheres[] = [
-                'type' => 'CompositeWhereIn',
-                'columns' => $column,
-                'values' => $values,
-                'operator' => $operator,
-                'boolean' => 'and',
-            ];
+            $this->whereQueries[] = new WhereInCompositeQuery(
+                boolean: WhereBoolean::And,
+                operator: $operator,
+                multipleColumns: $column, // :|
+                multipleValues: $values,
+            );
         }
 
         return $this;
@@ -192,7 +204,7 @@ class Query
      */
     public function whereNotIn($column, array $values): Query
     {
-        return $this->whereIn($column, $values, 'not in');
+        return $this->whereIn($column, $values, WhereOperator::NotIn);
     }
 
     /**
@@ -200,96 +212,20 @@ class Query
      */
     protected function compileWheres(): void
     {
-        if ([] === $this->wheres) {
+        if ([] === $this->whereQueries) {
             return;
         }
 
-        $this->query[] = 'where';
+        $this->query[] = 'WHERE';
 
-        foreach ($this->wheres as $index => $condition) {
-            $method = 'compile' . $condition['type'];
+        foreach ($this->whereQueries as $index => $whereQuery) {
+            $result = $whereQuery->compile($index);
 
-            if (0 == $index) {
-                $condition['boolean'] = '';
-            }
-
-            $this->query[] = trim($this->{$method}($condition));
+            $this->query[] = $result->output;
+            $this->bindings = \array_merge(
+                $this->bindings,
+                $result->bindings,
+            );
         }
-    }
-
-    /**
-     * Compile the basic where statement.
-     */
-    protected function compileWhere(array $where): string
-    {
-        // All these if, empty, are here to clean the legacy code before the fork. See the git history.
-        $boolean = array_key_exists('boolean', $where) ? $where['boolean'] : null;
-        $column = array_key_exists('column', $where) ? $where['column'] : null;
-        $operator = array_key_exists('operator', $where) ? $where['operator'] : null;
-        $value = array_key_exists('value', $where) ? $where['value'] : null;
-
-        $this->bindings[] = $value;
-
-        return "$boolean $column $operator ?";
-    }
-
-    /**
-     * Compile the where in statement.
-     */
-    protected function compileWhereIn(array $where): string
-    {
-        // All these if, empty, are here to clean the legacy code before the fork. See the git history.
-        $boolean = array_key_exists('boolean', $where) ? $where['boolean'] : null;
-        $column = array_key_exists('column', $where) ? $where['column'] : null;
-        $operator = array_key_exists('operator', $where) ? $where['operator'] : null;
-        $values = array_key_exists('values', $where) ? $where['values'] : null;
-
-        $this->bindings = array_merge($this->bindings, $values);
-
-        $parameters = $this->implode($values, '?');
-
-        return "$boolean $column $operator ($parameters)";
-    }
-
-    /**
-     * Compile the composite where in statement.
-     */
-    protected function compileCompositeWhereIn(array $where): string
-    {
-        // All these if, empty, are here to clean the legacy code before the fork. See the git history.
-        $boolean = array_key_exists('boolean', $where) ? $where['boolean'] : null;
-        $columns = array_key_exists('columns', $where) ? $where['columns'] : null;
-        $operator = array_key_exists('operator', $where) ? $where['operator'] : null;
-        $values = array_key_exists('values', $where) ? $where['values'] : null;
-
-        sort($columns);
-
-        $parameters = [];
-
-        foreach ($values as $value) {
-            ksort($value);
-
-            $this->bindings = array_merge($this->bindings, array_values($value));
-
-            $parameters[] = "({$this->implode($value, '?')})";
-        }
-
-        $parameters = $this->implode($parameters);
-
-        $columns = $this->implode($columns);
-
-        return "$boolean ($columns) $operator ($parameters)";
-    }
-
-    /**
-     * Join array elements using a string mask.
-     */
-    protected function implode(array $columns, string $mask = '{column}'): string
-    {
-        $columns = array_map(function ($column) use ($mask): string {
-            return str_replace('{column}', $column, $mask);
-        }, $columns);
-
-        return implode(', ', $columns);
     }
 }

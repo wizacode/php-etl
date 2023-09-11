@@ -321,9 +321,9 @@
            id="text896-3"
            y="-90.151337"
            x="35.713844"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05555582px;line-height:1.25;font-family:'Roboto Slab';-inkscape-font-specification:'Roboto Slab';text-align:justify;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:url(#fond);fill-opacity:1;stroke:none;stroke-width:0.52916664"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05555582px;line-height:1.25;font-family:'sans-serif';-inkscape-font-specification:'sans-serif';text-align:justify;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:url(#fond);fill-opacity:1;stroke:none;stroke-width:0.52916664"
            xml:space="preserve"><tspan
-             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.86666679px;font-family:'Operator Mono Lig';-inkscape-font-specification:'Operator Mono Lig';fill:url(#fond);stroke-width:0.52916664"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.86666679px;font-family:'Monospace';-inkscape-font-specification:'Monospace';fill:url(#fond);stroke-width:0.52916664"
              y="-90.151337"
              x="35.713844"
              id="tspan894-9"
@@ -386,7 +386,7 @@
          id="tspan865"
          x="-16.933332"
          y="53.719753"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Operator Mono Lig';-inkscape-font-specification:'Operator Mono Lig';stroke-width:0.26458332" /></text>
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Monospace';-inkscape-font-specification:'Monospace';stroke-width:0.26458332" /></text>
     <g
        id="g914"
        transform="matrix(2.0000001,0,0,2.0000001,15.31551,-52.437517)">
@@ -398,7 +398,7 @@
          style="opacity:1;fill:url(#extractor);fill-opacity:1;stroke:none;stroke-width:0.26458332;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal" />
       <text
          xml:space="preserve"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52777767px;line-height:1.25;font-family:'Roboto Slab';-inkscape-font-specification:'Roboto Slab';text-align:justify;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:url(#fond);fill-opacity:1;stroke:none;stroke-width:0.26458332"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52777767px;line-height:1.25;font-family:'sans-serif';-inkscape-font-specification:'sans-serif';text-align:justify;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:url(#fond);fill-opacity:1;stroke:none;stroke-width:0.26458332"
          x="-63.885406"
          y="49.297081"
          id="text896"><tspan
@@ -406,7 +406,7 @@
            id="tspan894"
            x="-63.885406"
            y="49.297081"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4px;font-family:'Operator Mono Lig';-inkscape-font-specification:'Operator Mono Lig';fill:url(#fond);stroke-width:0.26458332">Extractor</tspan></text>
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4px;font-family:'Monospace';-inkscape-font-specification:'Monospace';fill:url(#fond);stroke-width:0.26458332">Extractor</tspan></text>
     </g>
     <g
        id="g919"
@@ -422,9 +422,9 @@
          id="text900"
          y="48.999966"
          x="-192.33334"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52777767px;line-height:1.25;font-family:'Roboto Slab';-inkscape-font-specification:'Roboto Slab';text-align:justify;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:url(#bordure);fill-opacity:1;stroke:none;stroke-width:0.26458362"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52777767px;line-height:1.25;font-family:'sans-serif';-inkscape-font-specification:'sans-serif';text-align:justify;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:url(#bordure);fill-opacity:1;stroke:none;stroke-width:0.26458362"
          xml:space="preserve"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.00000429px;font-family:'Operator Mono Lig';-inkscape-font-specification:'Operator Mono Lig';fill:url(#bordure);stroke-width:0.26458362"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.00000429px;font-family:'Monospace';-inkscape-font-specification:'Monospace';fill:url(#bordure);stroke-width:0.26458362"
            y="48.999966"
            x="-192.33334"
            id="tspan898"
@@ -460,9 +460,9 @@
          id="text950-7-4"
          y="84.98333"
          x="-37.73333"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52777767px;line-height:1.25;font-family:'Roboto Slab';-inkscape-font-specification:'Roboto Slab';text-align:justify;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:url(#fond);fill-opacity:1;stroke:none;stroke-width:0.26458332"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52777767px;line-height:1.25;font-family:'sans-serif';-inkscape-font-specification:'sans-serif';text-align:justify;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:url(#fond);fill-opacity:1;stroke:none;stroke-width:0.26458332"
          xml:space="preserve"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4px;font-family:'Operator Mono Lig';-inkscape-font-specification:'Operator Mono Lig';text-align:end;text-anchor:end;fill:url(#fond);stroke-width:0.26458332"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4px;font-family:'Monospace';-inkscape-font-specification:'Monospace';text-align:end;text-anchor:end;fill:url(#fond);stroke-width:0.26458332"
            y="84.98333"
            x="-37.73333"
            sodipodi:role="line"
@@ -507,9 +507,9 @@
            id="text5435-5-9"
            y="110.03664"
            x="-172.11305"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:18.66666603px;line-height:1.25;font-family:'Roboto Slab';-inkscape-font-specification:'Roboto Slab';text-align:justify;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:url(#bordure);fill-opacity:1;stroke:none"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:18.66666603px;line-height:1.25;font-family:'sans-serif';-inkscape-font-specification:'sans-serif';text-align:justify;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:url(#bordure);fill-opacity:1;stroke:none"
            xml:space="preserve"><tspan
-             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:8px;font-family:'Operator Mono Lig';-inkscape-font-specification:'Operator Mono Lig Light';text-align:end;text-anchor:end;fill:url(#bordure)"
+             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:8px;font-family:'Monospace';-inkscape-font-specification:'Monospace Light';text-align:end;text-anchor:end;fill:url(#bordure)"
              y="110.03664"
              x="-172.11305"
              id="tspan5433-3-1"
@@ -527,7 +527,7 @@
          sodipodi:nodetypes="ccccccccc" />
       <text
          xml:space="preserve"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52777767px;line-height:1.25;font-family:'Roboto Slab';-inkscape-font-specification:'Roboto Slab';text-align:justify;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:url(#fond);fill-opacity:1;stroke:none;stroke-width:0.26458332"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52777767px;line-height:1.25;font-family:'sans-serif';-inkscape-font-specification:'sans-serif';text-align:justify;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:url(#fond);fill-opacity:1;stroke:none;stroke-width:0.26458332"
          x="-20.933332"
          y="133.66663"
          id="text950-7"><tspan
@@ -535,7 +535,7 @@
            id="tspan948"
            x="-20.933332"
            y="133.66663"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4px;font-family:'Operator Mono Lig';-inkscape-font-specification:'Operator Mono Lig';text-align:end;text-anchor:end;fill:url(#fond);stroke-width:0.26458332">Transformer</tspan></text>
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4px;font-family:'Monospace';-inkscape-font-specification:'Monospace';text-align:end;text-anchor:end;fill:url(#fond);stroke-width:0.26458332">Transformer</tspan></text>
       <rect
          style="opacity:0.5;fill:url(#bordure);stroke-width:0.2571882"
          id="rect231"
@@ -556,9 +556,9 @@
            id="text5435-5"
            y="110.03664"
            x="-172.11305"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:18.66666603px;line-height:1.25;font-family:'Roboto Slab';-inkscape-font-specification:'Roboto Slab';text-align:justify;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:url(#bordure);fill-opacity:1;stroke:none"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:18.66666603px;line-height:1.25;font-family:'sans-serif';-inkscape-font-specification:'sans-serif';text-align:justify;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:url(#bordure);fill-opacity:1;stroke:none"
            xml:space="preserve"><tspan
-             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:8px;font-family:'Operator Mono Lig';-inkscape-font-specification:'Operator Mono Lig Light';text-align:end;text-anchor:end;fill:url(#bordure)"
+             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:8px;font-family:'Monospace';-inkscape-font-specification:'Monospace Light';text-align:end;text-anchor:end;fill:url(#bordure)"
              y="110.03664"
              x="-172.11305"
              id="tspan5433-3"
@@ -633,9 +633,9 @@
          id="text5018"
          y="124.8464"
          x="-78.667244"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:22.34612274px;line-height:1.25;font-family:'Roboto Slab';-inkscape-font-specification:'Roboto Slab';text-align:justify;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:url(#bordure);fill-opacity:1;stroke:none;stroke-width:1.19711387"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:22.34612274px;line-height:1.25;font-family:'sans-serif';-inkscape-font-specification:'sans-serif';text-align:justify;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:url(#bordure);fill-opacity:1;stroke:none;stroke-width:1.19711387"
          xml:space="preserve"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Operator Mono Lig';-inkscape-font-specification:'Operator Mono Lig';fill:url(#bordure);stroke-width:1.19711387"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Monospace';-inkscape-font-specification:'Monospace';fill:url(#bordure);stroke-width:1.19711387"
            y="124.8464"
            x="-78.667244"
            sodipodi:role="line"
@@ -653,9 +653,9 @@
            id="text5435"
            y="102.05265"
            x="-171.84906"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:18.66666603px;line-height:1.25;font-family:'Roboto Slab';-inkscape-font-specification:'Roboto Slab';text-align:justify;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:url(#bordure);fill-opacity:1;stroke:none"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:18.66666603px;line-height:1.25;font-family:'sans-serif';-inkscape-font-specification:'sans-serif';text-align:justify;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:url(#bordure);fill-opacity:1;stroke:none"
            xml:space="preserve"><tspan
-             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:8px;font-family:'Operator Mono Lig';-inkscape-font-specification:'Operator Mono Lig weight=330';text-align:end;text-anchor:end;fill:url(#bordure)"
+             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:8px;font-family:'Monospace';-inkscape-font-specification:'Monospace weight=330';text-align:end;text-anchor:end;fill:url(#bordure)"
              y="102.05265"
              x="-171.84906"
              id="tspan5433"
@@ -751,9 +751,9 @@
                    id="text159-6"
                    y="4.9343967"
                    x="45.99485"
-                   style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4px;line-height:1.25;font-family:'Roboto Slab';-inkscape-font-specification:'Roboto Slab';text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.31020215"
+                   style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4px;line-height:1.25;font-family:'sans-serif';-inkscape-font-specification:'sans-serif';text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.31020215"
                    xml:space="preserve"><tspan
-                     style="font-style:italic;font-variant:normal;font-weight:300;font-stretch:normal;font-size:4px;font-family:'Operator Mono Lig';-inkscape-font-specification:'Operator Mono Lig Light Italic';text-align:center;text-anchor:middle;fill:url(#fond);stroke-width:0.31020215"
+                     style="font-style:italic;font-variant:normal;font-weight:300;font-stretch:normal;font-size:4px;font-family:'Monospace';-inkscape-font-specification:'Monospace Light Italic';text-align:center;text-anchor:middle;fill:url(#fond);stroke-width:0.31020215"
                      y="4.9343967"
                      x="45.99485"
                      id="tspan157-0"
@@ -791,7 +791,7 @@
            id="text7209"
            y="216.24667"
            x="-24.868639"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.66666651px;line-height:1.25;font-family:'Operator Mono Lig';-inkscape-font-specification:'Operator Mono Lig';letter-spacing:0px;word-spacing:0px;fill:url(#fond);fill-opacity:1;stroke:none;stroke-width:1"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.66666651px;line-height:1.25;font-family:'Monospace';-inkscape-font-specification:'Monospace';letter-spacing:0px;word-spacing:0px;fill:url(#fond);fill-opacity:1;stroke:none;stroke-width:1"
            xml:space="preserve"><tspan
              style="fill:url(#fond);stroke-width:1"
              y="216.24667"
@@ -813,7 +813,7 @@
            transform="matrix(1.3058147,-1.3058147,1.3058147,1.3058147,-58.229031,132.24915)" />
         <text
            xml:space="preserve"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.66666651px;line-height:1.25;font-family:'Operator Mono Lig';-inkscape-font-specification:'Operator Mono Lig';letter-spacing:0px;word-spacing:0px;fill:url(#fond);fill-opacity:1;stroke:none;stroke-width:1"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.66666651px;line-height:1.25;font-family:'Monospace';-inkscape-font-specification:'Monospace';letter-spacing:0px;word-spacing:0px;fill:url(#fond);fill-opacity:1;stroke:none;stroke-width:1"
            x="-24.868639"
            y="236.70656"
            id="text7233"><tspan
@@ -964,9 +964,9 @@
            id="text896-3-4-5"
            y="-90.151337"
            x="17.106749"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05555582px;line-height:1.25;font-family:'Roboto Slab';-inkscape-font-specification:'Roboto Slab';text-align:justify;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:url(#fond);fill-opacity:1;stroke:none;stroke-width:0.52916664"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05555582px;line-height:1.25;font-family:'sans-serif';-inkscape-font-specification:'sans-serif';text-align:justify;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:url(#fond);fill-opacity:1;stroke:none;stroke-width:0.52916664"
            xml:space="preserve"><tspan
-             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.86666679px;font-family:'Operator Mono Lig';-inkscape-font-specification:'Operator Mono Lig';fill:url(#fond);stroke-width:0.52916664"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.86666679px;font-family:'Monospace';-inkscape-font-specification:'Monospace';fill:url(#fond);stroke-width:0.52916664"
              y="-90.151337"
              x="17.106749"
              id="tspan894-9-9-9"
@@ -1034,9 +1034,9 @@
              id="text896-3-4-5-8"
              y="-90.151337"
              x="17.106745"
-             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05555582px;line-height:1.25;font-family:'Roboto Slab';-inkscape-font-specification:'Roboto Slab';text-align:justify;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:url(#fond);fill-opacity:1;stroke:none;stroke-width:0.52916664"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05555582px;line-height:1.25;font-family:'sans-serif';-inkscape-font-specification:'sans-serif';text-align:justify;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:url(#fond);fill-opacity:1;stroke:none;stroke-width:0.52916664"
              xml:space="preserve"><tspan
-               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:9.33333302px;font-family:'Operator Mono Lig';-inkscape-font-specification:'Operator Mono Lig';fill:url(#fond);stroke-width:0.52916664"
+               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:9.33333302px;font-family:'Monospace';-inkscape-font-specification:'Monospace';fill:url(#fond);stroke-width:0.52916664"
                y="-90.151337"
                x="17.106745"
                id="tspan894-9-9-9-1"
@@ -1117,16 +1117,16 @@
        id="text5018-6"
        y="-156.06227"
        x="-153.69902"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:22.34612274px;line-height:1.25;font-family:'Roboto Slab';-inkscape-font-specification:'Roboto Slab';text-align:justify;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:url(#bordure);fill-opacity:1;stroke:none;stroke-width:1.19711387"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:22.34612274px;line-height:1.25;font-family:'sans-serif';-inkscape-font-specification:'sans-serif';text-align:justify;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:url(#bordure);fill-opacity:1;stroke:none;stroke-width:1.19711387"
        xml:space="preserve"><tspan
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Operator Mono Lig';-inkscape-font-specification:'Operator Mono Lig';fill:url(#bordure);stroke-width:1.19711387"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Monospace';-inkscape-font-specification:'Monospace';fill:url(#bordure);stroke-width:1.19711387"
          y="-156.06227"
          x="-153.69902"
          sodipodi:role="line"
          id="tspan5016-2">ASSETS</tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:22.34612274px;line-height:1.25;font-family:'Roboto Slab';-inkscape-font-specification:'Roboto Slab';text-align:justify;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:url(#bordure);fill-opacity:1;stroke:none;stroke-width:1.19711387"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:22.34612274px;line-height:1.25;font-family:'sans-serif';-inkscape-font-specification:'sans-serif';text-align:justify;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:url(#bordure);fill-opacity:1;stroke:none;stroke-width:1.19711387"
        x="-17.231352"
        y="-328.57468"
        id="text7208"
@@ -1135,7 +1135,7 @@
          sodipodi:role="line"
          x="-17.231352"
          y="-328.57468"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Operator Mono Lig';-inkscape-font-specification:'Operator Mono Lig';fill:url(#bordure);stroke-width:1.19711387">COLORS</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Monospace';-inkscape-font-specification:'Monospace';fill:url(#bordure);stroke-width:1.19711387">COLORS</tspan></text>
     <rect
        y="-315.84335"
        x="175.54469"
@@ -1183,7 +1183,7 @@
          height="100%" />
       <text
          xml:space="preserve"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05555582px;line-height:1.25;font-family:'Roboto Slab';-inkscape-font-specification:'Roboto Slab';text-align:justify;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:url(#fond);fill-opacity:1;stroke:none;stroke-width:0.52916664"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05555582px;line-height:1.25;font-family:'sans-serif';-inkscape-font-specification:'sans-serif';text-align:justify;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:url(#fond);fill-opacity:1;stroke:none;stroke-width:0.52916664"
          x="17.106749"
          y="-90.151337"
          id="text896-3-4"><tspan
@@ -1191,7 +1191,7 @@
            id="tspan894-9-9"
            x="17.106749"
            y="-90.151337"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.86666679px;font-family:'Operator Mono Lig';-inkscape-font-specification:'Operator Mono Lig';fill:url(#fond);stroke-width:0.52916664">Json</tspan></text>
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.86666679px;font-family:'Monospace';-inkscape-font-specification:'Monospace';fill:url(#fond);stroke-width:0.52916664">Json</tspan></text>
     </g>
     <path
        style="opacity:1;vector-effect:none;fill:none;fill-opacity:1;stroke:url(#bordure);stroke-width:2.70000005;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:5.4, 5.4;stroke-dashoffset:0;stroke-opacity:1"

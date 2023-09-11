@@ -58,9 +58,7 @@ class Xml extends Extractor
             $value = $this->loop . $value;
         }
 
-        $this->reader = new \XMLReader();
-
-        $this->reader->open($this->input);
+        $this->reader = \XMLReader::open($this->input);
 
         while ($this->reader->read()) {
             $this->addElementToPath();

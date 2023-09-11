@@ -38,10 +38,8 @@ class Row implements \ArrayAccess
 
     /**
      * Set a row attribute.
-     *
-     * @param mixed $value
      */
-    public function set(string $key, $value): self
+    public function set(string $key, mixed $value): self
     {
         $this->attributes[$key] = $value;
 
@@ -50,10 +48,8 @@ class Row implements \ArrayAccess
 
     /**
      * Get a row attribute.
-     *
-     * @return mixed
      */
-    public function get(string $key)
+    public function get(string $key): mixed
     {
         return $this->attributes[$key] ?? null;
     }
@@ -68,10 +64,8 @@ class Row implements \ArrayAccess
 
     /**
      * Get a row attribute, and remove it.
-     *
-     * @return mixed
      */
-    public function pull(string $key)
+    public function pull(string $key): mixed
     {
         $value = $this->attributes[$key] ?? null;
 
@@ -92,7 +86,7 @@ class Row implements \ArrayAccess
         }
 
         foreach ($columns as $column) {
-            $this->$column = $callback($this->$column);
+            $this->attributes[$column] = $callback($this->attributes[$column]);
         }
     }
 
@@ -142,28 +136,22 @@ class Row implements \ArrayAccess
 
     /**
      * Dynamically retrieve attributes on the row.
-     *
-     * @return mixed
      */
-    public function __get(string $key)
+    public function __get(string $key): mixed
     {
         return $this->attributes[$key];
     }
 
     /**
      * Dynamically set attributes on the row.
-     *
-     * @param mixed $value
      */
-    public function __set(string $key, $value): void
+    public function __set(string $key, mixed $value): void
     {
         $this->attributes[$key] = $value;
     }
 
     /**
      * Determine if the given attribute exists.
-     *
-     * @param mixed $offset
      */
     public function offsetExists($offset): bool
     {
@@ -172,8 +160,6 @@ class Row implements \ArrayAccess
 
     /**
      * Get the value for a given offset.
-     *
-     * @param mixed $offset
      */
     public function offsetGet($offset): mixed
     {
@@ -182,9 +168,6 @@ class Row implements \ArrayAccess
 
     /**
      * Set the value for a given offset.
-     *
-     * @param mixed $offset
-     * @param mixed $value
      */
     public function offsetSet($offset, $value): void
     {
@@ -193,8 +176,6 @@ class Row implements \ArrayAccess
 
     /**
      * Unset the value for a given offset.
-     *
-     * @param mixed $offset
      */
     public function offsetUnset($offset): void
     {

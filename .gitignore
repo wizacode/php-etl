@@ -7,6 +7,7 @@ composer.lock
 .phpunit.cache
 .idea
 var/
+cov.xml
 
 # For these quality tools, the *.dist form should be in VCS and the forms
 # below should be reserved for local customizations.

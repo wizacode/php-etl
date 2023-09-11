@@ -18,19 +18,15 @@ abstract class Loader extends Step
 {
     /**
      * The loader output.
-     *
-     * @var mixed
      */
-    protected $output;
+    protected mixed $output;
 
     /**
      * Set the loader output.
      *
-     * @param mixed $output
-     *
      * @return $this
      */
-    public function output($output): Loader
+    public function output(mixed $output): Loader
     {
         $this->output = $output;
 
