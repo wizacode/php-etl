@@ -126,10 +126,7 @@ class Pipeline implements \Iterator
 
         foreach ($this->steps as $step) {
             if ($this->current->discarded()) {
-                $this->key--;
-                $this->next();
-
-                return $this->valid();
+                break;
             }
 
             if ($step instanceof Transformer) {
