@@ -41,18 +41,18 @@ class SqlServerConnector extends Connector
         $dsn = [];
 
         if (null !== $host && null === $socket) {
-            $dsn['host'] = $host;
+            $dsn['Server'] = $host;
         }
 
         if (null !== $port && null === $socket) {
-            $dsn['port'] = $port;
+            $dsn['Server'] .= ',' . $port;
         }
 
         if (null !== $database) {
-            $dsn['dbname'] = $database;
+            $dsn['Database'] = $database;
         }
 
-        return 'dblib:' . http_build_query($dsn, '', ';');
+        return 'sqlsrv:' . http_build_query($dsn, '', ';');
     }
 
     /**
