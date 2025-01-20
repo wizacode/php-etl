@@ -37,6 +37,8 @@ class SqlServerConnector extends Connector
         $port = array_key_exists('port', $config) ? $config['port'] : null;
         $database = array_key_exists('database', $config) ? $config['database'] : null;
         $socket = array_key_exists('unix_socket', $config) ? $config['unix_socket'] : null;
+        $encrypt = array_key_exists('encrypt', $config) ? $config['encrypt'] : null;
+        $trustservercert = array_key_exists('trustservercert', $config) ? $config['trustservercert'] : null;
 
         $dsn = [];
 
@@ -50,6 +52,14 @@ class SqlServerConnector extends Connector
 
         if (null !== $database) {
             $dsn['Database'] = $database;
+        }
+
+        if (null !== $encrypt) {
+            $dsn['Encrypt'] = $encrypt;
+        }
+
+        if (null !== $trustservercert) {
+            $dsn['TrustServerCertificate'] = $trustservercert;
         }
 
         return 'sqlsrv:' . http_build_query($dsn, '', ';');
