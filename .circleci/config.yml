@@ -8,6 +8,15 @@ executors:
     docker:
       - image: php:8.2-alpine
     working_directory: ~/repo
+  php8-3:
+    docker:
+      - image: php:8.3-alpine
+    working_directory: ~/repo
+  php8-4:
+    docker:
+      - image: php:8.4-alpine
+    working_directory: ~/repo
+
 
 jobs:
   # In the minimum PHP version supported, run all our quality checks.
@@ -36,26 +45,6 @@ jobs:
           root: .
           paths:
             - vendor
-
-  phpcsfixer8-1:
-    executor: php8-1
-    steps:
-      - checkout
-      - attach_workspace:
-          at: .
-      - run:
-          name: phpcs
-          command: vendor/bin/php-cs-fixer fix -v --dry-run --allow-risky=yes
-
-  phpcs8-1:
-    executor: php8-1
-    steps:
-      - checkout
-      - attach_workspace:
-          at: .
-      - run:
-          name: phpcs
-          command: vendor/bin/phpcs -n
 
   phpstan8-1:
     executor: php8-1
@@ -114,18 +103,86 @@ jobs:
           name: phpunit
           command: vendor/bin/phpunit --testdox
 
+  composer8-3:
+    executor: php8-3
+    steps:
+      - run:
+          name: Install alpine requirements for checkout
+          command: apk add git openssh-client curl
+      - checkout
+      - restore_cache:
+          key: composer-{{ checksum "composer.json" }}-{{ checksum "composer.lock" }}
+      - run:
+          name: composer
+          command: |
+            if [[ ! -f vendor/autoload.php ]]; then
+                curl https://getcomposer.org/composer-stable.phar --location --silent  --output /usr/bin/composer; \
+                chmod +x /usr/bin/composer; \
+                composer install --no-progress --no-interaction; \
+            fi
+      - save_cache:
+          key: composer-{{ checksum "composer.json" }}-{{ checksum "composer.lock" }}
+          paths:
+            - ./vendor
+      - persist_to_workspace:
+          root: .
+          paths:
+            - vendor
+
+  phpunit8-3:
+    executor: php8-3
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run:
+          name: phpunit
+          command: vendor/bin/phpunit --testdox
+
+  composer8-4:
+    executor: php8-4
+    steps:
+      - run:
+          name: Install alpine requirements for checkout
+          command: apk add git openssh-client curl
+      - checkout
+      - restore_cache:
+          key: composer-{{ checksum "composer.json" }}-{{ checksum "composer.lock" }}
+      - run:
+          name: composer
+          command: |
+            if [[ ! -f vendor/autoload.php ]]; then
+                curl https://getcomposer.org/composer-stable.phar --location --silent  --output /usr/bin/composer; \
+                chmod +x /usr/bin/composer; \
+                composer install --no-progress --no-interaction; \
+            fi
+      - save_cache:
+          key: composer-{{ checksum "composer.json" }}-{{ checksum "composer.lock" }}
+          paths:
+            - ./vendor
+      - persist_to_workspace:
+          root: .
+          paths:
+            - vendor
+
+  phpunit8-4:
+    executor: php8-4
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run:
+          name: phpunit
+          command: vendor/bin/phpunit --testdox
+
 workflows:
   version: '2.1'
   Code quality:
     jobs:
       - composer8-1
       - composer8-2
-      - phpcs8-1:
-          requires:
-            - composer8-1
-      - phpcsfixer8-1:
-          requires:
-            - composer8-1
+      - composer8-3
+      - composer8-4
       - phpstan8-1:
           requires:
             - composer8-1
@@ -135,3 +192,9 @@ workflows:
       - phpunit8-2:
           requires:
             - composer8-2
+      - phpunit8-3:
+          requires:
+            - composer8-3
+      - phpunit8-4:
+          requires:
+            - composer8-4

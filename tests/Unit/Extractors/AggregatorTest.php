@@ -214,13 +214,13 @@ class AggregatorTest extends AbstractTestCase
                 [
                     Aggregator::COLUMNS => ['name', 'id'],
                 ],
-                'error_code' => 1,
+                'exceptionCode' => 1,
             ],
             'invalid columns' => [
                 [
                     Aggregator::INDEX => ['email'],
                 ],
-                'error_code' => 2,
+                'exceptionCode' => 2,
             ],
         ];
     }
