@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.4 (not released yet)
+
+**Misc**
+* Removed PHPCS and PHPCsFixer because too much code has become obsolete.
+* Added a PHPStan exclusion.
+* Updated CI to launch PHPUnit with PHP 8.3 and PHP 8.4.
+* Updated the README to list which kind of work and improvements should be done to keep this library long-term.
+
 ## 2.3
 * Add the PHPDoc _@mixin Pipeline_ to the Etl class.
 * Add _mixed_ return type to _Wizaplace\Etl\Row\offsetGet_.

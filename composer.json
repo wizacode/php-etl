@@ -34,14 +34,11 @@
         "ext-json": "*",
         "ext-pdo_sqlite": "*",
         "ext-xmlreader": "*",
-        "friendsofphp/php-cs-fixer": "^3.4",
-        "infection/infection": ">=0.15",
         "phpstan/extension-installer": "^1.0",
         "phpstan/phpstan": "^0.12.100",
         "phpstan/phpstan-deprecation-rules": "^0.12.6",
         "phpstan/phpstan-strict-rules": "^0.12.11",
-        "phpunit/phpunit": ">=8",
-        "squizlabs/php_codesniffer": "^3.5"
+        "phpunit/phpunit": ">=8"
     },
     "autoload-dev": {
         "psr-4": {
@@ -59,8 +56,6 @@
     },
     "scripts": {
         "scan": [
-            "php-cs-fixer --dry-run -v --allow-risky=yes fix",
-            "phpcs -p",
             "phpstan --memory-limit=256M analyze"
         ],
         "test": "phpunit",
