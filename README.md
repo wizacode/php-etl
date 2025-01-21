@@ -84,6 +84,15 @@ _services.yaml_
         shared: false
 ```
 
+## How to contribute?
+
+Below are some (not exhaustive) welcomed features for a 3.x version.
+* Dropping support of older PHP versions.
+* Type-hinting, rector...
+* Putting PHPCS back on the project.
+* Updating PHPUnit
+* Improve code in order to remove some PHPStan exclusions.
+
 ## Documentation :notebook:
 
 The documentation is available in a subfolder of the repo, [here](docs/README.md).
