@@ -2,6 +2,9 @@
 
 ## 2.4 (not released yet)
 
+**Feature**
+* Don't call Pipeline::valid() recursively when a row is discarded. Contribution by [ollyollyollyltd](https://github.com/ollyollyollyltd).
+
 **Misc**
 * Removed PHPCS and PHPCsFixer because too much code has become obsolete.
 * Added a PHPStan exclusion.
