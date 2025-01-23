@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit;
 
+use Generator;
 use PHPUnit\Framework\MockObject\MockObject;
 use Tests\Tools\AbstractTestCase;
 use Wizaplace\Etl\Extractors\Extractor;
@@ -54,7 +55,7 @@ class PipelineTest extends AbstractTestCase
         $this->row3 = $this->createMock('Wizaplace\Etl\Row');
         $this->row3->expects(static::any())->method('toArray')->willReturn(['row3']);
 
-        $generator = function (): \Generator {
+        $generator = function (): Generator {
             yield $this->row1;
             yield $this->row2;
             yield $this->row3;
@@ -153,7 +154,56 @@ class PipelineTest extends AbstractTestCase
         $this->transformer->expects(static::exactly(2))->method('transform');
         $this->loader->expects(static::exactly(2))->method('load');
 
-        static::assertEquals([['row1'], ['row3']], $this->pipelineToArray($this->pipeline));
+        // The data has marked as discarded, but it is still present in the pipeline, therefore we still expect to have
+        // row2 in the output when the pipeline is converted to an array.
+        static::assertEquals(
+            [['row1'], ['row2'], ['row3']],
+            $this->pipelineToArray($this->pipeline)
+        );
+    }
+
+    /** @test */
+    public function recursionWhenConsecutiveRowsDiscarded(): void
+    {
+        $allowedStackSize = 50;
+
+        $transformer = $this->createMock('Wizaplace\Etl\Transformers\Transformer');
+        $loader = $this->createMock('Wizaplace\Etl\Loaders\Loader');
+
+        $numRows = $allowedStackSize * 2;
+        $toNotDiscard = (int) floor($numRows / 10);
+        $generator = function () use ($transformer, $loader, $allowedStackSize, $numRows, $toNotDiscard): Generator {
+            $i = 0;
+            while ($i < $numRows) {
+                $actualStackSize = count(debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, $allowedStackSize));
+                self::assertLessThan($allowedStackSize, $actualStackSize);
+
+                $row = $this->createMock('Wizaplace\Etl\Row');
+                $row->expects(static::any())->method('toArray')->willReturn(["row$i"]);
+                $i++;
+                if ($i > $toNotDiscard) {
+                    $row->expects(static::any())->method('discarded')->willReturn(true);
+                }
+                $transformer->expects(static::any())->method('transform')->with($row);
+                $loader->expects(static::any())->method('load')->with($row);
+
+                yield $row;
+            }
+        };
+
+        $extractor = $this->createMock('Wizaplace\Etl\Extractors\Extractor');
+        $extractor->expects(static::any())->method('extract')->willReturn($generator());
+
+        $pipeline = new Pipeline();
+        $pipeline->extractor($extractor);
+
+        $pipeline->pipe($transformer);
+        $pipeline->pipe($loader);
+
+        $transformer->expects(static::exactly($toNotDiscard))->method('transform');
+        $loader->expects(static::exactly($toNotDiscard))->method('load');
+
+        $this->pipelineToArray($pipeline);
     }
 
     protected function pipelineToArray(Pipeline $pipeline): array
