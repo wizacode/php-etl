@@ -153,7 +153,12 @@ class PipelineTest extends AbstractTestCase
         $this->transformer->expects(static::exactly(2))->method('transform');
         $this->loader->expects(static::exactly(2))->method('load');
 
-        static::assertEquals([['row1'], ['row3']], $this->pipelineToArray($this->pipeline));
+        // The data has marked as discarded, but it is still present in the pipeline, therefore we still expect to have
+        // row2 in the output when the pipeline is converted to an array.
+        static::assertEquals(
+            [['row1'], ['row2'], ['row3']],
+            $this->pipelineToArray($this->pipeline)
+        );
     }
 
     protected function pipelineToArray(Pipeline $pipeline): array
