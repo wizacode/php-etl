@@ -22,7 +22,7 @@
     },
     "require": {
         "php": "~8.1",
-        "softcreatr/jsonpath": "^0.7.2"
+        "softcreatr/jsonpath": "^0.9.1"
     },
     "autoload": {
         "psr-4": {
