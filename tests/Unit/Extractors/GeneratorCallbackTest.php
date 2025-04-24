@@ -48,8 +48,7 @@ class GeneratorCallbackTest extends AbstractTestCase
         };
     }
 
-    /** @test */
-    public function withClosure(): void
+    public function testWithClosure(): void
     {
         $extractor = new GeneratorCallback();
         $extractor->input($this->input);
@@ -57,8 +56,7 @@ class GeneratorCallbackTest extends AbstractTestCase
         static::assertEquals($this->expected, iterator_to_array($extractor->extract()));
     }
 
-    /** @test */
-    public function withClassAndMethod(): void
+    public function testWithClassAndMethod(): void
     {
         $extractor = new GeneratorCallback();
         $extractor->input($this->input);

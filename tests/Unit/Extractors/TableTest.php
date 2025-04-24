@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Extractors;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\Tools\AbstractTestCase;
 use Wizaplace\Etl;
 use Wizaplace\Etl\Database\ConnectionFactory;
@@ -21,15 +22,33 @@ use Wizaplace\Etl\Row;
 class TableTest extends AbstractTestCase
 {
     /** @test */
-    public function defaultOptions(): void
+    public function testDefaultOptions(): void
     {
         $statement = $this->createMock('PDOStatement');
-        $statement->expects(static::exactly(3))->method('fetch')
-            ->will(static::onConsecutiveCalls(['row1'], ['row2'], null));
 
+        $results = [
+            ['row1'],
+            ['row2'],
+            null,
+        ];
+
+        $statement->expects(static::exactly(3))
+            ->method('fetch')
+            ->willReturnCallback(function () use (&$results) {
+                return array_shift($results);
+            });
         $query = $this->createMock('Wizaplace\Etl\Database\Query');
-        $query->expects(static::once())->method('select')->with('table', ['*'])->will(static::returnSelf());
-        $query->expects(static::once())->method('where')->with([])->will(static::returnSelf());
+
+        $query->expects(static::once())
+            ->method('select')
+            ->with('table', ['*'])
+            ->willReturn($query);
+
+        $query->expects(static::once())
+            ->method('where')
+            ->with([])
+            ->willReturn($query);
+
         $query->expects(static::once())->method('execute')->willReturn($statement);
 
         $manager = $this->createMock('Wizaplace\Etl\Database\Manager');
@@ -42,16 +61,32 @@ class TableTest extends AbstractTestCase
         static::assertEquals([new Row(['row1']), new Row(['row2'])], iterator_to_array($extractor->extract()));
     }
 
-    /** @test */
-    public function customConnectionColumnsAndWhereClause(): void
+    public function testCustomConnectionColumnsAndWhereClause(): void
     {
         $statement = $this->createMock('PDOStatement');
-        $statement->expects(static::exactly(3))->method('fetch')
-            ->will(static::onConsecutiveCalls(['row1'], ['row2'], null));
+        $results = [
+            ['row1'],
+            ['row2'],
+            null,
+        ];
 
+        $statement->expects(static::exactly(3))
+            ->method('fetch')
+            ->willReturnCallback(function () use (&$results) {
+                return array_shift($results);
+            });
         $query = $this->createMock('Wizaplace\Etl\Database\Query');
-        $query->expects(static::once())->method('select')->with('table', ['columns'])->will(static::returnSelf());
-        $query->expects(static::once())->method('where')->with(['where'])->will(static::returnSelf());
+
+        $query->expects(static::once())
+            ->method('select')
+            ->with('table', ['columns'])
+            ->willReturn($query);
+
+        $query->expects(static::once())
+            ->method('where')
+            ->with(['where'])
+            ->willReturn($query);
+
         $query->expects(static::once())->method('execute')->willReturn($statement);
 
         $manager = $this->createMock('Wizaplace\Etl\Database\Manager');
@@ -74,12 +109,8 @@ class TableTest extends AbstractTestCase
      *
      * @param array           $expected the expected result of table extraction
      * @param string|string[] $where    the where clause used in filtering
-     *
-     * @test
-     *
-     * @dataProvider whereClauseDataProvider
      */
-    public function whereClauseOperators(array $expected, $where): void
+    #[DataProvider('whereClauseDataProvider')] public function testWhereClauseOperators(array $expected, $where): void
     {
         // Set up connection to SQLite test database.
         $connection = 'default';
@@ -111,7 +142,7 @@ class TableTest extends AbstractTestCase
     }
 
     /**
-     * Provides test case scenarios for {@see whereClauseOperators()}.
+     * Provides test case scenarios for {@see testWhereClauseOperators()}.
      */
     public static function whereClauseDataProvider(): array
     {

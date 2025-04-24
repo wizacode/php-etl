@@ -16,8 +16,7 @@ use Tests\Tools\FakeStep;
 
 class StepTest extends AbstractTestCase
 {
-    /** @test */
-    public function setOptionsWithStrictModeDisabled(): void
+    public function testSetOptionsWithStrictModeDisabled(): void
     {
         $step = new FakeStep();
 
@@ -30,8 +29,7 @@ class StepTest extends AbstractTestCase
         static::assertNull($step->getOption('Option2'));
     }
 
-    /** @test */
-    public function setOptionsWithStrictModeEnabled(): void
+    public function testSetOptionsWithStrictModeEnabled(): void
     {
         $step = new FakeStep();
 

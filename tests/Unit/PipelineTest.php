@@ -86,8 +86,7 @@ class PipelineTest extends AbstractTestCase
         $this->pipeline->extractor($this->extractor);
     }
 
-    /** @test */
-    public function pipelineFlow(): void
+    public function testPipelineFlow(): void
     {
         $this->row1->expects(static::once())->method('toArray');
         $this->row2->expects(static::once())->method('toArray');
@@ -114,16 +113,14 @@ class PipelineTest extends AbstractTestCase
         );
     }
 
-    /** @test */
-    public function limitNumberOfRows(): void
+    public function testLimitNumberOfRows(): void
     {
         $this->pipeline->limit(1);
 
         static::assertEquals([['row1']], $this->pipelineToArray($this->pipeline));
     }
 
-    /** @test */
-    public function skipInitialRows(): void
+    public function testSkipInitialRows(): void
     {
         $this->pipeline->skip(2);
 
@@ -134,8 +131,7 @@ class PipelineTest extends AbstractTestCase
         static::assertEquals([], $this->pipelineToArray($this->pipeline));
     }
 
-    /** @test */
-    public function limitAfterSkippingRows(): void
+    public function testLimitAfterSkippingRows(): void
     {
         $this->pipeline->skip(1);
         $this->pipeline->limit(1);
@@ -143,8 +139,7 @@ class PipelineTest extends AbstractTestCase
         static::assertEquals([['row2']], $this->pipelineToArray($this->pipeline));
     }
 
-    /** @test */
-    public function discardRows(): void
+    public function testDiscardRows(): void
     {
         $this->row2->expects(static::once())->method('discarded')->willReturn(true);
 

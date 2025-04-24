@@ -17,8 +17,7 @@ use Wizaplace\Etl\Row;
 
 class XmlTest extends AbstractTestCase
 {
-    /** @test */
-    public function customLoopPath(): void
+    public function testCustomLoopPath(): void
     {
         $expected = [
             new Row(['id' => 1, 'name' => 'John Doe', 'email' => 'johndoe@email.com']),
@@ -33,8 +32,7 @@ class XmlTest extends AbstractTestCase
         static::assertEquals($expected, iterator_to_array($extractor->extract()));
     }
 
-    /** @test */
-    public function customFieldsWithinTheLoopPath(): void
+    public function testCustomFieldsWithinTheLoopPath(): void
     {
         $expected = [
             new Row(['id' => 1, 'name' => 'John Doe', 'email' => 'johndoe@email.com']),

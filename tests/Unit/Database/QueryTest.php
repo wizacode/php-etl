@@ -16,8 +16,7 @@ use Wizaplace\Etl\Database\Query;
 
 class QueryTest extends AbstractTestCase
 {
-    /** @test */
-    public function select(): void
+    public function testSelect(): void
     {
         $query = new Query($this->createMock('PDO'));
         $query->select('users');
@@ -30,8 +29,7 @@ class QueryTest extends AbstractTestCase
         static::assertEquals('select name, email from users', $query->toSql());
     }
 
-    /** @test */
-    public function insert(): void
+    public function testInsert(): void
     {
         $query = new Query($this->createMock('PDO'));
         $query->insert('users', ['name' => 'Jane Doe', 'email' => 'janedoe@example.com']);
@@ -40,8 +38,7 @@ class QueryTest extends AbstractTestCase
         static::assertEquals(['Jane Doe', 'janedoe@example.com'], $query->getBindings());
     }
 
-    /** @test */
-    public function update(): void
+    public function testUpdate(): void
     {
         $query = new Query($this->createMock('PDO'));
         $query->update('users', ['name' => 'Jane Doe', 'email' => 'janedoe@example.com']);
@@ -50,8 +47,7 @@ class QueryTest extends AbstractTestCase
         static::assertEquals(['Jane Doe', 'janedoe@example.com'], $query->getBindings());
     }
 
-    /** @test */
-    public function delete(): void
+    public function testDelete(): void
     {
         $query = new Query($this->createMock('PDO'));
         $query->delete('users');
@@ -60,8 +56,7 @@ class QueryTest extends AbstractTestCase
         static::assertEquals([], $query->getBindings());
     }
 
-    /** @test */
-    public function where(): void
+    public function testWhere(): void
     {
         $query = new Query($this->createMock('PDO'));
         $query->where(['name' => 'Jane Doe', 'email' => 'janedoe@example.com']);
@@ -70,8 +65,7 @@ class QueryTest extends AbstractTestCase
         static::assertEquals(['Jane Doe', 'janedoe@example.com'], $query->getBindings());
     }
 
-    /** @test */
-    public function whereIn(): void
+    public function testWhereIn(): void
     {
         $query = new Query($this->createMock('PDO'));
         $query->whereIn('id', ['1', '2']);
@@ -80,8 +74,7 @@ class QueryTest extends AbstractTestCase
         static::assertEquals(['1', '2'], $query->getBindings());
     }
 
-    /** @test */
-    public function whereNotIn(): void
+    public function testWhereNotIn(): void
     {
         $query = new Query($this->createMock('PDO'));
         $query->whereNotIn('id', ['1', '2']);
@@ -90,8 +83,7 @@ class QueryTest extends AbstractTestCase
         static::assertEquals(['1', '2'], $query->getBindings());
     }
 
-    /** @test */
-    public function compositeWhereIn(): void
+    public function testCompositeWhereIn(): void
     {
         $query = new Query($this->createMock('PDO'));
         $query->whereIn(['id', 'company'], [['id' => '1', 'company' => '1'], ['id' => '2', 'company' => '1']]);
@@ -100,8 +92,7 @@ class QueryTest extends AbstractTestCase
         static::assertEquals(['1', '1', '1', '2'], $query->getBindings());
     }
 
-    /** @test */
-    public function compositeWhereNotIn(): void
+    public function testCompositeWhereNotIn(): void
     {
         $query = new Query($this->createMock('PDO'));
         $query->whereNotIn(['id', 'company'], [['id' => '1', 'company' => '1'], ['id' => '2', 'company' => '1']]);
@@ -110,8 +101,7 @@ class QueryTest extends AbstractTestCase
         static::assertEquals(['1', '1', '1', '2'], $query->getBindings());
     }
 
-    /** @test */
-    public function executeQuery(): void
+    public function testExecuteQuery(): void
     {
         $statement = $this->createMock('PDOStatement');
         $statement->expects(static::once())->method('execute')->with([]);

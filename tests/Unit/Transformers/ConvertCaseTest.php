@@ -34,8 +34,7 @@ class ConvertCaseTest extends AbstractTestCase
         ];
     }
 
-    /** @test */
-    public function lowercase(): void
+    public function testLowercase(): void
     {
         $expected = [
             new Row(['id' => '1', 'name' => 'jane doe', 'email' => 'janedoe@email.com']),
@@ -51,8 +50,7 @@ class ConvertCaseTest extends AbstractTestCase
         static::assertEquals($expected, $this->data);
     }
 
-    /** @test */
-    public function uppercase(): void
+    public function testUppercase(): void
     {
         $expected = [
             new Row(['id' => '1', 'name' => 'JANE DOE', 'email' => 'JANEDOE@EMAIL.COM']),
@@ -68,8 +66,7 @@ class ConvertCaseTest extends AbstractTestCase
         static::assertEquals($expected, $this->data);
     }
 
-    /** @test */
-    public function titleCase(): void
+    public function testTitleCase(): void
     {
         // @see https://www.php.net/manual/en/migration73.new-features.php
         $expected = [
@@ -86,8 +83,7 @@ class ConvertCaseTest extends AbstractTestCase
         static::assertEquals($expected, $this->data);
     }
 
-    /** @test */
-    public function customColumns(): void
+    public function testCustomColumns(): void
     {
         $expected = [
             new Row(['id' => '1', 'name' => 'jane doe', 'email' => 'janedoe@email.com']),

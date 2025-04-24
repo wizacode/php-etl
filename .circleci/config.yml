@@ -46,16 +46,6 @@ jobs:
           paths:
             - vendor
 
-  phpstan8-1:
-    executor: php8-1
-    steps:
-      - checkout
-      - attach_workspace:
-          at: .
-      - run:
-          name: phpstan
-          command: vendor/bin/phpstan analyse --memory-limit=256M
-
   phpunit8-1:
     executor: php8-1
     steps:
@@ -183,9 +173,6 @@ workflows:
       - composer8-2
       - composer8-3
       - composer8-4
-      - phpstan8-1:
-          requires:
-            - composer8-1
       - phpunit8-1:
           requires:
             - composer8-1

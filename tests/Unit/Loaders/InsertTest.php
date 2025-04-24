@@ -67,8 +67,7 @@ class InsertTest extends AbstractTestCase
         $this->loader = new Insert($this->manager);
     }
 
-    /** @test */
-    public function insert(): void
+    public function testInsert(): void
     {
         $this->manager->expects(static::once())->method('statement')->with('default');
         $this->manager->expects(static::once())->method('transaction')->with('default');
@@ -88,8 +87,7 @@ class InsertTest extends AbstractTestCase
         $this->execute($this->loader, [$this->row]);
     }
 
-    /** @test */
-    public function filteringColumns(): void
+    public function testFilteringColumns(): void
     {
         $this->builder->expects(static::once())->method('insert')->with('table', ['id', 'name']);
 
@@ -101,8 +99,7 @@ class InsertTest extends AbstractTestCase
         $this->execute($this->loader, [$this->row]);
     }
 
-    /** @test */
-    public function mappingColumns(): void
+    public function testMappingColumns(): void
     {
         $this->builder->expects(static::once())->method('insert')->with('table', ['user_id', 'full_name']);
 
@@ -115,8 +112,7 @@ class InsertTest extends AbstractTestCase
         $this->execute($this->loader, [$this->row]);
     }
 
-    /** @test */
-    public function withoutTransactions(): void
+    public function testWithoutTransactions(): void
     {
         $this->manager->expects(static::never())->method('transaction');
 
@@ -134,8 +130,7 @@ class InsertTest extends AbstractTestCase
         $this->execute($this->loader, [$this->row]);
     }
 
-    /** @test */
-    public function withTimestamps(): void
+    public function testWithTimestamps(): void
     {
         $this->builder->expects(static::once())->method('insert')
             ->with('table', ['id', 'name', 'email', 'created_at', 'updated_at']);
@@ -154,8 +149,7 @@ class InsertTest extends AbstractTestCase
         $this->execute($this->loader, [$this->row]);
     }
 
-    /** @test */
-    public function customCommitSize(): void
+    public function testCustomCommitSize(): void
     {
         $this->transaction->expects(static::once())->method('size')->with(50)->willReturnSelf();
 
@@ -165,8 +159,7 @@ class InsertTest extends AbstractTestCase
         $this->execute($this->loader, [$this->row]);
     }
 
-    /** @test */
-    public function customConnection(): void
+    public function testCustomConnection(): void
     {
         $this->manager->expects(static::once())->method('statement')->with('custom');
         $this->manager->expects(static::once())->method('transaction')->with('custom');

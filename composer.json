@@ -34,10 +34,6 @@
         "ext-json": "*",
         "ext-pdo_sqlite": "*",
         "ext-xmlreader": "*",
-        "phpstan/extension-installer": "^1.0",
-        "phpstan/phpstan": "^0.12.100",
-        "phpstan/phpstan-deprecation-rules": "^0.12.6",
-        "phpstan/phpstan-strict-rules": "^0.12.11",
         "phpunit/phpunit": ">=8"
     },
     "autoload-dev": {

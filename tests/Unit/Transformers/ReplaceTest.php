@@ -35,8 +35,7 @@ class ReplaceTest extends AbstractTestCase
         ];
     }
 
-    /** @test */
-    public function defaultTypeOption(): void
+    public function testDefaultTypeOption(): void
     {
         $expected = [
             new Row(['id' => '1', 'name' => 'John Die', 'email' => 'johndoe@email.com']),
@@ -58,8 +57,7 @@ class ReplaceTest extends AbstractTestCase
         static::assertEquals($expected, $this->data);
     }
 
-    /** @test */
-    public function defaultTypeOptionCustomColumns(): void
+    public function testDefaultTypeOptionCustomColumns(): void
     {
         $expected = [
             new Row(['id' => '1', 'name' => 'John Die', 'email' => 'johndoe@email.com']),
@@ -82,8 +80,7 @@ class ReplaceTest extends AbstractTestCase
         static::assertEquals($expected, $this->data);
     }
 
-    /** @test */
-    public function strTypeOption(): void
+    public function testStrTypeOption(): void
     {
         $expected = [
             new Row(['id' => '1', 'name' => 'John Die', 'email' => 'johndoe@email.com']),
@@ -106,8 +103,7 @@ class ReplaceTest extends AbstractTestCase
         static::assertEquals($expected, $this->data);
     }
 
-    /** @test */
-    public function strTypeOptionCustomColumns(): void
+    public function testStrTypeOptionCustomColumns(): void
     {
         $expected = [
             new Row(['id' => '1', 'name' => 'John Die', 'email' => 'johndoe@email.com']),
@@ -131,8 +127,7 @@ class ReplaceTest extends AbstractTestCase
         static::assertEquals($expected, $this->data);
     }
 
-    /** @test */
-    public function pregTypeOption(): void
+    public function testPregTypeOption(): void
     {
         $expected = [
             new Row(['id' => '1', 'name' => 'John Die', 'email' => 'johndoe@email.com']),
@@ -155,8 +150,7 @@ class ReplaceTest extends AbstractTestCase
         static::assertEquals($expected, $this->data);
     }
 
-    /** @test */
-    public function pregTypeOptionCustomColumns(): void
+    public function testPregTypeOptionCustomColumns(): void
     {
         $expected = [
             new Row(['id' => '1', 'name' => 'John Die', 'email' => 'johndoe@email.com']),
@@ -180,8 +174,7 @@ class ReplaceTest extends AbstractTestCase
         static::assertEquals($expected, $this->data);
     }
 
-    /** @test */
-    public function throwsExceptionForUnsupportedReplaceType(): void
+    public function testThrowsExceptionForUnsupportedReplaceType(): void
     {
         $transformer = new Replace();
 

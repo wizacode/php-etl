@@ -17,8 +17,7 @@ use Wizaplace\Etl\Transformers\CopyColumns;
 
 class CopyColumnsTest extends AbstractTestCase
 {
-    /** @test */
-    public function copyColumn(): void
+    public function testCopyColumn(): void
     {
         $data = [
             new Row(['id' => '1', 'name' => 'John Doe']),

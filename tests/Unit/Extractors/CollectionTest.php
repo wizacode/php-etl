@@ -23,8 +23,7 @@ class CollectionTest extends AbstractTestCase
         ['id' => 2, 'name' => 'Jane Doe', 'email' => 'janedoe@email.com'],
     ];
 
-    /** @test */
-    public function defaultOptions(): void
+    public function testDefaultOptions(): void
     {
         $expected = [
             new Row(['id' => 1, 'name' => 'John Doe', 'email' => 'johndoe@email.com']),
@@ -38,8 +37,7 @@ class CollectionTest extends AbstractTestCase
         static::assertEquals($expected, iterator_to_array($extractor->extract()));
     }
 
-    /** @test */
-    public function customColumns(): void
+    public function testCustomColumns(): void
     {
         $expected = [
             new Row(['id' => 1, 'name' => 'John Doe']),
