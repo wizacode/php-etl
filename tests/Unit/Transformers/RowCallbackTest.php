@@ -17,8 +17,7 @@ use Wizaplace\Etl\Transformers\RowCallback;
 
 class RowCallbackTest extends AbstractTestCase
 {
-    /** @test */
-    public function rowCallbackAsValidator(): void
+    public function testRowCallbackAsValidator(): void
     {
         $validationClosure = function (Row $row): Row {
             return

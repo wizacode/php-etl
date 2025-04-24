@@ -21,7 +21,7 @@ use Wizaplace\Etl\Row;
 class TableTest extends AbstractTestCase
 {
     /** @test */
-    public function defaultOptions(): void
+    public function testDefaultOptions(): void
     {
         $statement = $this->createMock('PDOStatement');
         $statement->expects(static::exactly(3))->method('fetch')
@@ -42,8 +42,7 @@ class TableTest extends AbstractTestCase
         static::assertEquals([new Row(['row1']), new Row(['row2'])], iterator_to_array($extractor->extract()));
     }
 
-    /** @test */
-    public function customConnectionColumnsAndWhereClause(): void
+    public function testCustomConnectionColumnsAndWhereClause(): void
     {
         $statement = $this->createMock('PDOStatement');
         $statement->expects(static::exactly(3))->method('fetch')
@@ -74,12 +73,9 @@ class TableTest extends AbstractTestCase
      *
      * @param array           $expected the expected result of table extraction
      * @param string|string[] $where    the where clause used in filtering
-     *
-     * @test
-     *
      * @dataProvider whereClauseDataProvider
      */
-    public function whereClauseOperators(array $expected, $where): void
+    public function testWhereClauseOperators(array $expected, $where): void
     {
         // Set up connection to SQLite test database.
         $connection = 'default';

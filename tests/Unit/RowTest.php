@@ -16,8 +16,7 @@ use Wizaplace\Etl\Row;
 
 class RowTest extends AbstractTestCase
 {
-    /** @test */
-    public function setAttribute(): void
+    public function testSetAttribute(): void
     {
         $row = new Row([]);
 
@@ -26,8 +25,7 @@ class RowTest extends AbstractTestCase
         static::assertEquals('Jane Doe', $row->get('name'));
     }
 
-    /** @test */
-    public function getAttribute(): void
+    public function testGetAttribute(): void
     {
         $row = new Row(['name' => 'Jane Doe']);
 
@@ -35,8 +33,7 @@ class RowTest extends AbstractTestCase
         static::assertNull($row->get('invalid'));
     }
 
-    /** @test */
-    public function removeAttribute(): void
+    public function testRemoveAttribute(): void
     {
         $row = new Row(['name' => 'Jane Doe']);
 
@@ -45,8 +42,7 @@ class RowTest extends AbstractTestCase
         static::assertNull($row->get('name'));
     }
 
-    /** @test */
-    public function pullAttribute(): void
+    public function testPullAttribute(): void
     {
         $row = new Row(['name' => 'Jane Doe']);
 
@@ -56,8 +52,7 @@ class RowTest extends AbstractTestCase
         static::assertNull($row->get('name'));
     }
 
-    /** @test */
-    public function transformValuesUsingCallback(): void
+    public function testTransformValuesUsingCallback(): void
     {
         $row = new Row(['name' => 'Jane Doe', 'email' => 'janedoe@example.com']);
 
@@ -76,16 +71,14 @@ class RowTest extends AbstractTestCase
         static::assertEquals('*janedoe@example.com*', $row->get('email'));
     }
 
-    /** @test */
-    public function getArrayRepresentationOfRow(): void
+    public function testGetArrayRepresentationOfRow(): void
     {
         $row = new Row(['name' => 'Jane Doe']);
 
         static::assertEquals(['name' => 'Jane Doe'], $row->toArray());
     }
 
-    /** @test */
-    public function discardRow(): void
+    public function testDiscardRow(): void
     {
         $row = new Row([]);
 
@@ -96,8 +89,7 @@ class RowTest extends AbstractTestCase
         static::assertTrue($row->discarded());
     }
 
-    /** @test */
-    public function arrayAccess(): void
+    public function testArrayAccess(): void
     {
         $row = new Row(['name' => 'Jane Doe']);
 
@@ -114,8 +106,7 @@ class RowTest extends AbstractTestCase
         static::assertFalse(isset($row['name']));
     }
 
-    /** @test */
-    public function objectAccess(): void
+    public function testObjectAccess(): void
     {
         $row = new Row(['name' => 'Jane Doe']);
 
@@ -126,8 +117,7 @@ class RowTest extends AbstractTestCase
         static::assertEquals('John Doe', $row->name);
     }
 
-    /** @test */
-    public function setAttributesWithoutMerge(): void
+    public function testSetAttributesWithoutMerge(): void
     {
         $row = new Row(['name' => 'Jane Doe', 'Sex' => 'Female']);
         $newAttributes = ['name' => 'Pocahontas', 'Sex' => 'Female'];
@@ -135,8 +125,7 @@ class RowTest extends AbstractTestCase
         static::assertEquals($newAttributes, $row->toArray());
     }
 
-    /** @test */
-    public function setAttributesWithMerge(): void
+    public function testSetAttributesWithMerge(): void
     {
         $row = new Row(['name' => 'Jane Doe', 'Sex' => 'Female']);
         $newAttributes = ['name' => 'Marie Curie', 'Job' => 'Scientist'];
@@ -148,8 +137,7 @@ class RowTest extends AbstractTestCase
         ], $row->toArray());
     }
 
-    /** @test */
-    public function clearAttributes(): void
+    public function testClearAttributes(): void
     {
         $row = new Row(['name' => 'Jane Doe', 'Sex' => 'Female']);
         $row->clearAttributes();

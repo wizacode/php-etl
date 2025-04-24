@@ -34,8 +34,7 @@ class JsonDecodeTest extends AbstractTestCase
         ];
     }
 
-    /** @test */
-    public function defaultOptions(): void
+    public function testDefaultOptions(): void
     {
         $expected = [
             new Row(['id' => '1', 'data' => (object) ['name' => 'John Doe', 'email' => 'johndoe@email.com']]),
@@ -49,8 +48,7 @@ class JsonDecodeTest extends AbstractTestCase
         static::assertEquals($expected, $this->data);
     }
 
-    /** @test */
-    public function convertingObjectsToAssociativeArrays(): void
+    public function testConvertingObjectsToAssociativeArrays(): void
     {
         $expected = [
             new Row(['id' => '1', 'data' => ['name' => 'John Doe', 'email' => 'johndoe@email.com']]),
@@ -66,8 +64,7 @@ class JsonDecodeTest extends AbstractTestCase
         static::assertEquals($expected, $this->data);
     }
 
-    /** @test */
-    public function customColumns(): void
+    public function testCustomColumns(): void
     {
         $expected = [
             new Row(['id' => '"1"', 'data' => (object) ['name' => 'John Doe', 'email' => 'johndoe@email.com']]),

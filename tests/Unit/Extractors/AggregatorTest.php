@@ -21,12 +21,9 @@ class AggregatorTest extends AbstractTestCase
 {
     /**
      * @throws IncompleteDataException
-     *
-     * @test
-     *
      * @dataProvider invalidOptionsProvider
      */
-    public function invalidIndexOptions(array $invalidOptions, int $exceptionCode): void
+    public function testInvalidIndexOptions(array $invalidOptions, int $exceptionCode): void
     {
         $extractor = new Aggregator();
 
@@ -48,11 +45,9 @@ class AggregatorTest extends AbstractTestCase
     }
 
     /**
-     * @test
-     *
      * @dataProvider iteratorsProvider
      **/
-    public function strictIndexMatching(array $iterators): void
+    public function testStrictIndexMatching(array $iterators): void
     {
         $extractor = new Aggregator();
 
@@ -73,11 +68,9 @@ class AggregatorTest extends AbstractTestCase
     }
 
     /**
-     * @test
-     *
      * @dataProvider iteratorsProvider
      **/
-    public function unstrictIndexMatching(array $iterators): void
+    public function testUnstrictIndexMatching(array $iterators): void
     {
         $extractor = new Aggregator();
 
@@ -124,11 +117,9 @@ class AggregatorTest extends AbstractTestCase
     }
 
     /**
-     * @test
-     *
      * @dataProvider iteratorsProvider
      **/
-    public function discardIncompleteRowIndexMatching(array $iterators): void
+    public function testDiscardIncompleteRowIndexMatching(array $iterators): void
     {
         $extractor = new Aggregator();
 
@@ -162,8 +153,7 @@ class AggregatorTest extends AbstractTestCase
         static::assertEquals($expected, $actual);
     }
 
-    /** @test */
-    public function bigShuffledDataSet(): void
+    public function testBigShuffledDataSet(): void
     {
         $expected = 10 ** 4;
 

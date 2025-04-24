@@ -17,8 +17,7 @@ use Wizaplace\Etl\Row;
 
 class QueryTest extends AbstractTestCase
 {
-    /** @test */
-    public function defaultOptions(): void
+    public function testDefaultOptions(): void
     {
         $statement = $this->createMock('PDOStatement');
         $statement->expects(static::once())->method('execute')->with([]);
@@ -38,8 +37,7 @@ class QueryTest extends AbstractTestCase
         static::assertEquals([new Row(['row1']), new Row(['row2'])], iterator_to_array($extractor->extract()));
     }
 
-    /** @test */
-    public function customConnectionAndBindings(): void
+    public function testCustomConnectionAndBindings(): void
     {
         $statement = $this->createMock('PDOStatement');
         $statement->expects(static::once())->method('execute')->with(['binding']);
