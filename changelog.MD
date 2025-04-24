@@ -10,6 +10,7 @@
 * Added a PHPStan exclusion.
 * Updated CI to launch PHPUnit with PHP 8.3 and PHP 8.4.
 * Updated the README to list which kind of work and improvements should be done to keep this library long-term.
+* Update softcreatr/jsonpath to ^9.1 (#124)
 
 ## 2.3
 * Add the PHPDoc _@mixin Pipeline_ to the Etl class.
