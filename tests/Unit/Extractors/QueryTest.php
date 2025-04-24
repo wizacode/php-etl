@@ -21,8 +21,18 @@ class QueryTest extends AbstractTestCase
     {
         $statement = $this->createMock('PDOStatement');
         $statement->expects(static::once())->method('execute')->with([]);
-        $statement->expects(static::exactly(3))->method('fetch')
-            ->will(static::onConsecutiveCalls(['row1'], ['row2'], null));
+
+        $results = [
+            ['row1'],
+            ['row2'],
+            null,
+        ];
+
+        $statement->expects(static::exactly(3))
+            ->method('fetch')
+            ->willReturnCallback(function () use (&$results) {
+                return array_shift($results);
+            });
 
         $connection = $this->createMock('PDO');
         $connection->expects(static::once())->method('prepare')->with('select query')->willReturn($statement);
@@ -41,8 +51,18 @@ class QueryTest extends AbstractTestCase
     {
         $statement = $this->createMock('PDOStatement');
         $statement->expects(static::once())->method('execute')->with(['binding']);
-        $statement->expects(static::exactly(3))->method('fetch')
-            ->will(static::onConsecutiveCalls(['row1'], ['row2'], null));
+
+        $results = [
+            ['row1'],
+            ['row2'],
+            null,
+        ];
+
+        $statement->expects(static::exactly(3))
+            ->method('fetch')
+            ->willReturnCallback(function () use (&$results) {
+                return array_shift($results);
+            });
 
         $connection = $this->createMock('PDO');
         $connection->expects(static::once())->method('prepare')->with('select query')->willReturn($statement);
