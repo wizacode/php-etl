@@ -38,9 +38,9 @@ class CallbackTest extends AbstractTestCase
     public function testTransformOneColumn(): void
     {
         $expected = [
-            new Row(['id' => '1', 'name' => 'John', 'Doe', 'email' => 'johndoe@email.com']),
-            new Row(['id' => '2', 'name' => 'Jane', 'Doe', 'email' => 'janedoe@email.com']),
-            new Row(['id' => '3', 'name' => 'Jane', 'Doe', 'email' => 'janeDoe@email.com']),
+            new Row(['id' => '1', 'name' => ['John', 'Doe'], 'email' => 'johndoe@email.com']),
+            new Row(['id' => '2', 'name' => ['Jane', 'Doe'], 'email' => 'janedoe@email.com']),
+            new Row(['id' => '3', 'name' => ['Jane', 'Doe'], 'email' => 'janeDoe@email.com']),
         ];
 
         $callback = function (Row $row, $column) {
