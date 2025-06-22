@@ -23,10 +23,8 @@ class ChainingTest extends TestCase
     /**
      * Merging data from two different source
      * using a common matching column data
-     *
-     * @test
      */
-    public function mergingIteratorsChaining(): void
+    public function testMergingIteratorsChaining(): void
     {
         // lazy get users
         $usersIterator = (new Etl())

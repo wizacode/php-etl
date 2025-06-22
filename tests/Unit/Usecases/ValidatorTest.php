@@ -21,8 +21,7 @@ use Wizaplace\Etl\Transformers\Transformer;
 
 class ValidatorTest extends TestCase
 {
-    /** @test */
-    public function anonymousTransformerAsValidator(): void
+    public function testAnonymousTransformerAsValidator(): void
     {
         // php-cs-fixer and phpcs disagree about this :|
         // phpcs:ignore
@@ -61,8 +60,7 @@ class ValidatorTest extends TestCase
         );
     }
 
-    /** @test */
-    public function rowCallbackAsValidator(): void
+    public function testRowCallbackAsValidator(): void
     {
         $validator = function (Row $row): void {
             if ('1' === $row->get('id')) {
@@ -99,8 +97,7 @@ class ValidatorTest extends TestCase
         );
     }
 
-    /** @test */
-    public function rowCallbackAsDataSetValidator(): void
+    public function testRowCallbackAsDataSetValidator(): void
     {
         $datasetTrasher = function (Row $row): void {
             // let's consider this 1 value for id as a reason to trash the whole data set

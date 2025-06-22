@@ -35,8 +35,7 @@ class FormatUnixTimeTest extends AbstractTestCase
         ];
     }
 
-    /** @test */
-    public function setUtc(): void
+    public function testSetUtc(): void
     {
         $expected = [
             new Row(['id' => '1', 'timestamp' => '19700101', 'unixtime' => '1']),
@@ -54,8 +53,7 @@ class FormatUnixTimeTest extends AbstractTestCase
         static::assertEquals($expected, $this->data);
     }
 
-    /** @test */
-    public function setAmericaNewYork(): void
+    public function testSetAmericaNewYork(): void
     {
         $expected = [
             new Row(['id' => '1', 'timestamp' => '19691231', 'unixtime' => '1']),
@@ -73,8 +71,7 @@ class FormatUnixTimeTest extends AbstractTestCase
         static::assertEquals($expected, $this->data);
     }
 
-    /** @test */
-    public function changeFormat(): void
+    public function testChangeFormat(): void
     {
         $expected = [
             new Row(['id' => '1', 'timestamp' => '1970-01-01 00:00:01', 'unixtime' => '1']),
@@ -93,8 +90,7 @@ class FormatUnixTimeTest extends AbstractTestCase
         static::assertEquals($expected, $this->data);
     }
 
-    /** @test */
-    public function selectMultipleColumns(): void
+    public function testSelectMultipleColumns(): void
     {
         $expected = [
             new Row(['id' => '1', 'timestamp' => '19700101', 'unixtime' => '19700101']),
@@ -112,8 +108,7 @@ class FormatUnixTimeTest extends AbstractTestCase
         static::assertEquals($expected, $this->data);
     }
 
-    /** @test */
-    public function systemDefaultTimezone(): void
+    public function testSystemDefaultTimezone(): void
     {
         $expected = [
             new Row(['id' => '1', 'timestamp' => date_create()->setTimestamp(1)->format('Ymd'), 'unixtime' => '1']),

@@ -35,12 +35,12 @@ class CallbackTest extends AbstractTestCase
         ];
     }
 
-    public function transformOneColumn(): void
+    public function testTransformOneColumn(): void
     {
         $expected = [
-            new Row(['id' => '1', 'name' => 'John', 'Doe', 'email' => 'johndoe@email.com']),
-            new Row(['id' => '2', 'name' => 'Jane', 'Doe', 'email' => 'janedoe@email.com']),
-            new Row(['id' => '3', 'name' => 'Jane', 'Doe', 'email' => 'janeDoe@email.com']),
+            new Row(['id' => '1', 'name' => ['John', 'Doe'], 'email' => 'johndoe@email.com']),
+            new Row(['id' => '2', 'name' => ['Jane', 'Doe'], 'email' => 'janedoe@email.com']),
+            new Row(['id' => '3', 'name' => ['Jane', 'Doe'], 'email' => 'janeDoe@email.com']),
         ];
 
         $callback = function (Row $row, $column) {
@@ -61,8 +61,7 @@ class CallbackTest extends AbstractTestCase
         static::assertEquals($expected, $this->data);
     }
 
-    /** @test */
-    public function useDataFromOtherColumn(): void
+    public function testUseDataFromOtherColumn(): void
     {
         $expected = [
             new Row(['id' => '1', 'name' => 'John Doe <johndoe@email.com>', 'email' => 'johndoe@email.com']),

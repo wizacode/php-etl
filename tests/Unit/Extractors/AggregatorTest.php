@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Extractors;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\Tools\AbstractTestCase;
 use Wizaplace\Etl\Exception\IncompleteDataException;
 use Wizaplace\Etl\Exception\InvalidOptionException;
@@ -21,12 +22,8 @@ class AggregatorTest extends AbstractTestCase
 {
     /**
      * @throws IncompleteDataException
-     *
-     * @test
-     *
-     * @dataProvider invalidOptionsProvider
      */
-    public function invalidIndexOptions(array $invalidOptions, int $exceptionCode): void
+    #[DataProvider('invalidOptionsProvider')] public function testInvalidIndexOptions(array $invalidOptions, int $exceptionCode): void
     {
         $extractor = new Aggregator();
 
@@ -47,12 +44,7 @@ class AggregatorTest extends AbstractTestCase
         iterator_to_array($extractor->extract());
     }
 
-    /**
-     * @test
-     *
-     * @dataProvider iteratorsProvider
-     **/
-    public function strictIndexMatching(array $iterators): void
+    #[DataProvider('iteratorsProvider')] public function testStrictIndexMatching(array $iterators): void
     {
         $extractor = new Aggregator();
 
@@ -72,12 +64,7 @@ class AggregatorTest extends AbstractTestCase
         \iterator_to_array($extractor->extract());
     }
 
-    /**
-     * @test
-     *
-     * @dataProvider iteratorsProvider
-     **/
-    public function unstrictIndexMatching(array $iterators): void
+    #[DataProvider('iteratorsProvider')] public function testUnstrictIndexMatching(array $iterators): void
     {
         $extractor = new Aggregator();
 
@@ -123,12 +110,7 @@ class AggregatorTest extends AbstractTestCase
         static::assertEquals($expected, $actual);
     }
 
-    /**
-     * @test
-     *
-     * @dataProvider iteratorsProvider
-     **/
-    public function discardIncompleteRowIndexMatching(array $iterators): void
+    #[DataProvider('iteratorsProvider')] public function testDiscardIncompleteRowIndexMatching(array $iterators): void
     {
         $extractor = new Aggregator();
 
@@ -162,8 +144,7 @@ class AggregatorTest extends AbstractTestCase
         static::assertEquals($expected, $actual);
     }
 
-    /** @test */
-    public function bigShuffledDataSet(): void
+    public function testBigShuffledDataSet(): void
     {
         $expected = 10 ** 4;
 
@@ -214,13 +195,13 @@ class AggregatorTest extends AbstractTestCase
                 [
                     Aggregator::COLUMNS => ['name', 'id'],
                 ],
-                'exceptionCode' => 1,
+                1,
             ],
             'invalid columns' => [
                 [
                     Aggregator::INDEX => ['email'],
                 ],
-                'exceptionCode' => 2,
+                2,
             ],
         ];
     }

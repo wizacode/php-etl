@@ -18,8 +18,7 @@ use Wizaplace\Etl\Database\Statement;
 
 class StatementTest extends AbstractTestCase
 {
-    /** @test */
-    public function select(): void
+    public function testSelect(): void
     {
         $statement = new Statement($this->createMock('PDO'));
         $statement->select('users');
@@ -32,8 +31,7 @@ class StatementTest extends AbstractTestCase
         static::assertEquals('select name, email from users', $statement->toSql());
     }
 
-    /** @test */
-    public function insert(): void
+    public function testInsert(): void
     {
         $statement = new Statement($this->createMock('PDO'));
         $statement->insert('users', ['name', 'email']);
@@ -41,8 +39,7 @@ class StatementTest extends AbstractTestCase
         static::assertEquals('insert into users (name, email) values (:name, :email)', $statement->toSql());
     }
 
-    /** @test */
-    public function update(): void
+    public function testUpdate(): void
     {
         $statement = new Statement($this->createMock('PDO'));
         $statement->update('users', ['name', 'email']);
@@ -50,8 +47,7 @@ class StatementTest extends AbstractTestCase
         static::assertEquals('update users set name = :name, email = :email', $statement->toSql());
     }
 
-    /** @test */
-    public function delete(): void
+    public function testDelete(): void
     {
         $statement = new Statement($this->createMock('PDO'));
         $statement->delete('users');
@@ -59,8 +55,7 @@ class StatementTest extends AbstractTestCase
         static::assertEquals('delete from users', $statement->toSql());
     }
 
-    /** @test */
-    public function where(): void
+    public function testWhere(): void
     {
         $statement = new Statement($this->createMock('PDO'));
         $statement->where(['name', 'email']);
@@ -68,8 +63,7 @@ class StatementTest extends AbstractTestCase
         static::assertEquals('where name = :name and email = :email', $statement->toSql());
     }
 
-    /** @test */
-    public function prepare(): void
+    public function testPrepare(): void
     {
         $pdoStatement = $this->createMock('PDOStatement');
 
@@ -81,8 +75,7 @@ class StatementTest extends AbstractTestCase
         static::assertInstanceOf('PDOStatement', $statement->prepare());
     }
 
-    /** @test */
-    public function prepareInvalid(): void
+    public function testPrepareInvalid(): void
     {
         // Set up connection to SQLite test database.
         $connection = 'default';

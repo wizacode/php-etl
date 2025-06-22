@@ -17,8 +17,7 @@ use Wizaplace\Etl\Row;
 
 class JsonTest extends AbstractTestCase
 {
-    /** @test */
-    public function defaultOptions(): void
+    public function testDefaultOptions(): void
     {
         $expected = [
             new Row(['id' => 1, 'name' => 'John Doe', 'email' => 'johndoe@email.com']),
@@ -32,8 +31,7 @@ class JsonTest extends AbstractTestCase
         static::assertEquals($expected, iterator_to_array($extractor->extract()));
     }
 
-    /** @test */
-    public function customColumnsJsonPath(): void
+    public function testCustomColumnsJsonPath(): void
     {
         $expected = [
             new Row(['id' => 1, 'name' => 'John Doe', 'email' => 'johndoe@email.com']),

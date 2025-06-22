@@ -17,8 +17,7 @@ use Wizaplace\Etl\Row;
 
 class EtlTest extends AbstractTestCase
 {
-    /** @test */
-    public function extractStep(): void
+    public function testExtractStep(): void
     {
         $extractor = $this->createMock('Wizaplace\Etl\Extractors\Extractor');
         $extractor->expects(static::once())->method('input')->with('input')->willReturnSelf();
@@ -32,8 +31,7 @@ class EtlTest extends AbstractTestCase
         static::assertInstanceOf(Etl::class, $etl->extract($extractor, 'input', ['options']));
     }
 
-    /** @test */
-    public function transformStep(): void
+    public function testTransformStep(): void
     {
         $transformer = $this->createMock('Wizaplace\Etl\Transformers\Transformer');
         $transformer->expects(static::once())->method('options')->with(['options']);
@@ -46,8 +44,7 @@ class EtlTest extends AbstractTestCase
         static::assertInstanceOf(Etl::class, $etl->transform($transformer, ['options']));
     }
 
-    /** @test */
-    public function loadStep(): void
+    public function testLoadStep(): void
     {
         $loader = $this->createMock('Wizaplace\Etl\Loaders\Loader');
         $loader->expects(static::once())->method('output')->with('output')->willReturnSelf();
@@ -61,8 +58,7 @@ class EtlTest extends AbstractTestCase
         static::assertInstanceOf(Etl::class, $etl->load($loader, 'output', ['options']));
     }
 
-    /** @test */
-    public function runTheEtl(): void
+    public function testRunTheEtl(): void
     {
         $pipeline = $this->createMock('Wizaplace\Etl\Pipeline');
         $pipeline->expects(static::exactly(1))->method('rewind');
@@ -74,8 +70,7 @@ class EtlTest extends AbstractTestCase
         $etl->run();
     }
 
-    /** @test */
-    public function getArrayOfEtlData(): void
+    public function testGetArrayOfEtlData(): void
     {
         $pipeline = $this->createMock('Wizaplace\Etl\Pipeline');
         $pipeline->expects(static::exactly(4))->method('valid')->willReturnOnConsecutiveCalls(true, true, true, false);

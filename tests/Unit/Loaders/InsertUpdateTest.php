@@ -104,8 +104,7 @@ class InsertUpdateTest extends AbstractTestCase
         $this->loader->output('table');
     }
 
-    /** @test */
-    public function insertRowIfNotFoundInDatabase(): void
+    public function testInsertRowIfNotFoundInDatabase(): void
     {
         $this->statement->expects(static::once())->method('select')->with('table');
         $this->selectStatement->expects(static::once())->method('where')->with(['id']);
@@ -127,8 +126,7 @@ class InsertUpdateTest extends AbstractTestCase
         $this->execute($this->loader, [$this->row]);
     }
 
-    /** @test */
-    public function updateRowIfFoundInDatabase(): void
+    public function testUpdateRowIfFoundInDatabase(): void
     {
         $this->statement->expects(static::once())->method('select')->with('table');
         $this->selectStatement->expects(static::once())->method('where')->with(['id']);
@@ -151,8 +149,7 @@ class InsertUpdateTest extends AbstractTestCase
         $this->execute($this->loader, [$this->row]);
     }
 
-    /** @test */
-    public function insertRowEvenIfUpdatesAreSuppressed(): void
+    public function testInsertRowEvenIfUpdatesAreSuppressed(): void
     {
         $this->loader->options([$this->loader::DO_UPDATES => false]);
         $this->statement->expects(static::once())->method('select')->with('table');
@@ -175,8 +172,7 @@ class InsertUpdateTest extends AbstractTestCase
         $this->execute($this->loader, [$this->row]);
     }
 
-    /** @test */
-    public function doNotUpdateOrInsertRowIfUpdatesAreSuppressed(): void
+    public function testDoNotUpdateOrInsertRowIfUpdatesAreSuppressed(): void
     {
         $this->loader->options([$this->loader::DO_UPDATES => false]);
         $this->statement->expects(static::once())->method('select')->with('table');
@@ -201,8 +197,7 @@ class InsertUpdateTest extends AbstractTestCase
         $this->execute($this->loader, [$this->row]);
     }
 
-    /** @test */
-    public function doNotUpdateIfThereAreNoChanges(): void
+    public function testDoNotUpdateIfThereAreNoChanges(): void
     {
         $this->statement->expects(static::once())->method('select')->with('table');
         $this->selectStatement->expects(static::once())->method('where')->with(['id']);
@@ -229,8 +224,7 @@ class InsertUpdateTest extends AbstractTestCase
         $this->execute($this->loader, [$this->row]);
     }
 
-    /** @test */
-    public function filteringColumnsToInsert(): void
+    public function testFilteringColumnsToInsert(): void
     {
         $this->select->expects(static::once())->method('fetch')->willReturn(false);
 
@@ -242,8 +236,7 @@ class InsertUpdateTest extends AbstractTestCase
         $this->execute($this->loader, [$this->row]);
     }
 
-    /** @test */
-    public function emptyFilterOnColumnsToInsert(): void
+    public function testEmptyFilterOnColumnsToInsert(): void
     {
         $this->select->expects(static::once())->method('fetch')->willReturn(false);
 
@@ -257,8 +250,7 @@ class InsertUpdateTest extends AbstractTestCase
         $this->execute($this->loader, [$this->row]);
     }
 
-    /** @test */
-    public function filteringColumnsToUpdate(): void
+    public function testFilteringColumnsToUpdate(): void
     {
         $this->select->expects(static::once())->method('fetch')->willReturn(['name' => 'Jane']);
 
@@ -270,8 +262,7 @@ class InsertUpdateTest extends AbstractTestCase
         $this->execute($this->loader, [$this->row]);
     }
 
-    /** @test */
-    public function mappingColumnsToInsert(): void
+    public function testMappingColumnsToInsert(): void
     {
         $this->select->expects(static::once())->method('fetch')->willReturn(false);
 
@@ -283,8 +274,7 @@ class InsertUpdateTest extends AbstractTestCase
         $this->execute($this->loader, [$this->row]);
     }
 
-    /** @test */
-    public function mappingColumnsToUpdate(): void
+    public function testMappingColumnsToUpdate(): void
     {
         $this->select->expects(static::once())->method('fetch')->willReturn(['name' => 'Jane']);
 
@@ -296,8 +286,7 @@ class InsertUpdateTest extends AbstractTestCase
         $this->execute($this->loader, [$this->row]);
     }
 
-    /** @test */
-    public function insertDataUsingTimestamps(): void
+    public function testInsertDataUsingTimestamps(): void
     {
         $this->select->expects(static::once())->method('fetch')->willReturn(false);
 
@@ -316,8 +305,7 @@ class InsertUpdateTest extends AbstractTestCase
         $this->execute($this->loader, [$this->row]);
     }
 
-    /** @test */
-    public function updateDataUsingTimestamps(): void
+    public function testUpdateDataUsingTimestamps(): void
     {
         $this->select->expects(static::once())->method('fetch')->willReturn(['name' => 'Jane']);
 
@@ -335,12 +323,10 @@ class InsertUpdateTest extends AbstractTestCase
     }
 
     /**
-     * @test
-     *
      * This test has been added to check strict comparison.
      * Before the fix, we had a loose comparison making skip updates because in PHP 'false' == true.
      */
-    public function updateWithTrickyTypesComparison(): void
+    public function testUpdateWithTrickyTypesComparison(): void
     {
         $row = $this->createMock('Wizaplace\Etl\Row');
         $row->expects(static::any())->method('toArray')
@@ -380,8 +366,7 @@ class InsertUpdateTest extends AbstractTestCase
         $this->execute($this->loader, [$row]);
     }
 
-    /** @test */
-    public function insertDataIntoDatabaseWithoutTransactions(): void
+    public function testInsertDataIntoDatabaseWithoutTransactions(): void
     {
         $this->transaction->expects(static::never())->method('size');
         $this->transaction->expects(static::never())->method('run');
@@ -395,8 +380,7 @@ class InsertUpdateTest extends AbstractTestCase
         $this->execute($this->loader, [$this->row]);
     }
 
-    /** @test */
-    public function updateDataIntoDatabaseWithoutTransactions(): void
+    public function testUpdateDataIntoDatabaseWithoutTransactions(): void
     {
         $this->transaction->expects(static::never())->method('size');
         $this->transaction->expects(static::never())->method('run');

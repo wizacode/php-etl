@@ -19,8 +19,7 @@ class DateDimensionTest extends AbstractTestCase
 {
     private const DAY_AS_SECONDS = 24 * 60 * 60;
 
-    /** @test */
-    public function defaultOptions(): void
+    public function testDefaultOptions(): void
     {
         $expected = [
             new Row([
@@ -101,8 +100,7 @@ class DateDimensionTest extends AbstractTestCase
         static::assertEquals($expected, iterator_to_array($extractor->extract()));
     }
 
-    /** @test */
-    public function selectedColumns(): void
+    public function testSelectedColumns(): void
     {
         $expected = [
             new Row([
@@ -145,8 +143,7 @@ class DateDimensionTest extends AbstractTestCase
         static::assertEquals($expected, iterator_to_array($extractor->extract()));
     }
 
-    /** @test */
-    public function quarters(): void
+    public function testQuarters(): void
     {
         $quarters = array_merge(
             array_fill(0, 31, 1),
@@ -186,8 +183,7 @@ class DateDimensionTest extends AbstractTestCase
         static::assertEquals($expected, iterator_to_array($extractor->extract()));
     }
 
-    /** @test */
-    public function defaultStart(): void
+    public function testDefaultStart(): void
     {
         date_default_timezone_set('America/New_York');
 
@@ -222,8 +218,7 @@ class DateDimensionTest extends AbstractTestCase
         static::assertEquals($year + 4 . '1231', $lastRow[DateDimension::ROW_DATE_KEY]);
     }
 
-    /** @test */
-    public function handlesDaylightSavingsTenYears(): void
+    public function testHandlesDaylightSavingsTenYears(): void
     {
         date_default_timezone_set('America/New_York');
 
@@ -246,8 +241,7 @@ class DateDimensionTest extends AbstractTestCase
         self::assertEquals(0, $gainedTime);
     }
 
-    /** @test */
-    public function handlesDaylightSavingsAYearAndAHalf(): void
+    public function testHandlesDaylightSavingsAYearAndAHalf(): void
     {
         date_default_timezone_set('America/New_York');
 
@@ -270,8 +264,7 @@ class DateDimensionTest extends AbstractTestCase
         self::assertEquals(-3600, $gainedTime);
     }
 
-    /** @test */
-    public function handlesDaylightSavingsDefaultStart(): void
+    public function testHandlesDaylightSavingsDefaultStart(): void
     {
         date_default_timezone_set('America/New_York');
 
@@ -293,8 +286,7 @@ class DateDimensionTest extends AbstractTestCase
         self::assertEquals(0, $gainedTime);
     }
 
-    /** @test */
-    public function handlesDaylightSavingsUtc(): void
+    public function testHandlesDaylightSavingsUtc(): void
     {
         date_default_timezone_set('UTC');
 

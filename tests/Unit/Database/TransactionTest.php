@@ -49,59 +49,41 @@ class TransactionTest extends AbstractTestCase
         }
     }
 
-    /** @test */
-    public function runsSingleTransactionIfSizeIsEmpty(): void
+    public function testRunsSingleTransactionIfSizeIsEmpty(): void
     {
         $this->runCleanly(4, 1);
         $this->transaction->close();
     }
 
-    /** @test */
-    public function runsTransactionsWhenCommitSizeIsMultipleOfTotalLines(): void
+    public function testRunsTransactionsWhenCommitSizeIsMultipleOfTotalLines(): void
     {
         $this->transaction->size(3);
         $this->runCleanly(9, 3);
         $this->transaction->close();
     }
 
-    /** @test */
-    public function runsTransactionsWhenCommitSizeIsNotMultipleOfTotalLines(): void
+    public function testRunsTransactionsWhenCommitSizeIsNotMultipleOfTotalLines(): void
     {
         $this->transaction->size(2);
         $this->runCleanly(7, 4);
         $this->transaction->close();
     }
 
-    /** @test */
-    public function transactionClosesOnDestroy(): void
+    public function testTransactionClosesOnDestroy(): void
     {
         $this->transaction->size(2);
         $this->runCleanly(7, 4);
         unset($this->transaction);
     }
 
-    /** @test */
-    public function transactionClosesOnDestroy2(): void
+    public function testTransactionClosesOnDestroy2(): void
     {
         $this->transaction->size(0);
         $this->runCleanly(7, 1, 1);
         unset($this->transaction);
     }
 
-    private function runCleanly(int $rows, int $expectedTransactions, int $expectedRollbacks = 0): void
-    {
-        $expectedCommits = $expectedTransactions - $expectedRollbacks;
-        $this->connection->expects(static::exactly($expectedTransactions))->method('beginTransaction');
-        $this->connection->expects(static::exactly($expectedTransactions))->method('inTransaction')->willReturn(true);
-        $this->connection->expects(static::exactly($expectedCommits))->method('commit');
-        $this->connection->expects(static::exactly($expectedRollbacks))->method('rollBack');
-
-        $this->callback->expects(static::exactly($rows))->method('callback');
-        $this->transaction($rows);
-    }
-
-    /** @test */
-    public function rollsBackLastTransactionAndStopsExecutionOnError(): void
+    public function testTollsBackLastTransactionAndStopsExecutionOnError(): void
     {
         $this->callback->expects(static::exactly(3))->method('callback')->willReturnOnConsecutiveCalls(
             null,
@@ -121,8 +103,7 @@ class TransactionTest extends AbstractTestCase
         $this->transaction(4);
     }
 
-    /** @test */
-    public function commitsLastTransactionAndStopsExecutionOnError(): void
+    public function testCommitsLastTransactionAndStopsExecutionOnError(): void
     {
         $this->callback->expects(static::exactly(3))->method('callback')->willReturnOnConsecutiveCalls(
             null,
@@ -144,10 +125,8 @@ class TransactionTest extends AbstractTestCase
 
     /**
      * If an exception is thrown, we should not lose rows that have already been processed.
-     *
-     * @test
      */
-    public function transactionPreservesIngestedRows(): void
+    public function testTransactionPreservesIngestedRows(): void
     {
         // Set up connection to SQLite test database.
         $connection = 'default';
@@ -196,5 +175,17 @@ class TransactionTest extends AbstractTestCase
             );
             static::assertEquals(8, $database->query("SELECT COUNT(*) FROM $table")->fetchColumn());
         }
+    }
+
+    private function runCleanly(int $rows, int $expectedTransactions, int $expectedRollbacks = 0): void
+    {
+        $expectedCommits = $expectedTransactions - $expectedRollbacks;
+        $this->connection->expects(static::exactly($expectedTransactions))->method('beginTransaction');
+        $this->connection->expects(static::exactly($expectedTransactions))->method('inTransaction')->willReturn(true);
+        $this->connection->expects(static::exactly($expectedCommits))->method('commit');
+        $this->connection->expects(static::exactly($expectedRollbacks))->method('rollBack');
+
+        $this->callback->expects(static::exactly($rows))->method('callback');
+        $this->transaction($rows);
     }
 }

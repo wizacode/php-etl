@@ -104,8 +104,7 @@ class UpdateLoaderTest extends AbstractTestCase
         $this->loader->output('table');
     }
 
-    /** @test */
-    public function updateRowIfFoundInDatabase(): void
+    public function testUpdateRowIfFoundInDatabase(): void
     {
         $this->statement->expects(static::once())->method('select')->with('table');
         $this->selectStatement->expects(static::once())->method('where')->with(['id']);
@@ -128,8 +127,7 @@ class UpdateLoaderTest extends AbstractTestCase
         $this->execute($this->loader, [$this->row]);
     }
 
-    /** @test */
-    public function doNotUpdateIfThereAreNoChanges(): void
+    public function testDoNotUpdateIfThereAreNoChanges(): void
     {
         $this->statement->expects(static::once())->method('select')->with('table');
         $this->selectStatement->expects(static::once())->method('where')->with(['id']);
@@ -156,8 +154,7 @@ class UpdateLoaderTest extends AbstractTestCase
         $this->execute($this->loader, [$this->row]);
     }
 
-    /** @test */
-    public function filteringColumnsToUpdate(): void
+    public function testFilteringColumnsToUpdate(): void
     {
         $this->select->expects(static::once())->method('fetch')->willReturn(['name' => 'Jane']);
 
@@ -169,8 +166,7 @@ class UpdateLoaderTest extends AbstractTestCase
         $this->execute($this->loader, [$this->row]);
     }
 
-    /** @test */
-    public function mappingColumnsToUpdate(): void
+    public function testMappingColumnsToUpdate(): void
     {
         $this->select->expects(static::once())->method('fetch')->willReturn(['name' => 'Jane']);
 
@@ -182,8 +178,7 @@ class UpdateLoaderTest extends AbstractTestCase
         $this->execute($this->loader, [$this->row]);
     }
 
-    /** @test */
-    public function updateDataUsingTimestamps(): void
+    public function testUpdateDataUsingTimestamps(): void
     {
         $this->select->expects(static::once())->method('fetch')->willReturn(['name' => 'Jane']);
 
@@ -200,8 +195,7 @@ class UpdateLoaderTest extends AbstractTestCase
         $this->execute($this->loader, [$this->row]);
     }
 
-    /** @test */
-    public function updateDataIntoDatabaseWithoutTransactions(): void
+    public function testUpdateDataIntoDatabaseWithoutTransactions(): void
     {
         $this->transaction->expects(static::never())->method('size');
         $this->transaction->expects(static::never())->method('run');

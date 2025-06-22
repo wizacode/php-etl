@@ -17,8 +17,7 @@ use Wizaplace\Etl\Transformers\UniqueRows;
 
 class UniqueRowsTest extends AbstractTestCase
 {
-    /** @test */
-    public function compareAllColumns(): void
+    public function testCompareAllColumns(): void
     {
         $data = [
             new Row(['id' => '1', 'name' => 'Jane Doe', 'email' => 'janedoe@email.com']),
@@ -41,8 +40,7 @@ class UniqueRowsTest extends AbstractTestCase
         static::assertEquals($expected, $data);
     }
 
-    /** @test */
-    public function compareTheGivenColumns(): void
+    public function testCompareTheGivenColumns(): void
     {
         $data = [
             new Row(['id' => '1', 'name' => 'Jane Doe', 'email' => 'janedoe@email.com']),
@@ -67,8 +65,7 @@ class UniqueRowsTest extends AbstractTestCase
         static::assertEquals($expected, $data);
     }
 
-    /** @test */
-    public function compareAllColumnsOfConsecutiveRows(): void
+    public function testCompareAllColumnsOfConsecutiveRows(): void
     {
         $data = [
             new Row(['id' => '1', 'name' => 'Jane Doe', 'email' => 'janedoe@email.com']),
@@ -97,8 +94,7 @@ class UniqueRowsTest extends AbstractTestCase
         static::assertEquals($expected, $data);
     }
 
-    /** @test */
-    public function compareTheGivenColumnsOfConsecutiveRows(): void
+    public function testCompareTheGivenColumnsOfConsecutiveRows(): void
     {
         $data = [
             new Row(['id' => '1', 'name' => 'Jane Doe', 'email' => 'janedoe@email.com']),
