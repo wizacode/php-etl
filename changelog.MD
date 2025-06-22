@@ -1,6 +1,6 @@
 # Changelog
 
-## 2.4 (not released yet)
+## 2.4
 
 **Feature**
 * Don't call Pipeline::valid() recursively when a row is discarded. Contribution by [ollyollyollyltd](https://github.com/ollyollyollyltd).
